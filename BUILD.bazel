@@ -3,15 +3,5 @@ load("@rules_cc//cc:defs.bzl", "cc_binary")
 cc_binary(
     name = "main",
     srcs = ["main.cpp"],
-    linkopts =
-        [
-            "-lglfw",
-            "-lGLEW",
-            "-lGLU",
-            "-lGL",
-            "-lglut",
-            "-lsfml-graphics",
-            "-lsfml-window",
-            "-lsfml-system",
-        ],
+    deps = ["//Game:game"],
 )
