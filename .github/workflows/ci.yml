@@ -1,0 +1,28 @@
+name: CI
+
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Add bazel distribution
+        run:
+          sudo apt install curl gnupg |
+          sudo apt-key add - echo "deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8" |
+          sudo tee /etc/apt/sources.list.d/bazel.list
+
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install bazel
+          sudo apt install libsfml-dev
+
+      - name: Build Project | All
+        run: bazel build //...
+
+# Enable when tests are created
+#      - name: Run Tests | All
+#        run: bazel test //...

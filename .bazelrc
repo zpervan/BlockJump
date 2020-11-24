@@ -2,10 +2,18 @@
 build --client_env=CC=/usr/bin/clang
 build --client_env=CXX=/usr/bin/clang
 
-# Compiler options
+# Release build options
 build --strip=always
 build --cxxopt=-std=c++17
 build --cxxopt=-Werror
+build --compilation_mode=opt
+build --cxxopt=-fdiagnostics-color
+
+# Debug build options
+build:debug --compilation_mode=dbg
+build:debug --strip=never
+build:debug --cxxopt=-ggdb3
+build:debug --cxxopt=-O0
 
 # Test environment
 test --test_env="GTEST_COLOR=1"

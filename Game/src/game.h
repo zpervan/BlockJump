@@ -2,6 +2,7 @@
 #define BLOCKJUMP_GAME_H
 
 #include <SFML/Graphics.hpp>
+#include<SFML/OpenGL.hpp>
 
 /// @brief Manages the lifetime and screen content of the game window.
 class Game {
