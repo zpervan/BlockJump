@@ -6,11 +6,6 @@ cc_library(
     hdrs = glob(["src/*.h"]),
     linkopts =
         [
-            "-lglfw",
-            "-lGLEW",
-            "-lGLU",
-            "-lGL",
-            "-lglut",
             "-lsfml-graphics",
             "-lsfml-window",
             "-lsfml-system",
