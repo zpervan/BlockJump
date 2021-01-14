@@ -1,19 +1,43 @@
 #include "Game/src/game.h"
+#include <thread>
+#include <iostream>
 
 void Game::Run() {
+
     while (window_.isOpen()) {
+        // Runs on the main thread
+        std::thread rendering_thread(&Game::Update, this);
         ProcessEvents();
 
-        window_.clear(sf::Color::White);
-        window_.display();
+        rendering_thread.join();
+        Display();
     }
 }
 
 void Game::ProcessEvents() {
-    while (window_.pollEvent(event_)) {
-        if (event_.type == sf::Event::Closed)
+    sf::Event event{};
+    while (window_.pollEvent(event)) {
+        if (event.type == sf::Event::Closed) {
             window_.close();
+        }
     }
 }
 
-Game::Game() : window_{sf::VideoMode(1280, 1024), "Block game"}, event_{sf::Event()} {}
+void Game::Update() {
+    rectangle_shapes_.emplace_back(player_entity_.Update());
+}
+
+void Game::Display() {
+    window_.clear(sf::Color::White);
+    ShowPlayer();
+    window_.display();
+}
+
+void Game::ShowPlayer() {
+    if (!rectangle_shapes_.empty()) {
+        window_.draw(rectangle_shapes_.at(0));
+        rectangle_shapes_.pop_back();
+        std::cout << "OLA AMIGO" << std::endl;
+
+    }
+}

@@ -12,5 +12,3 @@ Used libraries:
 
 Build system used in this project is [Bazel](https://www.bazel.build/). The installation instructions can be found 
 [here](https://docs.bazel.build/versions/master/install-ubuntu.html).
-
-Install the following dependencies in order to compile the project on Ubuntu 20.04:

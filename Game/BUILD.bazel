@@ -9,6 +9,8 @@ cc_library(
             "-lsfml-graphics",
             "-lsfml-window",
             "-lsfml-system",
+            "-pthread",
         ],
     visibility = ["//visibility:public"],
+    deps = ["//Entities:entities"],
 )
