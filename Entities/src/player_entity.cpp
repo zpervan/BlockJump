@@ -1,26 +1,39 @@
 #include "Entities/src/player_entity.h"
 #include <SFML/Graphics.hpp>
-
-static int i{0};
-static bool up{false};
-static bool down{true};
+#include <iostream>
 
 sf::RectangleShape PlayerEntity::Update() {
     sf::RectangleShape shape;
-    shape.setSize({200, 200});
-    if (i == 1024 && down) {
-        up = true;
-        down = false;
-    }
-
-    if (i == 0 && up) {
-        up = false;
-        down = true;
-    }
-
-    up ? i-- : i++;
-
-    shape.setPosition(200, i);
+    shape.setSize({50, 50});
+    shape.setPosition(GetPosition().x, GetPosition().y);
     shape.setFillColor(sf::Color::Green);
+
     return shape;
+}
+
+void PlayerEntity::Move() {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+        GetPosition().x > 0 ? SetPosition({GetPosition().x - 1, GetPosition().y}) :
+        SetPosition({GetPosition().x, GetPosition().y});
+        std::cout << "[LEFT]Player X position: " << GetPosition().x << std::endl;
+    }
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+
+        GetPosition().x < max_width_ ? SetPosition({GetPosition().x + 1, GetPosition().y}) :
+        SetPosition({GetPosition().x, GetPosition().y});
+        std::cout << "[RIGHT]Player X position: " << GetPosition().x << std::endl;
+    }
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+        GetPosition().y > 0 ? SetPosition({GetPosition().x, GetPosition().y - 1}) :
+        SetPosition({GetPosition().x, GetPosition().y});
+        std::cout << "[UP]Player Y position: " << GetPosition().y << std::endl;
+    }
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+        GetPosition().y < max_height_ ? SetPosition({GetPosition().x, GetPosition().y + 1}) :
+        SetPosition({GetPosition().x, GetPosition().y});
+        std::cout << "[DOWN]Player Y position: " << GetPosition().y << std::endl;
+    }
 }

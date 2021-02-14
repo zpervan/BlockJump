@@ -1,13 +1,13 @@
 #include "Game/src/game.h"
 #include <thread>
-#include <iostream>
 
 void Game::Run() {
-
     while (window_.isOpen()) {
         // Runs on the main thread
         std::thread rendering_thread(&Game::Update, this);
+
         ProcessEvents();
+        player_entity_.Move();
 
         rendering_thread.join();
         Display();
@@ -37,7 +37,5 @@ void Game::ShowPlayer() {
     if (!rectangle_shapes_.empty()) {
         window_.draw(rectangle_shapes_.at(0));
         rectangle_shapes_.pop_back();
-        std::cout << "OLA AMIGO" << std::endl;
-
     }
 }

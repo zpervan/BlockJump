@@ -7,13 +7,12 @@
 #include "Entities/src/player_entity.h"
 
 /// @brief Manages the lifetime and screen content of the game window.
-class Game
-{
-  public:
+class Game {
+public:
     /// @brief Updates the content of the game screen space.
     void Run();
 
-  private:
+private:
     void ProcessEvents();
 
     void Update();
