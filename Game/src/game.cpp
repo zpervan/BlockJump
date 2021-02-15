@@ -2,6 +2,9 @@
 #include <thread>
 
 void Game::Run() {
+    ///@TODO: Create initialize function
+    player_entity_.SetVelocity(0.35);
+
     while (window_.isOpen()) {
         // Runs on the main thread
         std::thread rendering_thread(&Game::Update, this);

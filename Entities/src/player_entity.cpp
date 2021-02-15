@@ -13,27 +13,26 @@ sf::RectangleShape PlayerEntity::Update() {
 
 void PlayerEntity::Move() {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-        GetPosition().x > 0 ? SetPosition({GetPosition().x - 1, GetPosition().y}) :
+        GetPosition().x > 0 ? SetPosition({GetPosition().x - GetVelocity(), GetPosition().y}) :
         SetPosition({GetPosition().x, GetPosition().y});
-        std::cout << "[LEFT]Player X position: " << GetPosition().x << std::endl;
+//        std::cout << "[LEFT]Player X position: " << GetPosition().x << std::endl;
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-
-        GetPosition().x < max_width_ ? SetPosition({GetPosition().x + 1, GetPosition().y}) :
+        GetPosition().x < max_width_ ? SetPosition({GetPosition().x + GetVelocity(), GetPosition().y}) :
         SetPosition({GetPosition().x, GetPosition().y});
-        std::cout << "[RIGHT]Player X position: " << GetPosition().x << std::endl;
+//        std::cout << "[RIGHT]Player X position: " << GetPosition().x << std::endl;
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-        GetPosition().y > 0 ? SetPosition({GetPosition().x, GetPosition().y - 1}) :
+        GetPosition().y > 0 ? SetPosition({GetPosition().x, GetPosition().y - GetVelocity()}) :
         SetPosition({GetPosition().x, GetPosition().y});
-        std::cout << "[UP]Player Y position: " << GetPosition().y << std::endl;
+//        std::cout << "[UP]Player Y position: " << GetPosition().y << std::endl;
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-        GetPosition().y < max_height_ ? SetPosition({GetPosition().x, GetPosition().y + 1}) :
+        GetPosition().y < max_height_ ? SetPosition({GetPosition().x, GetPosition().y + GetVelocity()}) :
         SetPosition({GetPosition().x, GetPosition().y});
-        std::cout << "[DOWN]Player Y position: " << GetPosition().y << std::endl;
+//        std::cout << "[DOWN]Player Y position: " << GetPosition().y << std::endl;
     }
 }

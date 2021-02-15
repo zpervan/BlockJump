@@ -9,6 +9,8 @@
 /// @brief Manages the lifetime and screen content of the game window.
 class Game {
 public:
+//    void Initialize();
+
     /// @brief Updates the content of the game screen space.
     void Run();
 
