@@ -5,3 +5,7 @@ directories:
   -bazel-GameofLife
   -bazel-out
   -bazel-testlogs
+
+targets:
+  -@googletestlib//...
+  -@fmtlib//...

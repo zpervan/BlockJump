@@ -23,6 +23,6 @@ cc_test(
     srcs = ["test/game_test.cpp"],
     deps = [
         ":game",
-        "@googletest//:gtest",
+        "@googletestlib//:gtest",
     ],
 )

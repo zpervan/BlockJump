@@ -6,6 +6,6 @@ local_repository(
 )
 
 local_repository(
-    name = "googletest",
+    name = "googletestlib",
     path = "ThirdParty/googletest/",
 )
