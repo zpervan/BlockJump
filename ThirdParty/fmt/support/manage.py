@@ -230,7 +230,7 @@ def release(args):
             line = prefix + version + ')\n'
         sys.stdout.write(line)
 
-    # Update the version in the changelog.
+    # UpdatePosition the version in the changelog.
     title_len = 0
     for line in fileinput.input(changelog_path, inplace=True):
         if line.decode('utf-8').startswith(version + ' - TBD'):
@@ -253,7 +253,7 @@ def release(args):
 
     fmt_repo.checkout('-B', 'release')
     fmt_repo.add(changelog, cmakelists, script)
-    fmt_repo.commit('-m', 'Update version')
+    fmt_repo.commit('-m', 'UpdatePosition version')
 
     # Build the docs and package.
     run = Runner(fmt_repo.dir)

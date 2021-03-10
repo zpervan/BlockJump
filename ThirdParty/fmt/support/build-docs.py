@@ -47,7 +47,7 @@ if is_ci:
 # Push docs to GitHub pages.
 check_call(['git', 'add', '--all'], cwd=repo)
 if call(['git', 'diff-index', '--quiet', 'HEAD'], cwd=repo):
-    check_call(['git', 'commit', '-m', 'Update documentation'], cwd=repo)
+    check_call(['git', 'commit', '-m', 'UpdatePosition documentation'], cwd=repo)
     cmd = 'git push'
     if is_ci:
         cmd += ' https://$KEY@github.com/fmtlib/fmtlib.github.io.git master'

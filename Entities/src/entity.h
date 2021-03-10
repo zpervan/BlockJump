@@ -19,7 +19,7 @@ public:
     [[nodiscard]] float GetVelocity() const;
 
 protected:
-    sf::Vector2f position_{50, 950};
+    sf::Vector2f position_{50, 800};
     sf::Vector2f orientation_{0, 0};
     float velocity_{1.0};
 };

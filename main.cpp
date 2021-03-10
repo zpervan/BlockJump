@@ -7,6 +7,8 @@ int main() {
     /// Create the game (window)
     Game game;
 
+    game.Initialize();
+
     /// Run the game (process events, update the game screen)
     game.Run();
 

@@ -1,7 +1,7 @@
 load("@rules_cc//cc:defs.bzl", "cc_library")
 
 cc_library(
-    name = "game",
+    name = "world",
     srcs = glob(["src/*.cpp"]),
     hdrs = glob(["src/*.h"]),
     linkopts =
@@ -9,20 +9,6 @@ cc_library(
             "-lsfml-graphics",
             "-lsfml-window",
             "-lsfml-system",
-            "-pthread",
         ],
     visibility = ["//visibility:public"],
-    deps = [
-        "//Entities:entities",
-        "//World:world",
-    ],
-)
-
-cc_test(
-    name = "game_test",
-    srcs = ["test/game_test.cpp"],
-    deps = [
-        ":game",
-        "@googletest//:gtest",
-    ],
 )
