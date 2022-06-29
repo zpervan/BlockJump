@@ -1,7 +1,7 @@
 #ifndef BLOCKJUMP_ENTITY_H
 #define BLOCKJUMP_ENTITY_H
 
-#include <SFML/System/Vector2.hpp>
+#include "ThirdParty/SFML/include/SFML/System/Vector2.hpp"
 
 /// @brief Represents the base class for each object located in the game.
 class Entity {

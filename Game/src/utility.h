@@ -1,7 +1,8 @@
 #ifndef BLOCKJUMP_UTILITY_H
 #define BLOCKJUMP_UTILITY_H
 
-#include <SFML/Graphics/RectangleShape.hpp>
+#include "ThirdParty/SFML/include/SFML/Graphics/RectangleShape.hpp"
+
 #include <algorithm>
 #include <vector>
 

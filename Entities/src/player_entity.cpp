@@ -1,5 +1,6 @@
 #include "Entities/src/player_entity.h"
-#include <SFML/Graphics.hpp>
+#include "ThirdParty/SFML/include/SFML/Graphics.hpp"
+
 #include <iostream>
 
 sf::RectangleShape PlayerEntity::UpdateState() {

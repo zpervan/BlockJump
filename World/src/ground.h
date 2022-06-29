@@ -1,8 +1,10 @@
 #ifndef BLOCKJUMP_GROUND_H
 #define BLOCKJUMP_GROUND_H
 
-#include <SFML/Graphics/RectangleShape.hpp>
 #include <memory>
+
+#include "ThirdParty/SFML/include/SFML/Graphics/RectangleShape.hpp"
+#include "ThirdParty/SFML/include/SFML/System/Vector2.hpp"
 
 namespace World {
     class Ground {

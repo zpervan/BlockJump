@@ -4,11 +4,11 @@ cc_library(
     name = "world",
     srcs = glob(["src/*.cpp"]),
     hdrs = glob(["src/*.h"]),
-    linkopts =
-        [
-            "-lsfml-graphics",
-            "-lsfml-window",
-            "-lsfml-system",
-        ],
     visibility = ["//visibility:public"],
+    deps =
+        [
+            "@sfmllib//:sfml-graphics",
+            "@sfmllib//:sfml-system",
+            "@sfmllib//:sfml-window",
+        ],
 )

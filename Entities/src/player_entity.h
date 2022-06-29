@@ -2,7 +2,7 @@
 #define BLOCKJUMP_PLAYER_ENTITY_H
 
 #include "Entities/src/entity.h"
-#include <SFML/Graphics/RectangleShape.hpp>
+#include "ThirdParty/SFML/include/SFML/Graphics/RectangleShape.hpp"
 
 /// @brief Contains all the information about the player entity.
 /// @verbatim

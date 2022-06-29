@@ -1,12 +1,13 @@
 #ifndef BLOCKJUMP_GAME_H
 #define BLOCKJUMP_GAME_H
 
-#include <SFML/Graphics.hpp>
-#include <SFML/OpenGL.hpp>
+#include "ThirdParty/SFML/include/SFML/Graphics.hpp"
+#include "ThirdParty/SFML/include/SFML/OpenGL.hpp"
 
 #include "Entities/src/player_entity.h"
 #include "World/src/ground.h"
 
+#include <vector>
 /// @brief Manages the lifetime and screen content of the game window.
 class Game {
 public:
