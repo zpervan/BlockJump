@@ -1,7 +1,9 @@
 #include "Game/src/game.h"
 #include "Game/src/utility.h"
+
+#include "spdlog/spdlog.h"
+
 #include <thread>
-#include <iostream>
 
 void Game::Initialize() {
     player_entity_.SetVelocity(0.3);
@@ -16,7 +18,7 @@ void Game::Run() {
 
         if (!rectangle_shapes_.empty()) {
             if (!Utility::AreObjectsColliding(rectangle_shapes_.at(0), rectangle_shapes_)) {
-                std::cout << "Objects are not colliding" << std::endl;
+//                spdlog::debug("Objects are not colliding"); // Spams the console when turned on
                 player_entity_.UpdatePosition();
             }
         }

@@ -10,5 +10,6 @@ cc_library(
             "@sfmllib//:sfml-graphics",
             "@sfmllib//:sfml-system",
             "@sfmllib//:sfml-window",
+            "@spdloglib//:spdlog",
         ],
 )

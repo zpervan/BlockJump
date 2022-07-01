@@ -1,7 +1,7 @@
 #include "Entities/src/player_entity.h"
-#include "SFML/Graphics.hpp"
 
-#include <iostream>
+#include "SFML/Graphics.hpp"
+#include "spdlog/spdlog.h"
 
 sf::RectangleShape PlayerEntity::UpdateState() {
     sf::RectangleShape shape;
@@ -17,7 +17,7 @@ void PlayerEntity::Move() {
         if (GetPosition().x > 0) {
             position_to_move_.x = GetPosition().x - GetVelocity();
             position_to_move_.y = GetPosition().y;
-            std::cout << "[LEFT]Player X position: " << GetPosition().x << std::endl;
+            spdlog::debug("[LEFT] Player X position: {}", GetPosition().x);
         }
     }
 
@@ -25,7 +25,7 @@ void PlayerEntity::Move() {
         if (GetPosition().x < max_width_) {
             position_to_move_.x = GetPosition().x + GetVelocity();
             position_to_move_.y = GetPosition().y;
-            std::cout << "[RIGHT]Player X position: " << GetPosition().x << std::endl;
+            spdlog::debug("[RIGHT] Player X position: {}", GetPosition().x);
         }
     }
 
@@ -33,7 +33,7 @@ void PlayerEntity::Move() {
         if (GetPosition().y > 0) {
             position_to_move_.x = GetPosition().x;
             position_to_move_.y = GetPosition().y - GetVelocity();
-            std::cout << "[UP]Player Y position: " << GetPosition().y << std::endl;
+            spdlog::debug("[UP] Player Y position: {}", GetPosition().y);
         }
     }
 
@@ -41,7 +41,7 @@ void PlayerEntity::Move() {
         if (GetPosition().y < max_height_) {
             position_to_move_.x = GetPosition().x;
             position_to_move_.y = GetPosition().y + GetVelocity();
-            std::cout << "[DOWN]Player Y position: " << GetPosition().y << std::endl;
+            spdlog::debug("[DOWN] Player Y position: {}", GetPosition().y);
         }
     }
 }
