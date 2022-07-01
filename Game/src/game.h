@@ -1,8 +1,8 @@
 #ifndef BLOCKJUMP_GAME_H
 #define BLOCKJUMP_GAME_H
 
-#include "ThirdParty/SFML/include/SFML/Graphics.hpp"
-#include "ThirdParty/SFML/include/SFML/OpenGL.hpp"
+#include "SFML/Graphics.hpp"
+#include "SFML/OpenGL.hpp"
 
 #include "Entities/src/player_entity.h"
 #include "World/src/ground.h"

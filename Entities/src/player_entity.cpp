@@ -1,5 +1,5 @@
 #include "Entities/src/player_entity.h"
-#include "ThirdParty/SFML/include/SFML/Graphics.hpp"
+#include "SFML/Graphics.hpp"
 
 #include <iostream>
 

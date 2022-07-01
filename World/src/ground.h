@@ -3,8 +3,8 @@
 
 #include <memory>
 
-#include "ThirdParty/SFML/include/SFML/Graphics/RectangleShape.hpp"
-#include "ThirdParty/SFML/include/SFML/System/Vector2.hpp"
+#include "SFML/Graphics/RectangleShape.hpp"
+#include "SFML/System/Vector2.hpp"
 
 namespace World {
     class Ground {

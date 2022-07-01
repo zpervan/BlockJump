@@ -25,11 +25,7 @@ cc_library(
         "include/SFML/OpenGL.hpp",
         "include/SFML/Window.hpp",
     ],
-    include_prefix = "ThirdParty/SFML",
-    includes = [
-        "include/SFML",
-        "include/SFML/Graphics",
-    ],
+    includes = ["include"],
 )
 
 cc_library(
@@ -53,11 +49,7 @@ cc_library(
         "include/SFML/System.hpp",
         "include/SFML/Config.hpp",
     ],
-    include_prefix = "ThirdParty/SFML",
-    includes = [
-        "include/SFML",
-        "include/SFML/System",
-    ],
+    includes = ["include"],
 )
 
 cc_library(
@@ -81,11 +73,7 @@ cc_library(
         "include/SFML/Window.hpp",
         "include/SFML/System.hpp",
     ],
-    include_prefix = "ThirdParty/SFML",
-    includes = [
-        "include/SFML",
-        "include/SFML/Window",
-    ],
+    includes = ["include"],
 )
 
 cc_library(
@@ -109,11 +97,7 @@ cc_library(
         "include/SFML/Audio.hpp",
         "include/SFML/System.hpp",
     ],
-    include_prefix = "ThirdParty/SFML",
-    includes = [
-        "include/SFML",
-        "include/SFML/Audio",
-    ],
+    includes = ["include"],
 )
 
 cc_library(
@@ -137,9 +121,5 @@ cc_library(
         "include/SFML/Network.hpp",
         "include/SFML/System.hpp",
     ],
-    include_prefix = "ThirdParty/SFML",
-    includes = [
-        "include/SFML",
-        "include/SFML/Window",
-    ],
+    includes = ["include"],
 )
