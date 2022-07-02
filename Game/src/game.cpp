@@ -1,62 +1,74 @@
 #include "Game/src/game.h"
-#include "Game/src/utility.h"
 
-#include "spdlog/spdlog.h"
-
-#include <thread>
-
-void Game::Initialize() {
-    player_entity_.SetVelocity(0.3);
+void Game::Initialize()
+{
+    player_entity_.SetVelocity(0.05);
     ground_.SetGroundPosition({0.0, 980.0});
 }
 
-void Game::Run() {
-    while (window_.isOpen()) {
+void Game::Run()
+{
+    while (window_.isOpen())
+    {
         // Runs on the main thread
-        std::thread rendering_thread(&Game::Update, this);
-        player_entity_.Move();
+        Update();
+        player_entity_.Move(rectangle_shapes_);
 
-        if (!rectangle_shapes_.empty()) {
-            if (!Utility::AreObjectsColliding(rectangle_shapes_.at(0), rectangle_shapes_)) {
-//                spdlog::debug("Objects are not colliding"); // Spams the console when turned on
-                player_entity_.UpdatePosition();
-            }
-        }
-
-        rendering_thread.join();
         Display();
         ProcessEvents();
     }
 }
 
-void Game::ProcessEvents() {
+void Game::ProcessEvents()
+{
     sf::Event event{};
-    while (window_.pollEvent(event)) {
-        if (event.type == sf::Event::Closed) {
+    while (window_.pollEvent(event))
+    {
+        if (event.type == sf::Event::Closed)
+        {
             window_.close();
         }
     }
 }
 
-void Game::Update() {
+void Game::Update()
+{
     rectangle_shapes_.emplace_back(player_entity_.UpdateState());
+    rectangle_shapes_.emplace_back(ground_.GenerateGround());
+
+    // @TODO: Create a non-player entity factory or builder
     sf::RectangleShape rec;
     rec.setSize({50, 50});
     rec.setPosition({500, 505});
     rec.setFillColor(sf::Color::Black);
     rectangle_shapes_.emplace_back(rec);
-    rectangle_shapes_.emplace_back(ground_.GenerateGround());
+
+    sf::RectangleShape rec1;
+    rec.setSize({100, 50});
+    rec.setPosition({700, 600});
+    rec.setFillColor(sf::Color::Black);
+    rectangle_shapes_.emplace_back(rec1);
+
+    sf::RectangleShape rec2;
+    rec.setSize({50, 100});
+    rec.setPosition({100, 300});
+    rec.setFillColor(sf::Color::Black);
+    rectangle_shapes_.emplace_back(rec2);
 }
 
-void Game::Display() {
+void Game::Display()
+{
     window_.clear(sf::Color::White);
     ShowEntities();
     window_.display();
 }
 
-void Game::ShowEntities() {
-    if (!rectangle_shapes_.empty()) {
-        for (const auto &entity : rectangle_shapes_) {
+void Game::ShowEntities()
+{
+    if (!rectangle_shapes_.empty())
+    {
+        for (const auto& entity : rectangle_shapes_)
+        {
             window_.draw(entity);
         }
         rectangle_shapes_.clear();
