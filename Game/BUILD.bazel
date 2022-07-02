@@ -11,7 +11,6 @@ cc_library(
     visibility = ["//visibility:public"],
     deps = [
         "//Entities:entities",
-        "//World:world",
         "@sfmllib//:sfml-graphics",
         "@sfmllib//:sfml-system",
         "@sfmllib//:sfml-window",

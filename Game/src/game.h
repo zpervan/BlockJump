@@ -2,7 +2,6 @@
 #define BLOCKJUMP_GAME_H
 
 #include "Entities/src/player_entity.h"
-#include "World/src/ground.h"
 
 #include "SFML/Graphics.hpp"
 #include "SFML/OpenGL.hpp"
@@ -27,9 +26,9 @@ class Game
 
     void ShowEntities();
 
+  private:
     sf::RenderWindow window_{sf::VideoMode(1280, 1024), "Block game"};
     PlayerEntity player_entity_;
-    World::Ground ground_;
     std::vector<sf::RectangleShape> rectangle_shapes_;
 };
 
