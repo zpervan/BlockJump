@@ -4,25 +4,13 @@ cc_library(
     name = "game",
     srcs = glob(["src/*.cpp"]),
     hdrs = glob(["src/*.h"]),
-    linkopts =
-        [
-            "-pthread",
-        ],
+    linkopts = ["-pthread"],
     visibility = ["//visibility:public"],
     deps = [
-        "//Entities:entities",
+        "//Game/Entities:entities",
         "@sfmllib//:sfml-graphics",
         "@sfmllib//:sfml-system",
         "@sfmllib//:sfml-window",
         "@spdloglib//:spdlog",
-    ],
-)
-
-cc_test(
-    name = "game_test",
-    srcs = ["test/game_test.cpp"],
-    deps = [
-        ":game",
-        "@googletestlib//:gtest",
     ],
 )

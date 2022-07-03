@@ -1,6 +1,6 @@
-#include "Entities/src/player_entity.h"
+#include "Game/Entities/src/player_entity.h"
 
-#include "Entities/src/utility.h"
+#include "Game/Entities/src/utility.h"
 
 #include "SFML/Graphics.hpp"
 #include "spdlog/spdlog.h"

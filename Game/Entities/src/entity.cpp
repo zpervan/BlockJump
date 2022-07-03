@@ -1,4 +1,4 @@
-#include "Entities/src/entity.h"
+#include "Game/Entities/src/entity.h"
 
 void Entity::SetPosition(const sf::Vector2f &position) {
     position_ = position;

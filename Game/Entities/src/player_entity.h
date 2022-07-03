@@ -1,7 +1,8 @@
 #ifndef BLOCKJUMP_PLAYER_ENTITY_H
 #define BLOCKJUMP_PLAYER_ENTITY_H
 
-#include "Entities/src/entity.h"
+#include "Game/Entities/src/entity.h"
+
 #include "SFML/Graphics/RectangleShape.hpp"
 
 /// @brief Contains all the information about the player entity.

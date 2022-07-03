@@ -1,7 +1,7 @@
 #ifndef BLOCKJUMP_GAME_H
 #define BLOCKJUMP_GAME_H
 
-#include "Entities/src/player_entity.h"
+#include "Game/Entities/src/player_entity.h"
 
 #include "SFML/Graphics.hpp"
 #include "SFML/OpenGL.hpp"
