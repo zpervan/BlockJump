@@ -1,7 +1,7 @@
 #ifndef BLOCKJUMP_WINDOW_H
 #define BLOCKJUMP_WINDOW_H
 
-#include "SFML/Graphics/RenderWindow.hpp"
+#include <SFML/Graphics/RenderWindow.hpp>
 
 class Window
 {

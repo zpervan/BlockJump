@@ -2,8 +2,9 @@
 #define BLOCKJUMP_PLAYER_ENTITY_H
 
 #include "Game/Entities/src/entity.h"
-
 #include "SFML/Graphics/RectangleShape.hpp"
+
+#include <memory>
 
 /// @brief Contains all the information about the player entity.
 /// @verbatim
@@ -23,11 +24,15 @@ class PlayerEntity : public Entity
     /// @brief Changes the position value w.r.t the pressed key.
     void Move(std::vector<sf::RectangleShape>& entities);
 
+    void SetTexture(sf::Texture* texture);
+
     sf::Vector2f GetPositionToMove() const;
 
   private:
     const std::size_t max_width_{1280};
     const std::size_t max_height_{1024};
+
+    std::unique_ptr<sf::Texture> texture_{nullptr};
     sf::RectangleShape player_entity_{};
     sf::Vector2f position_to_move_{0.0, 0.0};
 };

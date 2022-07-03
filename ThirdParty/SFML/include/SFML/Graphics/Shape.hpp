@@ -78,7 +78,7 @@ public:
   ///
   /// \param rect Rectangle defining the region of the texture to display
   ///
-  /// \see getTextureRect, setTexture
+  /// \see getTextureRect, SetTexture
   ///
   ////////////////////////////////////////////////////////////
   void setTextureRect(const IntRect &rect);
@@ -136,7 +136,7 @@ public:
   ///
   /// \return Pointer to the shape's texture
   ///
-  /// \see setTexture
+  /// \see SetTexture
   ///
   ////////////////////////////////////////////////////////////
   const Texture *getTexture() const;

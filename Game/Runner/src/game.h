@@ -2,11 +2,10 @@
 #define BLOCKJUMP_GAME_H
 
 #include "Game/Entities/src/player_entity.h"
-#include "window.h"
+#include "Game/Runner/src/window.h"
 
-#include "SFML/Graphics.hpp"
-#include "SFML/OpenGL.hpp"
-
+#include <SFML/Graphics.hpp>
+#include <SFML/OpenGL.hpp>
 #include <vector>
 #include <memory>
 
@@ -29,6 +28,7 @@ class Game
 
   private:
     std::unique_ptr<Window> window_;
+    std::unique_ptr<sf::Texture> texture_;
     PlayerEntity player_entity_;
     std::vector<sf::RectangleShape> entities_;
 };

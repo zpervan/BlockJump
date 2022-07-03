@@ -57,7 +57,7 @@ public:
   ///
   /// \param texture Source texture
   ///
-  /// \see setTexture
+  /// \see SetTexture
   ///
   ////////////////////////////////////////////////////////////
   explicit Sprite(const Texture &texture);
@@ -68,7 +68,7 @@ public:
   /// \param texture   Source texture
   /// \param rectangle Sub-rectangle of the texture to assign to the sprite
   ///
-  /// \see setTexture, setTextureRect
+  /// \see SetTexture, setTextureRect
   ///
   ////////////////////////////////////////////////////////////
   Sprite(const Texture &texture, const IntRect &rectangle);
@@ -103,7 +103,7 @@ public:
   ///
   /// \param rectangle Rectangle defining the region of the texture to display
   ///
-  /// \see getTextureRect, setTexture
+  /// \see getTextureRect, SetTexture
   ///
   ////////////////////////////////////////////////////////////
   void setTextureRect(const IntRect &rectangle);
@@ -132,7 +132,7 @@ public:
   ///
   /// \return Pointer to the sprite's texture
   ///
-  /// \see setTexture
+  /// \see SetTexture
   ///
   ////////////////////////////////////////////////////////////
   const Texture *getTexture() const;
@@ -258,7 +258,7 @@ private:
 ///
 /// // Create a sprite
 /// sf::Sprite sprite;
-/// sprite.setTexture(texture);
+/// sprite.SetTexture(texture);
 /// sprite.setTextureRect(sf::IntRect(10, 10, 50, 30));
 /// sprite.setColor(sf::Color(255, 255, 255, 200));
 /// sprite.setPosition(100, 25);

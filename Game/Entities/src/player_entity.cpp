@@ -10,6 +10,7 @@ sf::RectangleShape PlayerEntity::UpdateState() {
     shape.setSize({50, 50});
     shape.setPosition(position_);
     shape.setFillColor(sf::Color::Green);
+    shape.setTexture(texture_.get());
 
     return shape;
 }
@@ -59,4 +60,9 @@ sf::Vector2f PlayerEntity::GetPositionToMove() const {
 
 void PlayerEntity::UpdatePosition() {
     position_ = position_to_move_;
+}
+
+void PlayerEntity::SetTexture(sf::Texture * texture)
+{
+    texture_.reset(texture);
 }

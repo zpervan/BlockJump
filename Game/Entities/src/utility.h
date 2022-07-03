@@ -4,9 +4,9 @@
 #include <algorithm>
 #include <vector>
 
-#include "SFML/Graphics/RectangleShape.hpp"
-#include "SFML/Window/Keyboard.hpp"
-#include "spdlog/spdlog.h"
+#include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Window/Keyboard.hpp>
+#include <spdlog/spdlog.h>
 
 namespace Utility
 {

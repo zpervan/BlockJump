@@ -677,7 +677,7 @@ private:
 ///
 /// // Assign it to a sprite
 /// sf::Sprite sprite;
-/// sprite.setTexture(texture);
+/// sprite.SetTexture(texture);
 ///
 /// // Draw the textured sprite
 /// window.draw(sprite);
