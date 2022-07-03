@@ -2,23 +2,24 @@
 #define BLOCKJUMP_GAME_H
 
 #include "Game/Entities/src/player_entity.h"
+#include "window.h"
 
 #include "SFML/Graphics.hpp"
 #include "SFML/OpenGL.hpp"
 
 #include <vector>
+#include <memory>
 
 /// @brief Manages the lifetime and screen content of the game window.
 class Game
 {
   public:
-    void Initialize();
+    Game();
 
     /// @brief Updates the content of the game screen space.
     void Run();
 
   private:
-    void ProcessEvents();
 
     void Update();
 
@@ -27,9 +28,9 @@ class Game
     void ShowEntities();
 
   private:
-    sf::RenderWindow window_{sf::VideoMode(1280, 1024), "Block game"};
+    std::unique_ptr<Window> window_;
     PlayerEntity player_entity_;
-    std::vector<sf::RectangleShape> rectangle_shapes_;
+    std::vector<sf::RectangleShape> entities_;
 };
 
 #endif  // BLOCKJUMP_GAME_H

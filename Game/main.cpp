@@ -15,8 +15,6 @@ int main() {
     spdlog::info("Starting game");
     Game game;
 
-    game.Initialize();
-
     /// Run the game (process events, update the game screen)
     game.Run();
 

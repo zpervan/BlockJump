@@ -16,7 +16,7 @@ sf::RectangleShape PlayerEntity::UpdateState() {
 
 void PlayerEntity::Move(std::vector<sf::RectangleShape>& entities)
 {
-    const auto & player_entity{entities.at(0)};
+    const auto & player_entity{entities.back()};
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
         if (GetPosition().x > 0 && !Utility::IsColliding(player_entity, entities, sf::Keyboard::Left)) {
