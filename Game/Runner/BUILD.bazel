@@ -8,6 +8,7 @@ cc_library(
     linkopts = ["-pthread"],
     visibility = ["//visibility:public"],
     deps = [
+        "//:bootstrap",
         "//Game/Entities:entities",
         "@sfmllib//:sfml-graphics",
         "@sfmllib//:sfml-system",

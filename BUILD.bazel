@@ -8,3 +8,9 @@ cc_binary(
         "@spdloglib//:spdlog",
     ],
 )
+
+cc_library(
+    name = "bootstrap",
+    srcs = ["Game/constants.h"],
+    visibility = ["//visibility:public"],
+)

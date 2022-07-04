@@ -1,8 +1,10 @@
 #include "Game/Runner/src/game.h"
 
-#include "spdlog/spdlog.h"
+#include "Game/constants.h"
 
-Game::Game() : window_(new Window("Block Jump", {1280, 1024})), texture_(new sf::Texture())
+#include <spdlog/spdlog.h>
+
+Game::Game() : window_(new Window(Constants::TITLE, {Constants::WINDOW_WIDTH, Constants::WINDOW_HEIGHT})), texture_(new sf::Texture())
 {
     entities_.reserve(5);
 
