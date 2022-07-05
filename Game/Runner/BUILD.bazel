@@ -1,11 +1,19 @@
 load("@rules_cc//cc:defs.bzl", "cc_library")
 
+config_setting(
+    name = "windows",
+    constraint_values = ["@bazel_tools//platforms:windows"],
+)
+
 cc_library(
     name = "game",
     srcs = glob(["src/*.cpp"]),
     hdrs = glob(["src/*.h"]),
     data = ["//Game/Assets:assets"],
-    linkopts = ["-pthread"],
+    linkopts = select({
+        ":windows": [],
+        "//conditions:default": ["-pthread"],
+    }),
     visibility = ["//visibility:public"],
     deps = [
         "//:bootstrap",
