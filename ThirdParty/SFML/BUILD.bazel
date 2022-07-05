@@ -2,10 +2,15 @@ load("@rules_cc//cc:defs.bzl", "cc_library")
 
 package(default_visibility = ["//visibility:public"])
 
+config_setting(
+    name = "windows",
+    constraint_values = ["@bazel_tools//platforms:windows"],
+)
+
 cc_library(
     name = "sfml-graphics",
     srcs = select({
-        "@bazel_tools//src/conditions:windows": [
+        ":windows": [
             "bin/sfml-graphics-2.dll",
             "bin/sfml-graphics-d-2.dll",
             "lib/sfml-graphics.lib",
@@ -31,7 +36,7 @@ cc_library(
 cc_library(
     name = "sfml-system",
     srcs = select({
-        "@bazel_tools//src/conditions:windows": [
+        ":windows": [
             "bin/sfml-system-2.dll",
             "bin/sfml-system-d-2.dll",
             "lib/sfml-system.lib",
@@ -55,7 +60,7 @@ cc_library(
 cc_library(
     name = "sfml-window",
     srcs = select({
-        "@bazel_tools//src/conditions:windows": [
+        ":windows": [
             "bin/sfml-window-2.dll",
             "bin/sfml-window-d-2.dll",
             "lib/sfml-window.lib",
@@ -79,7 +84,7 @@ cc_library(
 cc_library(
     name = "sfml-audio",
     srcs = select({
-        "@bazel_tools//src/conditions:windows": [
+        ":windows": [
             "bin/sfml-audio-2.dll",
             "bin/sfml-audio-d-2.dll",
             "lib/sfml-audio.lib",
@@ -103,7 +108,7 @@ cc_library(
 cc_library(
     name = "sfml-network",
     srcs = select({
-        "@bazel_tools//src/conditions:windows": [
+        ":windows": [
             "bin/sfml-network-2.dll",
             "bin/sfml-network-d-2.dll",
             "lib/sfml-network.lib",
