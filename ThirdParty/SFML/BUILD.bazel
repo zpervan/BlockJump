@@ -7,6 +7,18 @@ config_setting(
     constraint_values = ["@bazel_tools//platforms:windows"],
 )
 
+config_setting(
+    name = "linux_debug_build",
+    constraint_values = ["@bazel_tools//platforms:linux"],
+    values = {"compilation_mode": "dbg"},
+)
+
+config_setting(
+    name = "linux_release_build",
+    constraint_values = ["@bazel_tools//platforms:linux"],
+    values = {"compilation_mode": "opt"},
+)
+
 cc_library(
     name = "sfml-graphics",
     srcs = select({
@@ -15,7 +27,12 @@ cc_library(
             "bin/sfml-graphics-d-2.dll",
             "lib/sfml-graphics.lib",
         ],
-        "//conditions:default": [
+        ":linux_debug_build": [
+            "lib/libsfml-graphics-d.so",
+            "lib/libsfml-graphics-d.so.2.5",
+            "lib/libsfml-graphics-d.so.2.5.1",
+        ],
+        ":linux_release_build": [
             "lib/libsfml-graphics.so",
             "lib/libsfml-graphics.so.2.5",
             "lib/libsfml-graphics.so.2.5.1",
@@ -41,7 +58,12 @@ cc_library(
             "bin/sfml-system-d-2.dll",
             "lib/sfml-system.lib",
         ],
-        "//conditions:default": [
+        ":linux_debug_build": [
+            "lib/libsfml-system-d.so",
+            "lib/libsfml-system-d.so.2.5",
+            "lib/libsfml-system-d.so.2.5.1",
+        ],
+        ":linux_release_build": [
             "lib/libsfml-system.so",
             "lib/libsfml-system.so.2.5",
             "lib/libsfml-system.so.2.5.1",
@@ -65,7 +87,12 @@ cc_library(
             "bin/sfml-window-d-2.dll",
             "lib/sfml-window.lib",
         ],
-        "//conditions:default": [
+        ":linux_debug_build": [
+            "lib/libsfml-window-d.so",
+            "lib/libsfml-window-d.so.2.5",
+            "lib/libsfml-window-d.so.2.5.1",
+        ],
+        ":linux_release_build": [
             "lib/libsfml-window.so",
             "lib/libsfml-window.so.2.5",
             "lib/libsfml-window.so.2.5.1",
@@ -89,7 +116,12 @@ cc_library(
             "bin/sfml-audio-d-2.dll",
             "lib/sfml-audio.lib",
         ],
-        "//conditions:default": [
+        ":linux_debug_build": [
+            "lib/libsfml-audio-d.so",
+            "lib/libsfml-audio-d.so.2.5",
+            "lib/libsfml-audio-d.so.2.5.1",
+        ],
+        ":linux_release_build": [
             "lib/libsfml-audio.so",
             "lib/libsfml-audio.so.2.5",
             "lib/libsfml-audio.so.2.5.1",
@@ -113,7 +145,12 @@ cc_library(
             "bin/sfml-network-d-2.dll",
             "lib/sfml-network.lib",
         ],
-        "//conditions:default": [
+        ":linux_debug_build": [
+            "lib/libsfml-network-d.so",
+            "lib/libsfml-network-d.so.2.5",
+            "lib/libsfml-network-d.so.2.5.1",
+        ],
+        ":linux_release_build": [
             "lib/libsfml-network.so",
             "lib/libsfml-network.so.2.5",
             "lib/libsfml-network.so.2.5.1",
