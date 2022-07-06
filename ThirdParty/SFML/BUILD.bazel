@@ -2,9 +2,18 @@ load("@rules_cc//cc:defs.bzl", "cc_library")
 
 package(default_visibility = ["//visibility:public"])
 
+## NOTE: The dll libraries in the Windows configurations are needed in order for Windows to run the game. ¯\_(ツ)_/¯
+
 config_setting(
-    name = "windows",
+    name = "windows_debug_build",
     constraint_values = ["@bazel_tools//platforms:windows"],
+    values = {"compilation_mode": "dbg"},
+)
+
+config_setting(
+    name = "windows_release_build",
+    constraint_values = ["@bazel_tools//platforms:windows"],
+    values = {"compilation_mode": "opt"},
 )
 
 config_setting(
@@ -22,9 +31,12 @@ config_setting(
 cc_library(
     name = "sfml-graphics",
     srcs = select({
-        ":windows": [
-            "bin/sfml-graphics-2.dll",
+        ":windows_debug_build": [
             "bin/sfml-graphics-d-2.dll",
+            "lib/sfml-graphics-d.lib",
+        ],
+        ":windows_release_build": [
+            "bin/sfml-graphics-2.dll",
             "lib/sfml-graphics.lib",
         ],
         ":linux_debug_build": [
@@ -53,9 +65,12 @@ cc_library(
 cc_library(
     name = "sfml-system",
     srcs = select({
-        ":windows": [
-            "bin/sfml-system-2.dll",
+        ":windows_debug_build": [
             "bin/sfml-system-d-2.dll",
+            "lib/sfml-system-d.lib",
+        ],
+        ":windows_release_build": [
+            "bin/sfml-system-2.dll",
             "lib/sfml-system.lib",
         ],
         ":linux_debug_build": [
@@ -82,9 +97,12 @@ cc_library(
 cc_library(
     name = "sfml-window",
     srcs = select({
-        ":windows": [
-            "bin/sfml-window-2.dll",
+        ":windows_debug_build": [
             "bin/sfml-window-d-2.dll",
+            "lib/sfml-window-d.lib",
+        ],
+        ":windows_release_build": [
+            "bin/sfml-window-2.dll",
             "lib/sfml-window.lib",
         ],
         ":linux_debug_build": [
@@ -111,10 +129,15 @@ cc_library(
 cc_library(
     name = "sfml-audio",
     srcs = select({
-        ":windows": [
-            "bin/sfml-audio-2.dll",
+        ":windows_debug_build": [
+            "lib/sfml-audio-d.lib",
             "bin/sfml-audio-d-2.dll",
+            "bin/openal32.dll",
+        ],
+        ":windows_release_build": [
             "lib/sfml-audio.lib",
+            "bin/sfml-audio-2.dll",
+            "bin/openal32.dll",
         ],
         ":linux_debug_build": [
             "lib/libsfml-audio-d.so",
@@ -140,10 +163,13 @@ cc_library(
 cc_library(
     name = "sfml-network",
     srcs = select({
-        ":windows": [
-            "bin/sfml-network-2.dll",
+        ":windows_debug_build": [
             "bin/sfml-network-d-2.dll",
-            "lib/sfml-network.lib",
+            "lib/sfml-network-d.lib",
+        ],
+        ":windows_release_build": [
+            "bin/sfml-network-2.dll",
+            "lib/sfml-network.dll",
         ],
         ":linux_debug_build": [
             "lib/libsfml-network-d.so",
