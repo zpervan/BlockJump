@@ -1,25 +1,41 @@
 #include "Game/Entities/src/entity.h"
 
-void Entity::SetPosition(const sf::Vector2f &position) {
-    position_ = position;
+void Entity::SetPosition(const sf::Vector2f& position)
+{
+    entity_->setPosition(position);
 }
 
-void Entity::SetOrientation(const sf::Vector2f &orientation) {
-    orientation_ = orientation;
+void Entity::SetRotation(float angle)
+{
+    entity_->setRotation(angle);
 }
 
-const sf::Vector2f & Entity::GetPosition() const {
-    return position_;
+const sf::Vector2f& Entity::GetPosition() const
+{
+    return entity_->getPosition();
 }
 
-const sf::Vector2f & Entity::GetOrientation() const {
-    return orientation_;
+float Entity::GetRotation() const
+{
+    return entity_->getRotation();
 }
 
-float Entity::GetVelocity() const {
+float Entity::GetVelocity() const
+{
     return velocity_;
 }
 
-void Entity::SetVelocity(float velocity) {
+void Entity::SetVelocity(float velocity)
+{
     Entity::velocity_ = velocity;
+}
+
+void Entity::SetTexture(const sf::Texture* texture)
+{
+    entity_->setTexture(texture);
+}
+
+sf::RectangleShape* Entity::GetEntity()
+{
+    return entity_.get();
 }

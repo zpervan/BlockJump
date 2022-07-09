@@ -18,6 +18,7 @@ cc_library(
     deps = [
         "//:bootstrap",
         "//Game/Entities:entities",
+        "//Game/World:world",
         "@sfmllib//:sfml-graphics",
         "@sfmllib//:sfml-system",
         "@sfmllib//:sfml-window",

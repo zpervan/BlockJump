@@ -2,8 +2,8 @@
 
 #include "spdlog/spdlog.h"
 
-///@TODO: Add jumping
-///@TODO: Create floor (simple line represent a world)
+/// @TODO: Add jumping
+/// @TODO: Create texture manager/handler class
 
 int main() {
 // Use debug messages in non-optimizes (debug) mode

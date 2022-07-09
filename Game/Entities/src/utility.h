@@ -1,12 +1,14 @@
 #ifndef BLOCKJUMP_UTILITY_H
 #define BLOCKJUMP_UTILITY_H
 
-#include <algorithm>
-#include <vector>
+#include "Game/World/src/background_object.h"
 
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Window/Keyboard.hpp>
 #include <spdlog/spdlog.h>
+
+#include <algorithm>
+#include <vector>
 
 namespace Utility
 {
@@ -14,12 +16,12 @@ namespace Utility
 // @TODO: Calculate this from the entity velocity
 constexpr float POSITION_OFFSET{1.0};
 
-bool IsColliding(const sf::RectangleShape& entity, const std::vector<sf::RectangleShape>& entities, sf::Keyboard::Key key)
+bool IsColliding(const sf::RectangleShape& entity, const std::vector<BackgroundObject*>& entities, sf::Keyboard::Key key)
 {
     for (const auto& e : entities)
     {
         // Skip the processed entity
-        if (e.getGlobalBounds() == entity.getGlobalBounds())
+        if (e->Get()->getGlobalBounds() == entity.getGlobalBounds())
         {
             continue;
         }
@@ -49,7 +51,7 @@ bool IsColliding(const sf::RectangleShape& entity, const std::vector<sf::Rectang
                 break;
         }
 
-        if (e.getGlobalBounds().intersects(new_entity_position))
+        if (e->Get()->getGlobalBounds().intersects(new_entity_position))
         {
             return true;
         }
