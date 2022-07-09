@@ -12,3 +12,13 @@ targets:
   -@googletestlib//...
   -@sfmllib//...
   -@spdloglib//...
+
+import_run_configurations:
+  .clion_targets/linux_debug_build.xml
+  .clion_targets/linux_debug_run.xml
+  .clion_targets/linux_release_build.xml
+  .clion_targets/linux_release_run.xml
+  .clion_targets/windows_debug_build.xml
+  .clion_targets/windows_debug_run.xml
+  .clion_targets/windows_release_build.xml
+  .clion_targets/windows_release_run.xml
