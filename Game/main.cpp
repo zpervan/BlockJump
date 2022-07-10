@@ -1,4 +1,4 @@
-#include "Game/Runner/src/game.h"
+#include "Game/Core/src/game.h"
 
 #include "spdlog/spdlog.h"
 

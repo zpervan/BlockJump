@@ -2,7 +2,7 @@
 #define BLOCKJUMP_GAME_H
 
 #include "Game/Entities/src/player_entity.h"
-#include "Game/Runner/src/window.h"
+#include "Game/Core/src/window.h"
 #include "Game/World/src/background_object.h"
 
 #include <memory>

@@ -1,4 +1,4 @@
-#include "Game/Runner/src/window.h"
+#include "Game/Core/src/window.h"
 
 #include <SFML/Window/Event.hpp>
 #include <utility>
