@@ -1,10 +1,9 @@
 #include "Game/Entities/src/player_entity.h"
 
-#include "Game/Entities/src/utility.h"
-#include "Game/constants.h"
-
-#include <SFML/Graphics.hpp>
 #include <spdlog/spdlog.h>
+#include <SFML/Graphics.hpp>
+
+#include "Game/constants.h"
 
 PlayerEntity::PlayerEntity(sf::Vector2f startingPosition)
 {
@@ -16,50 +15,41 @@ PlayerEntity::PlayerEntity(sf::Vector2f startingPosition)
 
 void PlayerEntity::Move(std::vector<BackgroundObject*>& entities)
 {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-        if (GetPosition().x > 0 && !Utility::IsColliding(*GetEntity(), entities, sf::Keyboard::Left)) {
+    position_to_move_ = GetEntity()->getPosition();
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+    {
+        if (GetPosition().x > 0)
+        {
             position_to_move_.x = GetPosition().x - GetVelocity();
             position_to_move_.y = GetPosition().y;
-//            spdlog::debug("[LEFT] Player X position: {}", GetPosition().x);
         }
     }
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-        if (GetPosition().x < Constants::WINDOW_WIDTH && !Utility::IsColliding(*GetEntity(), entities, sf::Keyboard::Right)) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+    {
+        if (GetPosition().x + GetEntity()->getSize().x < Constants::WINDOW_WIDTH)
+        {
             position_to_move_.x = GetPosition().x + GetVelocity();
             position_to_move_.y = GetPosition().y;
-//            spdlog::debug("[RIGHT] Player X position: {}", GetPosition().x);
         }
     }
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-        if (GetPosition().y > 0 && !Utility::IsColliding(*GetEntity(), entities, sf::Keyboard::Up))  {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+    {
+        if (GetPosition().y > 0)
+        {
             position_to_move_.x = GetPosition().x;
             position_to_move_.y = GetPosition().y - GetVelocity();
-//            spdlog::debug("[UP] Player Y position: {}", GetPosition().y);
         }
     }
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-        if (GetPosition().y < Constants::WINDOW_HEIGHT && !Utility::IsColliding(*GetEntity(), entities, sf::Keyboard::Down)) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+    {
+        if (GetPosition().y + GetEntity()->getSize().y < Constants::WINDOW_HEIGHT)
+        {
             position_to_move_.x = GetPosition().x;
             position_to_move_.y = GetPosition().y + GetVelocity();
-//            spdlog::debug("[DOWN] Player Y position: {}", GetPosition().y);
         }
     }
-
-    UpdatePosition();
-}
-
-sf::Vector2f PlayerEntity::GetPositionToMove() const {
-    return position_to_move_;
-}
-
-void PlayerEntity::UpdatePosition() {
-    GetEntity()->setPosition(position_to_move_);
-}
-
-void PlayerEntity::SetTexture(sf::Texture * texture)
-{
-    GetEntity()->setTexture(texture);
 }

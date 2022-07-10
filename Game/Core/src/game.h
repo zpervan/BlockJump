@@ -29,6 +29,8 @@ class Game
 
     void ShowBackground();
 
+    void AddGravity();
+
   private:
     std::unique_ptr<Window> window_;
     /// @TODO: Move to a texture manager/handler class.

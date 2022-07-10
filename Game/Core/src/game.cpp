@@ -6,13 +6,14 @@
 #include <SFML/OpenGL.hpp>
 
 #include "Game/World/src/block.h"
+#include "Game/Core/src/utility.h"
 #include "Game/constants.h"
 
 Game::Game()
     : window_(new Window(Constants::TITLE, {Constants::WINDOW_WIDTH, Constants::WINDOW_HEIGHT})),
       texture_(std::make_unique<sf::Texture>()),
       player_texture_(std::make_unique<sf::Texture>()),
-      player_entity_(std::make_unique<PlayerEntity>(sf::Vector2f(50, 800)))
+      player_entity_(std::make_unique<PlayerEntity>(sf::Vector2f(50, 50)))
 {
     texture_->loadFromFile("Game/Assets/block.png");
 
@@ -64,7 +65,14 @@ void Game::Run()
 void Game::Update()
 {
     window_->Update();
+
     player_entity_->Move(background_objects_);
+
+    if(!Utility::IsColliding(*player_entity_, background_objects_))
+    {
+        player_entity_->Update();
+        AddGravity();
+    }
 }
 
 void Game::Display()
@@ -95,5 +103,16 @@ Game::~Game()
     {
         delete background_object;
         background_object = nullptr;
+    }
+}
+
+void Game::AddGravity()
+{
+    const auto & player_size_y = player_entity_->GetEntity()->getSize().y;
+
+    if((player_entity_->GetPosition().y + player_size_y) < (Constants::WINDOW_HEIGHT - 200))
+    {
+        const auto new_player_position_y{player_entity_->GetEntity()->getPosition().y + (Constants::GRAVITY / 500)};
+        player_entity_->GetEntity()->setPosition({player_entity_->GetPosition().x, new_player_position_y});
     }
 }

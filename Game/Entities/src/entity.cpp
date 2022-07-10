@@ -39,3 +39,13 @@ sf::RectangleShape* Entity::GetEntity()
 {
     return entity_.get();
 }
+
+sf::Vector2f Entity::GetPositionToMove() const
+{
+    return position_to_move_;
+}
+
+void Entity::Update()
+{
+    entity_->setPosition(position_to_move_);
+}
