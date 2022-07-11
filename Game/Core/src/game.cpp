@@ -13,11 +13,11 @@ Game::Game()
     : window_(new Window(Constants::TITLE, {Constants::WINDOW_WIDTH, Constants::WINDOW_HEIGHT})),
       texture_(std::make_unique<sf::Texture>()),
       player_texture_(std::make_unique<sf::Texture>()),
-      player_entity_(std::make_unique<PlayerEntity>(sf::Vector2f(50, 50)))
+      player_entity_(std::make_unique<PlayerEntity>(sf::Vector2f(25, 50)))
 {
     texture_->loadFromFile("Game/Assets/block.png");
 
-    background_objects_.reserve(5);
+    background_objects_.reserve(6);
 
     // @TODO: Create a non-player entity factory or builder
     Block* rec{new Block()};
@@ -29,7 +29,7 @@ Game::Game()
 
     Block* rec1{new Block()};
     rec1->SetSize({100, 50});
-    rec1->SetPosition({700, 600});
+    rec1->SetPosition({500, 750});
     rec1->SetFillColor(sf::Color::Cyan);
     rec1->SetTexture(texture_.get());
     background_objects_.emplace_back(rec1);
@@ -41,8 +41,22 @@ Game::Game()
     rec2->SetTexture(texture_.get());
     background_objects_.emplace_back(rec2);
 
+    Block* rec3{new Block()};
+    rec3->SetSize({400, 50});
+    rec3->SetPosition({700, 850});
+    rec3->SetFillColor(sf::Color::Green);
+    rec3->SetTexture(texture_.get());
+    background_objects_.emplace_back(rec3);
+
+    Block* rec4{new Block()};
+    rec4->SetSize({150, 50});
+    rec4->SetPosition({850, 800});
+    rec4->SetFillColor(sf::Color::Black);
+    rec4->SetTexture(texture_.get());
+    background_objects_.emplace_back(rec4);
+
     Block* ground{new Block()};
-    ground->SetSize({1280, 100});
+    ground->SetSize({1280, 200});
     ground->SetPosition({0, 900});
     // @TODO: Brown color. Move to a top-level config file.
     ground->SetFillColor({102, 70, 67});

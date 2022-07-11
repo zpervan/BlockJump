@@ -8,14 +8,10 @@
 #include <SFML/Window/Keyboard.hpp>
 #include <spdlog/spdlog.h>
 
-#include <algorithm>
 #include <vector>
 
 namespace Utility
 {
-
-// @TODO: Calculate this from the entity velocity
-constexpr float POSITION_OFFSET{1.0};
 
 // @TODO: Consider to use the intersect function in order to calculate collision
 bool IsColliding(Entity & entity, const std::vector<BackgroundObject*>& entities)
