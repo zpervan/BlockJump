@@ -49,3 +49,13 @@ void Entity::Update()
 {
     entity_->setPosition(position_to_move_);
 }
+
+EntityState Entity::GetEntityState() const
+{
+    return entity_state_;
+}
+
+void Entity::SetEntityState(EntityState entity_state)
+{
+    entity_state_ = entity_state;
+}

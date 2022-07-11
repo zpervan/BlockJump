@@ -73,6 +73,14 @@ void Game::Update()
         player_entity_->Update();
         AddGravity();
     }
+    else
+    {
+        if(player_entity_->GetEntityState() == EntityState::Jumping)
+        {
+            spdlog::debug("Finished jumping");
+            player_entity_->SetEntityState(EntityState::NoAction);
+        }
+    }
 }
 
 void Game::Display()
@@ -108,11 +116,6 @@ Game::~Game()
 
 void Game::AddGravity()
 {
-    const auto & player_size_y = player_entity_->GetEntity()->getSize().y;
-
-    if((player_entity_->GetPosition().y + player_size_y) < (Constants::WINDOW_HEIGHT - 200))
-    {
-        const auto new_player_position_y{player_entity_->GetEntity()->getPosition().y + (Constants::GRAVITY / 500)};
-        player_entity_->GetEntity()->setPosition({player_entity_->GetPosition().x, new_player_position_y});
-    }
+    const auto new_player_position_y{player_entity_->GetEntity()->getPosition().y + (Constants::GRAVITY / 250)};
+    player_entity_->GetEntity()->setPosition({player_entity_->GetPosition().x, new_player_position_y});
 }
