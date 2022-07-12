@@ -29,6 +29,7 @@ bool IsColliding(Entity & entity, const std::vector<BackgroundObject*>& entities
         {
             return true;
         }
+
         // Lower right point
         if(e->Get()->getGlobalBounds().contains(entity.GetPositionToMove().x + entity.GetEntity()->getSize().x, entity.GetPositionToMove().y + entity.GetEntity()->getSize().y))
         {

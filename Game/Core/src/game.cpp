@@ -6,7 +6,7 @@
 #include <SFML/OpenGL.hpp>
 
 #include "Game/World/src/block.h"
-#include "Game/Core/src/utility.h"
+#include "Game/World/src/utility.h"
 #include "Game/constants.h"
 
 Game::Game()
