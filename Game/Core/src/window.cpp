@@ -1,6 +1,5 @@
 #include "Game/Core/src/window.h"
 
-#include <SFML/Window/Event.hpp>
 #include <utility>
 
 Window::Window(std::string title, const sf::Vector2u& size)
@@ -26,10 +25,9 @@ void Window::EndDraw()
 
 void Window::Update()
 {
-    sf::Event event{};
-    while (window_.pollEvent(event))
+    while (window_.pollEvent(event_))
     {
-        if (event.type == sf::Event::Closed)
+        if (event_.type == sf::Event::Closed)
         {
             is_done_ = true;
         }

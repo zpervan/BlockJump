@@ -2,6 +2,7 @@
 #define BLOCKJUMP_WINDOW_H
 
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Window/Event.hpp>
 
 class Window
 {
@@ -18,6 +19,7 @@ class Window
     sf::Vector2u GetWindowSize();
 
   private:
+    sf::Event event_;
     sf::RenderWindow window_;
     sf::Vector2u window_size_;
     std::string window_title_;
