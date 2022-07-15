@@ -23,9 +23,11 @@ class PlayerEntity : public Entity
     void Move(std::vector<BackgroundObject*>& entities);
 
   private:
-    sf::Clock jumping_clock_;
-    sf::Time jumping_timer_;
-    float jumping_timer_delta_;
+    void Jump(std::vector<BackgroundObject*>& entities);
+
+    sf::Clock jumping_clock_{};
+    sf::Time jumping_timer_{};
+    float jumping_timer_delta_{0.0f};
 };
 
 #endif  // BLOCKJUMP_PLAYER_ENTITY_H

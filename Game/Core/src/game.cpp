@@ -3,7 +3,6 @@
 #include <spdlog/spdlog.h>
 
 #include <SFML/Graphics.hpp>
-#include <SFML/OpenGL.hpp>
 
 #include "Game/World/src/block.h"
 #include "Game/World/src/utility.h"
@@ -13,7 +12,7 @@ Game::Game()
     : window_(new Window(Constants::TITLE, {Constants::WINDOW_WIDTH, Constants::WINDOW_HEIGHT})),
       texture_(std::make_unique<sf::Texture>()),
       player_texture_(std::make_unique<sf::Texture>()),
-      player_entity_(std::make_unique<PlayerEntity>(sf::Vector2f(25, 50)))
+       player_entity_(std::make_unique<PlayerEntity>(sf::Vector2f(25, 50)))
 {
     texture_->loadFromFile("Game/Assets/block.png");
 
@@ -81,20 +80,9 @@ void Game::Update()
     window_->Update();
 
     player_entity_->Move(background_objects_);
+    player_entity_->Update();
 
-    if(!Utility::IsColliding(*player_entity_, background_objects_))
-    {
-        player_entity_->Update();
-        AddGravity();
-    }
-    else
-    {
-        if(player_entity_->GetEntityState() == EntityState::Jumping)
-        {
-            spdlog::debug("Finished jumping");
-            player_entity_->SetEntityState(EntityState::NoAction);
-        }
-    }
+    AddGravity();
 }
 
 void Game::Display()
@@ -131,5 +119,10 @@ Game::~Game()
 void Game::AddGravity()
 {
     const auto new_player_position_y{player_entity_->GetEntity()->getPosition().y + (Constants::GRAVITY / 250)};
-    player_entity_->GetEntity()->setPosition({player_entity_->GetPosition().x, new_player_position_y});
+    const sf::FloatRect new_player_position{{player_entity_->GetPosition().x, new_player_position_y}, player_entity_->GetEntity()->getSize()};
+
+    if((player_entity_->GetEntityState() == EntityState::Jumping) || !Utility::IsColliding(new_player_position, background_objects_))
+    {
+        player_entity_->GetEntity()->setPosition({player_entity_->GetPosition().x, new_player_position_y});
+    }
 }
