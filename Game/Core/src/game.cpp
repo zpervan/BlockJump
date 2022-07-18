@@ -12,7 +12,7 @@ Game::Game()
     : window_(new Window(Constants::TITLE, {Constants::WINDOW_WIDTH, Constants::WINDOW_HEIGHT})),
       texture_(std::make_unique<sf::Texture>()),
       player_texture_(std::make_unique<sf::Texture>()),
-       player_entity_(std::make_unique<PlayerEntity>(sf::Vector2f(25, 50)))
+      player_entity_(std::make_unique<PlayerEntity>(sf::Vector2f(25, 50)))
 {
     texture_->loadFromFile("Game/Assets/block.png");
 
@@ -64,6 +64,7 @@ Game::Game()
 
     player_texture_->loadFromFile("Game/Assets/player.png");
     player_entity_->SetTexture(player_texture_.get());
+    window_->SetView({player_entity_->GetPosition(), {Constants::VIEW_THRESHOLD_X, Constants::VIEW_THRESHOLD_Y}});
 }
 
 void Game::Run()
@@ -83,6 +84,8 @@ void Game::Update()
     player_entity_->Update();
 
     AddGravity();
+
+    window_->UpdatePlayerView(player_entity_->GetPosition());
 }
 
 void Game::Display()
