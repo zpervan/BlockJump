@@ -1,0 +1,9 @@
+<configuration default="false" name="MapEditor | Run | Debug | Linux" type="BlazeCommandRunConfigurationType" factoryName="Bazel Command">
+    <blaze-settings handler-id="BlazeCLionRunConfigurationHandlerProvider" blaze-command="run" kind="cc_binary">
+        <blaze-target>//:map-editor</blaze-target>
+        <blaze-user-flag>--config=linux_debug</blaze-user-flag>
+    </blaze-settings>
+    <method v="2">
+        <option name="Blaze.BeforeRunTask" enabled="true"/>
+    </method>
+</configuration>
