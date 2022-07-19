@@ -2,6 +2,17 @@ load("@rules_cc//cc:defs.bzl", "cc_library")
 
 package(default_visibility = ["//visibility:public"])
 
+cc_binary(
+    name = "imgui-demo",
+    srcs = ["imgui_demo_main.cpp"],
+    deps = [
+        ":imgui",
+        "@sfmllib//:sfml-graphics",
+        "@sfmllib//:sfml-system",
+        "@sfmllib//:sfml-window",
+    ],
+)
+
 cc_library(
     name = "imgui",
     srcs = select(
