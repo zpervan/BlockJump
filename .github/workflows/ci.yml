@@ -23,7 +23,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt update
-          sudo apt install bazel libgl-dev
+          sudo apt install bazel libgl-dev freeglut3-dev
 
       - name: Build Project | All
         run: |
