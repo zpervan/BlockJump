@@ -15,7 +15,8 @@ before_build:
   - appveyor DownloadFile https://github.com/bazelbuild/bazel/releases/download/5.2.0/bazel-5.2.0-windows-x86_64.exe -FileName "bazel.exe"
   - set PATH=%PATH%;C:/projects/plotingz/Tools
 
+# @TODO: Enable map editor project for Windows once it's buildable
 build_script:
   - call "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
-  - bazel build //... --config=windows -c dbg
-  - bazel build //... --config=windows -c opt
+  - bazel build //:main --config=windows -c dbg
+  - bazel build //:main --config=windows -c opt
