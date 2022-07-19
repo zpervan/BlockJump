@@ -9,6 +9,15 @@ cc_binary(
     ],
 )
 
+cc_binary(
+    name = "map-editor",
+    srcs = ["MapEditor/main.cpp"],
+    deps = [
+        "@imguilib//:imgui",
+        "@spdloglib//:spdlog",
+    ],
+)
+
 cc_library(
     name = "bootstrap",
     srcs = ["Game/constants.h"],

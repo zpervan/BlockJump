@@ -1,0 +1,48 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
+package(default_visibility = ["//visibility:public"])
+
+cc_library(
+    name = "imgui",
+    srcs = select(
+        {
+            "@bazel_tools//platforms:windows": glob([
+                "backends/imgui_impl_win32*",
+                "backends/imgui_impl_dx11*",
+                "*.cpp",
+                "*.h",
+            ]),
+            "@bazel_tools//platforms:linux": glob([
+                "backends/imgui_impl_opengl3*",
+                "backends/imgui_impl_glut*",
+                "backends/imgui_impl_glfw*",
+                "*.cpp",
+                "*.h",
+            ]),
+        },
+    ),
+    hdrs = select(
+        {
+            "@bazel_tools//platforms:windows": [
+                "backends/imgui_impl_win32.h",
+                "backends/imgui_impl_dx11.h",
+            ] + glob(["*.h"]),
+            "@bazel_tools//platforms:linux": [
+                "backends/imgui_impl_opengl3.h",
+                "backends/imgui_impl_glut.h",
+                "backends/imgui_impl_glfw.h",
+            ] + glob(["*.h"]),
+        },
+    ),
+    includes = [
+        "",
+        "backends",
+    ],
+    deps = [
+        "@gllib//:glew",
+        "@gllib//:glfw",
+        "@sfmllib//:sfml-graphics",
+        "@sfmllib//:sfml-system",
+        "@sfmllib//:sfml-window",
+    ],
+)
