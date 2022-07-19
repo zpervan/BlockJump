@@ -12,7 +12,7 @@ cc_library(
         "include/spdlog/fmt/*.h",
         "include/spdlog/sinks/*.h",
     ]),
-    includes = glob(["include/spdlog/*"]),
+    includes = glob(["include/spdlog"]),
     strip_include_prefix = "include",
     deps = [":fmt"],
 )
