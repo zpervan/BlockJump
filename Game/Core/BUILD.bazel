@@ -16,7 +16,7 @@ cc_library(
     }),
     visibility = ["//visibility:public"],
     deps = [
-        "//:bootstrap",
+        "//:game-bootstrap",
         "//Game/Entities:entities",
         "//Game/World:world",
         "@sfmllib//:sfml-graphics",

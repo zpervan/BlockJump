@@ -1,5 +1,7 @@
 load("@rules_cc//cc:defs.bzl", "cc_binary")
 
+# Game rules
+
 cc_binary(
     name = "main",
     srcs = ["Game/main.cpp"],
@@ -9,17 +11,27 @@ cc_binary(
     ],
 )
 
+cc_library(
+    name = "game-bootstrap",
+    srcs = ["Game/constants.h"],
+    visibility = ["//visibility:public"],
+)
+
+# Map editor rules
+
 cc_binary(
     name = "map-editor",
     srcs = ["MapEditor/main.cpp"],
     deps = [
+        "//:map-editor-bootstrap",
+        "//MapEditor/GUI:gui",
         "@imguilib//:imgui",
         "@spdloglib//:spdlog",
     ],
 )
 
 cc_library(
-    name = "bootstrap",
-    srcs = ["Game/constants.h"],
+    name = "map-editor-bootstrap",
+    srcs = ["MapEditor/utility.h"],
     visibility = ["//visibility:public"],
 )
