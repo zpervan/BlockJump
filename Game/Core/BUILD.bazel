@@ -9,7 +9,7 @@ cc_library(
     name = "game",
     srcs = glob(["src/*.cpp"]),
     hdrs = glob(["src/*.h"]),
-    data = ["//Game/Assets:assets"],
+    data = ["//Assets:assets"],
     linkopts = select({
         ":windows": [],
         "//conditions:default": [

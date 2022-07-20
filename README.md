@@ -4,14 +4,14 @@
 
 A game in which the player needs to avoid obstacles as much as possible.
 
-![](Assets/preview.gif)
+![](.github/assets/preview.gif)
 
 Used libraries:
 - [Google Test](https://github.com/google/googletest)
 - [SFML](https://www.sfml-dev.org/)
 - [spdlog](https://github.com/gabime/spdlog)
 
-### Setup ###
+### Initialize ###
 
 Build system - [Bazel](https://www.bazel.build/). Installation instructions can be found 
 [here](https://docs.bazel.build/versions/master/install-ubuntu.html).

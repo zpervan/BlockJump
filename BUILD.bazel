@@ -32,6 +32,13 @@ cc_binary(
 
 cc_library(
     name = "map-editor-bootstrap",
-    srcs = ["MapEditor/utility.h"],
+    srcs = [
+        "MapEditor/bootstrap.cpp",
+        "MapEditor/bootstrap.h",
+    ],
     visibility = ["//visibility:public"],
+    deps = [
+        "@imguilib//:imgui",
+        "@spdloglib//:spdlog",
+    ],
 )

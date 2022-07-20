@@ -14,7 +14,7 @@ Game::Game()
       player_texture_(std::make_unique<sf::Texture>()),
       player_entity_(std::make_unique<PlayerEntity>(sf::Vector2f(25, 50)))
 {
-    texture_->loadFromFile("Game/Assets/block.png");
+    texture_->loadFromFile("Assets/block.png");
 
     background_objects_.reserve(6);
 
@@ -62,7 +62,7 @@ Game::Game()
     ground->SetTexture(texture_.get());
     background_objects_.emplace_back(ground);
 
-    player_texture_->loadFromFile("Game/Assets/player.png");
+    player_texture_->loadFromFile("Assets/player.png");
     player_entity_->SetTexture(player_texture_.get());
     window_->SetView({player_entity_->GetPosition(), {Constants::VIEW_THRESHOLD_X, Constants::VIEW_THRESHOLD_Y}});
 }
