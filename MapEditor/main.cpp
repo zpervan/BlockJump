@@ -4,20 +4,21 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
 
+#include "Assets/src/assets_manager.h"
 #include "MapEditor/GUI/src/menu_bar.h"
-#include "MapEditor/utility.h"
+#include "MapEditor/GUI/src/side_panel.h"
+#include "MapEditor/bootstrap.h"
 #include "imgui-SFML.h"
 
 int main()
 {
-    const auto screen_size{Utility::GetDisplaySize()};
-    sf::RenderWindow window({screen_size.first, screen_size.second}, "Block Jump - Map Editor");
+    Bootstrap::Initialize();
 
-// Use debug messages in non-optimized (debug) mode
-#ifndef __OPTIMIZE__
-    spdlog::set_level(spdlog::level::debug);
-#endif
+    // Needed for SFML as the screen size is of type int
+    const auto width = static_cast<unsigned int>(Configuration::Screen_Size.x);
+    const auto height = static_cast<unsigned int>(Configuration::Screen_Size.y);
 
+    sf::RenderWindow window({width, height}, "Block Jump - Map Editor");
     spdlog::debug("Window size {}x{}", window.getSize().x, window.getSize().y);
 
     (void)ImGui::SFML::Init(window);
@@ -25,7 +26,7 @@ int main()
 
     sf::CircleShape shape(100.0f, 200);
     shape.setFillColor(sf::Color::Red);
-    shape.setPosition(screen_size.first / 3.0f, screen_size.second / 3.0f);
+    shape.setPosition(Configuration::Screen_Size.x / 3.0f, Configuration::Screen_Size.y / 3.0f);
 
     while (window.isOpen())
     {
@@ -42,6 +43,7 @@ int main()
             ImGui::SFML::Update(window, deltaClock.restart());
 
             MenuBar::Show();
+            SidePanel::Show();
 
             window.clear();
             window.draw(shape);

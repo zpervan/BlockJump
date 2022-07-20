@@ -2,8 +2,10 @@ cc_library(
     name = "gui",
     srcs = glob(["src/*.cpp"]),
     hdrs = glob(["src/*.h"]),
+    data = ["//Assets:sprites"],
     visibility = ["//visibility:public"],
     deps = [
+        "//Assets:assets",
         "@imguilib//:imgui",
         "@spdloglib//:spdlog",
     ],

@@ -15,7 +15,7 @@ std::unique_ptr<sf::Texture> AssetsManager::LoadAsset(const std::string& asset_n
 {
     auto asset_object{std::make_unique<sf::Texture>()};
 
-    const std::string asset_path{fmt::format("AssetsManager/{}", asset_name)};
+    const std::string asset_path{fmt::format("Assets/sprites/{}", asset_name)};
     assert(asset_object->loadFromFile(asset_path) && fmt::format("Asset {} does not exist!", asset_name).c_str());
 
     return asset_object;
