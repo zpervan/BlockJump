@@ -1,14 +1,14 @@
-#ifndef BLOCKJUMP_WINDOW_H
-#define BLOCKJUMP_WINDOW_H
+#ifndef BLOCKJUMP_GAME_WINDOW_H
+#define BLOCKJUMP_GAME_WINDOW_H
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
 
-class Window
+class GameWindow
 {
   public:
-    Window(std::string title, const sf::Vector2u& size);
-    ~Window();
+    GameWindow(std::string title);
+    ~GameWindow();
 
     void BeginDraw();
     void EndDraw();
@@ -24,7 +24,6 @@ class Window
   private:
     sf::Event event_;
     sf::RenderWindow window_;
-    sf::Vector2u window_size_;
     sf::View view_;
 
   private:
@@ -34,4 +33,4 @@ class Window
     bool is_done_;
 };
 
-#endif  // BLOCKJUMP_WINDOW_H
+#endif  // BLOCKJUMP_GAME_WINDOW_H

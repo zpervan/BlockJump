@@ -2,7 +2,6 @@
 
 #include "spdlog/spdlog.h"
 
-/// @TODO: Add jumping
 /// @TODO: Create texture manager/handler class
 
 int main() {

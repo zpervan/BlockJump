@@ -9,7 +9,7 @@
 #include "Game/constants.h"
 
 Game::Game()
-    : window_(new Window(Constants::TITLE, {Constants::WINDOW_WIDTH, Constants::WINDOW_HEIGHT})),
+    : window_(new GameWindow(Constants::TITLE)),
       texture_(std::make_unique<sf::Texture>()),
       player_texture_(std::make_unique<sf::Texture>()),
       player_entity_(std::make_unique<PlayerEntity>(sf::Vector2f(25, 50)))

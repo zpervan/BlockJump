@@ -12,7 +12,10 @@ cc_library(
     data = ["//Game/Assets:assets"],
     linkopts = select({
         ":windows": [],
-        "//conditions:default": ["-pthread"],
+        "//conditions:default": [
+            "-pthread",
+            "-lX11",
+        ],
     }),
     visibility = ["//visibility:public"],
     deps = [

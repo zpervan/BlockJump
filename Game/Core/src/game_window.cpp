@@ -1,35 +1,67 @@
-#include "Game/Core/src/window.h"
-#include "Game/constants.h"
+#include "Game/Core/src/game_window.h"
 
 #include <spdlog/spdlog.h>
+
 #include <utility>
 
-Window::Window(std::string title, const sf::Vector2u& size)
-    : window_size_(size),
+#include "Game/constants.h"
+
+/// @TODO: Add Windows option
+#ifdef __linux__
+#include <X11/Xlib.h>
+
+#include <valarray>
+#endif
+
+namespace
+{
+
+inline std::pair<std::uint32_t , std::uint32_t> GetDisplaySize()
+{
+    std::pair<std::uint32_t , std::uint32_t> window_size{0, 0};
+
+#ifdef __linux__
+    Display* display{XOpenDisplay(nullptr)};
+    Screen* screen{DefaultScreenOfDisplay(display)};
+
+    window_size.first = screen->width;
+    window_size.second = screen->height;
+#endif
+
+    return window_size;
+}
+
+}
+
+GameWindow::GameWindow(std::string title) :
       window_title_(std::move(title)),
       is_done_(false)
 {
-    window_.create({window_size_.x, window_size_.y, 32}, window_title_, sf::Style::Default);
+    const auto display_size{GetDisplaySize()};
+    window_.create({display_size.first, display_size.second, 32}, window_title_, sf::Style::Default);
     view_threshold_x_ = view_.getSize().x * 0.2f;
     view_threshold_y_ = view_.getSize().y * 0.2f;
+
+    spdlog::debug("Game window size: {}x{}", window_.getSize().x, window_.getSize().y);
+    spdlog::debug("View threshold x={} y={}", view_threshold_x_, view_threshold_y_);
 }
 
-Window::~Window()
+GameWindow::~GameWindow()
 {
     window_.close();
 }
 
-void Window::BeginDraw()
+void GameWindow::BeginDraw()
 {
     window_.clear(sf::Color::White);
 }
 
-void Window::EndDraw()
+void GameWindow::EndDraw()
 {
     window_.display();
 }
 
-void Window::Update()
+void GameWindow::Update()
 {
     while (window_.pollEvent(event_))
     {
@@ -40,32 +72,32 @@ void Window::Update()
     }
 }
 
-bool Window::IsDone()
+bool GameWindow::IsDone()
 {
     return is_done_;
 }
 
-sf::Vector2u Window::GetWindowSize()
+sf::Vector2u GameWindow::GetWindowSize()
 {
-    return window_size_;
+    return window_.getSize();
 }
 
-void Window::Draw(sf::Drawable& drawable)
+void GameWindow::Draw(sf::Drawable& drawable)
 {
     window_.draw(drawable);
 }
 
-void Window::SetView(const sf::View& view)
+void GameWindow::SetView(const sf::View& view)
 {
     window_.setView(view);
 }
 
-const sf::View& Window::GetView() const
+const sf::View& GameWindow::GetView() const
 {
     return view_;
 }
 
-void Window::UpdatePlayerView(const sf::Vector2f& player_position)
+void GameWindow::UpdatePlayerView(const sf::Vector2f& player_position)
 {
     sf::Vector2f offset{0.0f, 0.0f};
 
