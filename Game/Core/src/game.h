@@ -33,10 +33,6 @@ class Game
 
   private:
     std::unique_ptr<GameWindow> window_;
-    /// @TODO: Move to a texture manager/handler class.
-    std::unique_ptr<sf::Texture> texture_;
-    std::unique_ptr<sf::Texture> player_texture_;
-
     std::unique_ptr<PlayerEntity> player_entity_;
     std::vector<BackgroundObject *> background_objects_;
 };
