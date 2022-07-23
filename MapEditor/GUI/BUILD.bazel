@@ -1,3 +1,5 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
 cc_library(
     name = "gui",
     srcs = glob(["src/*.cpp"]),
@@ -5,7 +7,9 @@ cc_library(
     data = ["//Assets:sprites"],
     visibility = ["//visibility:public"],
     deps = [
+        "//:map-editor-bootstrap",
         "//Assets:assets",
+        "//MapEditor/Core:core",
         "@imguilib//:imgui",
         "@spdloglib//:spdlog",
     ],

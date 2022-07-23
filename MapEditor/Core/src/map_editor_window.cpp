@@ -1,11 +1,15 @@
 #include "map_editor_window.h"
 
-#include "MapEditor/bootstrap.h"
-
 #include <imgui-SFML.h>
 #include <spdlog/spdlog.h>
 
-MapEditorWindow::MapEditorWindow(std::string title) : delta_clock_(sf::Clock()),window_title_(std::move(title)), is_done_(false)
+#include "MapEditor/bootstrap.h"
+
+MapEditorWindow::MapEditorWindow(MapEditorEventSystem& map_editor_event_system, std::string title)
+    : map_editor_event_system_(map_editor_event_system),
+      delta_clock_(sf::Clock()),
+      window_title_(std::move(title)),
+      is_done_(false)
 {
     const auto width = static_cast<unsigned int>(Configuration::Screen_Size.x);
     const auto height = static_cast<unsigned int>(Configuration::Screen_Size.y);
@@ -42,6 +46,17 @@ void MapEditorWindow::Update()
         {
             is_done_ = true;
         }
+
+        if (map_editor_event_system_.Poll() == MapEditorEvent::Add)
+        {
+            mouse_position_.x = event_.mouseMove.x;
+            mouse_position_.y = event_.mouseMove.y;
+        }
+
+        if ((map_editor_event_system_.Poll() != MapEditorEvent::None) && (event_.type == sf::Event::MouseButtonPressed))
+        {
+            map_editor_event_system_.Set(MapEditorEvent::None);
+        }
     }
 
     ImGui::SFML::Update(window_, delta_clock_.restart());
@@ -75,4 +90,9 @@ const sf::View& MapEditorWindow::GetView() const
 sf::RenderWindow& MapEditorWindow::Get()
 {
     return window_;
+}
+
+const sf::Vector2i& MapEditorWindow::GetMousePosition() const
+{
+    return mouse_position_;
 }
