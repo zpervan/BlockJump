@@ -3,7 +3,7 @@
 #include <imgui-SFML.h>
 #include <spdlog/spdlog.h>
 
-#include "MapEditor/bootstrap.h"
+#include "MapEditor/Core/src/bootstrap.h"
 
 MapEditorWindow::MapEditorWindow(MapEditorEventSystem& map_editor_event_system, std::string title)
     : map_editor_event_system_(map_editor_event_system),

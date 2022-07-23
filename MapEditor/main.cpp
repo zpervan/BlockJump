@@ -5,7 +5,7 @@
 #include "MapEditor/Core/src/map_editor_window.h"
 #include "MapEditor/GUI/src/menu_bar.h"
 #include "MapEditor/GUI/src/side_panel.h"
-#include "MapEditor/bootstrap.h"
+#include "MapEditor/Core/src/bootstrap.h"
 
 int main()
 {

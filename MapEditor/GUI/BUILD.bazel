@@ -7,7 +7,6 @@ cc_library(
     data = ["//Assets:sprites"],
     visibility = ["//visibility:public"],
     deps = [
-        "//:map-editor-bootstrap",
         "//Assets:assets",
         "//MapEditor/Core:core",
         "@imguilib//:imgui",

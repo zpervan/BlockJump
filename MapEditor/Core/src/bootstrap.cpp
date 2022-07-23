@@ -1,4 +1,4 @@
-#include "MapEditor/bootstrap.h"
+#include "MapEditor/Core/src/bootstrap.h"
 
 #include "Assets/src/assets_manager.h"
 
@@ -11,6 +11,7 @@
 
 void Bootstrap::Initialize()
 {
+    spdlog::info("Initializing...");
 #ifndef __OPTIMIZE__
     // Use debug messages in non-optimized (debug) mode
     spdlog::set_level(spdlog::level::debug);

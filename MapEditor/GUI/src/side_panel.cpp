@@ -1,6 +1,6 @@
 #include "side_panel.h"
 
-#include "MapEditor/bootstrap.h"
+#include "MapEditor/Core/src/bootstrap.h"
 
 SidePanel::SidePanel(MapEditorEventSystem& map_editor_events_system) : map_editor_events_system_(map_editor_events_system){}
 

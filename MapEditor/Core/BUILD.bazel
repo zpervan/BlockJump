@@ -6,7 +6,7 @@ cc_library(
     hdrs = glob(["src/*.h"]),
     visibility = ["//visibility:public"],
     deps = [
-        "//:map-editor-bootstrap",
+        "//Assets:assets",
         "@imguilib//:imgui",
         "@sfmllib//:sfml-graphics",
         "@sfmllib//:sfml-system",

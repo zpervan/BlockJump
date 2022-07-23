@@ -23,23 +23,8 @@ cc_binary(
     name = "map-editor",
     srcs = ["MapEditor/main.cpp"],
     deps = [
-        "//:map-editor-bootstrap",
         "//MapEditor/Core:core",
         "//MapEditor/GUI:gui",
-        "@imguilib//:imgui",
-        "@spdloglib//:spdlog",
-    ],
-)
-
-cc_library(
-    name = "map-editor-bootstrap",
-    srcs = [
-        "MapEditor/bootstrap.cpp",
-        "MapEditor/bootstrap.h",
-    ],
-    visibility = ["//visibility:public"],
-    deps = [
-        "//Assets:assets",
         "@imguilib//:imgui",
         "@spdloglib//:spdlog",
     ],
