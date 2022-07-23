@@ -24,6 +24,7 @@ cc_binary(
     srcs = ["MapEditor/main.cpp"],
     deps = [
         "//:map-editor-bootstrap",
+        "//MapEditor/Core:core",
         "//MapEditor/GUI:gui",
         "@imguilib//:imgui",
         "@spdloglib//:spdlog",

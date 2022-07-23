@@ -1,0 +1,16 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
+cc_library(
+    name = "core",
+    srcs = glob(["src/*.cpp"]),
+    hdrs = glob(["src/*.h"]),
+    visibility = ["//visibility:public"],
+    deps = [
+        "//:map-editor-bootstrap",
+        "@imguilib//:imgui",
+        "@sfmllib//:sfml-graphics",
+        "@sfmllib//:sfml-system",
+        "@sfmllib//:sfml-window",
+        "@spdloglib//:spdlog",
+    ],
+)
