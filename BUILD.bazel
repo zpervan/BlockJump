@@ -25,6 +25,7 @@ cc_binary(
     deps = [
         "//MapEditor/Core:core",
         "//MapEditor/GUI:gui",
+        "//MapEditor/Map:map",
         "@imguilib//:imgui",
         "@spdloglib//:spdlog",
     ],

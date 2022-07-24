@@ -77,9 +77,9 @@ sf::Vector2u MapEditorWindow::GetWindowSize()
     return window_.getSize();
 }
 
-void MapEditorWindow::Draw(sf::Drawable& drawable)
+void MapEditorWindow::Draw(sf::Drawable* drawable)
 {
-    window_.draw(drawable);
+    window_.draw(*drawable);
 }
 
 void MapEditorWindow::SetView(const sf::View& view)
@@ -96,6 +96,7 @@ sf::RenderWindow& MapEditorWindow::Get()
 {
     return window_;
 }
+
 const sf::Vector2i& MapEditorWindow::GetMousePosition() const
 {
     return mouse_position_;

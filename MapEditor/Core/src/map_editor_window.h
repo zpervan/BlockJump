@@ -23,7 +23,7 @@ class MapEditorWindow
 
     /// @brief Draws an object to the rendering window.
     /// @param drawable Object to be drawn
-    void Draw(sf::Drawable& drawable);
+    void Draw(sf::Drawable* drawable);
 
     /// @brief Fetches the render window of the current application session.
     /// @return Rendering window
