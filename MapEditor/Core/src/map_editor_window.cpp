@@ -67,6 +67,11 @@ bool MapEditorWindow::IsDone()
     return is_done_;
 }
 
+void MapEditorWindow::SetIsDone(bool is_done)
+{
+    is_done_ = is_done;
+}
+
 sf::Vector2u MapEditorWindow::GetWindowSize()
 {
     return window_.getSize();
@@ -91,7 +96,6 @@ sf::RenderWindow& MapEditorWindow::Get()
 {
     return window_;
 }
-
 const sf::Vector2i& MapEditorWindow::GetMousePosition() const
 {
     return mouse_position_;

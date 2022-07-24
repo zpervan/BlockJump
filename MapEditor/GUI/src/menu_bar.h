@@ -1,34 +1,16 @@
 #ifndef BLOCKJUMP_MENU_BAR_H
 #define BLOCKJUMP_MENU_BAR_H
 
-#include "imgui.h"
+#include "MapEditor/Core/src/map_editor_window.h"
 
-namespace MenuBar
+class MenuBar
 {
+  public:
+    MenuBar(MapEditorWindow & map_editor_window);
+    void Show();
 
-inline void Show()
-{
-    if (ImGui::BeginMainMenuBar())
-    {
-        if (ImGui::BeginMenu("Application"))
-        {
-            ImGui::MenuItem("Restart", nullptr);
-            ImGui::MenuItem("Quit", nullptr);
-
-            ImGui::EndMenu();
-        }
-
-        if (ImGui::BeginMenu("Help"))
-        {
-            ImGui::MenuItem("Usage", nullptr);
-            ImGui::MenuItem("About", nullptr);
-
-            ImGui::EndMenu();
-        }
-        ImGui::EndMainMenuBar();
-    }
-}
-
-}  // namespace MenuBar
+  private:
+    MapEditorWindow & map_editor_window_;
+};
 
 #endif  // BLOCKJUMP_MENU_BAR_H

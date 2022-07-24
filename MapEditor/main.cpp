@@ -17,8 +17,10 @@ int main()
     MapEditorWindow window{map_editor_events_system, "Block Jump - Map Editor"};
     (void)ImGui::SFML::Init(window.Get());
 
+    /// @TODO: Consider to have some kind of dependency injection to avoid passing single objects to components
     // Initialize components - usually that use the map editor event system
     SidePanel side_panel{map_editor_events_system};
+    MenuBar menu_bar{window};
 
     /// @TODO: Move this out once we have the shape creation logic
     sf::RectangleShape shape({50.0f, 50.0f});
@@ -30,7 +32,7 @@ int main()
         window.Update();
 
         // GUI components
-        MenuBar::Show();
+        menu_bar.Show();
         side_panel.Show();
 
         window.BeginDraw();
