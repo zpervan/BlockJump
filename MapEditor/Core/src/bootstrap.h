@@ -5,7 +5,12 @@
 
 namespace Configuration
 {
+// Window
 inline ImVec2 Screen_Size;
+
+// GUI components
+inline ImVec2 Side_Bar_Size;
+inline ImVec2 Side_Bar_Position;
 }
 
 class Bootstrap

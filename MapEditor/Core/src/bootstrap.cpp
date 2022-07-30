@@ -17,6 +17,9 @@ void Bootstrap::Initialize()
     spdlog::set_level(spdlog::level::debug);
 #endif
     Configuration::Screen_Size = Bootstrap::ScreenSize();
+    Configuration::Side_Bar_Position = ImVec2(0, 18);
+    Configuration::Side_Bar_Size = ImVec2(300, 800);
+
     AssetsManager::Initialize();
 }
 

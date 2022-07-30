@@ -6,8 +6,8 @@ SidePanel::SidePanel(MapEditorEventSystem& map_editor_events_system) : map_edito
 
 void SidePanel::Show()
 {
-    ImGui::SetNextWindowPos({0,20});
-    ImGui::SetNextWindowSize({Configuration::Screen_Size.x * 0.1f, Configuration::Screen_Size.y});
+    ImGui::SetNextWindowPos(Configuration::Side_Bar_Position);
+    ImGui::SetNextWindowSize(Configuration::Side_Bar_Size);
 
     ImGui::Begin("Tiles", nullptr, side_panel_flags_);
 
