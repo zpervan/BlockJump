@@ -33,7 +33,8 @@ ImVec2 Bootstrap::ScreenSize()
     const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
 
     window_size.x = mode->width;
-    window_size.y = mode->height;
+    /// @TODO: Subtract the OS menu bar height to get the actual application height
+    window_size.y = mode->height - 100.0f;
 #endif
 
     return window_size;

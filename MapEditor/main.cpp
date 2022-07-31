@@ -6,6 +6,7 @@
 #include "MapEditor/Core/src/map_editor_window.h"
 #include "MapEditor/GUI/src/menu_bar.h"
 #include "MapEditor/GUI/src/side_panel.h"
+#include "MapEditor/Map/src/grid.h"
 #include "MapEditor/Map/src/tiles.h"
 
 int main()
@@ -24,6 +25,8 @@ int main()
     MenuBar menu_bar{window};
 
     // Initialize map creation functionality
+    Grid grid;
+    grid.Create({30,18});
     Tiles tiles{map_editor_events_system};
 
     while (!window.IsDone())
@@ -56,6 +59,11 @@ int main()
         for (const auto & tile : tiles.GetTiles())
         {
             window.Draw(tile);
+        }
+
+        for (const auto & grid_line : grid.GetGridShapes())
+        {
+            window.Draw(grid_line);
         }
 
         ImGui::SFML::Render(window.Get());
