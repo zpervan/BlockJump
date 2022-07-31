@@ -42,9 +42,15 @@ int main()
         if(map_editor_events_system.Poll() == MapEditorEvent::Add)
         {
             tiles.BeginPlacement();
-            auto* temporary_tile{tiles.GetTemporaryTile()};
-            temporary_tile->setPosition(window.GetMousePosition().x - (temporary_tile->getSize().x / 2), window.GetMousePosition().y - (temporary_tile->getSize().y / 2));
-            window.Draw(temporary_tile);
+
+            for (auto & e : grid.GetGridShapes())
+            {
+                if(e->getGlobalBounds().contains(window.GetMousePosition().x, window.GetMousePosition().y))
+                {
+                    tiles.GetTemporaryTile()->setPosition(e->getPosition());
+                }
+            }
+            window.Draw(tiles.GetTemporaryTile());
         }
 
         if(map_editor_events_system.Poll() == MapEditorEvent::None)

@@ -1,5 +1,7 @@
 #include "tiles.h"
 
+#include "MapEditor/Core/src/bootstrap.h"
+
 #include <spdlog/spdlog.h>
 
 Tiles::Tiles(MapEditorEventSystem& map_editor_event_system)
@@ -17,9 +19,8 @@ void Tiles::BeginPlacement()
     if(!temporary_tile_)
     {
         spdlog::info("Begin tile placement...");
-        temporary_tile_ = new sf::RectangleShape({50.0f, 50.0f});
+        temporary_tile_ = new sf::RectangleShape({Configuration::tile_size, Configuration::tile_size});
         temporary_tile_->setFillColor(sf::Color::Red);
-        temporary_tile_->setPosition(300.0f, 300.0f);
     }
 }
 
