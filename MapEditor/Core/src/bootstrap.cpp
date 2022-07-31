@@ -1,12 +1,12 @@
 #include "MapEditor/Core/src/bootstrap.h"
 
-#include "Assets/src/assets_manager.h"
-
 #include <spdlog/spdlog.h>
+
+#include "Assets/src/assets_manager.h"
 
 /// @TODO: Add Windows option
 #ifdef __linux__
-#include <X11/Xlib.h>
+#include <GLFW/glfw3.h>
 #endif
 
 void Bootstrap::Initialize()
@@ -18,22 +18,22 @@ void Bootstrap::Initialize()
 #endif
     Configuration::Screen_Size = Bootstrap::ScreenSize();
     Configuration::Side_Bar_Position = ImVec2(0, 18);
-    Configuration::Side_Bar_Size = ImVec2(300, 800);
+    Configuration::Side_Bar_Size = ImVec2(Configuration::Screen_Size.x * 0.2, Configuration::Screen_Size.y);
 
     AssetsManager::Initialize();
 }
 
-/// @TODO: Consider how to handle multi-screen size
 ImVec2 Bootstrap::ScreenSize()
 {
-    ImVec2 window_size{0.0f, 0.0f};
+    ImVec2 window_size{0, 0};
 
 #ifdef __linux__
-    Display* display{XOpenDisplay(nullptr)};
-    Screen* screen{DefaultScreenOfDisplay(display)};
+    glfwInit();
 
-    window_size.x = static_cast<float>(screen->width);
-    window_size.y = static_cast<float>(screen->height);
+    const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+
+    window_size.x = mode->width;
+    window_size.y = mode->height;
 #endif
 
     return window_size;
