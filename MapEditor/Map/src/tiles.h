@@ -10,7 +10,7 @@ class Tiles
 {
   public:
     Tiles(MapEditorEventSystem& map_editor_event_system);
-    void BeginPlacement();
+    void BeginPlacement(const sf::Texture* tile_type);
     void FinishPlacement();
 
     const std::list<sf::RectangleShape*>& GetTiles() const;

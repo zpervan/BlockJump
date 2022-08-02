@@ -20,35 +20,35 @@ Game::Game()
     rec->SetSize({50, 50});
     rec->SetPosition({500, 505});
     rec->SetFillColor(sf::Color::Yellow);
-    rec->SetTexture(AssetsManager::GetBackgroundDirt());
+    rec->SetTexture(AssetsManager::DirtWithGrass());
     background_objects_.emplace_back(rec);
 
     Block* rec1{new Block()};
     rec1->SetSize({100, 50});
     rec1->SetPosition({500, 750});
     rec1->SetFillColor(sf::Color::Cyan);
-    rec1->SetTexture(AssetsManager::GetBackgroundDirt());
+    rec1->SetTexture(AssetsManager::DirtWithGrass());
     background_objects_.emplace_back(rec1);
 
     Block* rec2{new Block()};
     rec2->SetSize({50, 100});
     rec2->SetPosition({100, 300});
     rec2->SetFillColor(sf::Color::Magenta);
-    rec2->SetTexture(AssetsManager::GetBackgroundDirt());
+    rec2->SetTexture(AssetsManager::DirtWithGrass());
     background_objects_.emplace_back(rec2);
 
     Block* rec3{new Block()};
     rec3->SetSize({400, 50});
     rec3->SetPosition({700, 850});
     rec3->SetFillColor(sf::Color::Green);
-    rec3->SetTexture(AssetsManager::GetBackgroundDirt());
+    rec3->SetTexture(AssetsManager::DirtWithGrass());
     background_objects_.emplace_back(rec3);
 
     Block* rec4{new Block()};
     rec4->SetSize({150, 50});
     rec4->SetPosition({850, 800});
     rec4->SetFillColor(sf::Color::Black);
-    rec4->SetTexture(AssetsManager::GetBackgroundDirt());
+    rec4->SetTexture(AssetsManager::DirtWithGrass());
     background_objects_.emplace_back(rec4);
 
     Block* ground{new Block()};
@@ -56,10 +56,10 @@ Game::Game()
     ground->SetPosition({0, 900});
     // @TODO: Brown color. Move to a top-level config file.
     ground->SetFillColor({102, 70, 67});
-    ground->SetTexture(AssetsManager::GetBackgroundDirt());
+    ground->SetTexture(AssetsManager::DirtWithGrass());
     background_objects_.emplace_back(ground);
 
-    player_entity_->SetTexture(AssetsManager::GetPlayerEntity());
+    player_entity_->SetTexture(AssetsManager::Player());
     window_->SetView({player_entity_->GetPosition(), {Constants::VIEW_THRESHOLD_X, Constants::VIEW_THRESHOLD_Y}});
 }
 

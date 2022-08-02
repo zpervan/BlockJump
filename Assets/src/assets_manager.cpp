@@ -8,7 +8,8 @@
 void AssetsManager::Initialize()
 {
     player_entity_ = LoadAsset("player.png");
-    background_dirt_ = LoadAsset("block.png");
+    background_dirt_with_grass_ = LoadAsset("dirt_with_grass.png");
+    background_brick_ = LoadAsset("brick.png");
 }
 
 std::unique_ptr<sf::Texture> AssetsManager::LoadAsset(const std::string& asset_name)
@@ -21,12 +22,17 @@ std::unique_ptr<sf::Texture> AssetsManager::LoadAsset(const std::string& asset_n
     return asset_object;
 }
 
-const sf::Texture* AssetsManager::GetPlayerEntity()
+sf::Texture* AssetsManager::Player()
 {
     return player_entity_.get();
 }
 
-const sf::Texture* AssetsManager::GetBackgroundDirt()
+sf::Texture* AssetsManager::DirtWithGrass()
 {
-    return background_dirt_.get();
+    return background_dirt_with_grass_.get();
+}
+
+sf::Texture* AssetsManager::Brick()
+{
+    return background_brick_.get();
 }

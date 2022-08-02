@@ -12,14 +12,16 @@ class AssetsManager
     static void Initialize();
 
     /// Getters
-    static const sf::Texture* GetPlayerEntity();
-    static const sf::Texture* GetBackgroundDirt();
+    static sf::Texture* Player();
+    static sf::Texture* DirtWithGrass();
+    static sf::Texture* Brick();
 
   private:
     static std::unique_ptr<sf::Texture> LoadAsset(const std::string& asset_name);
 
     inline static std::unique_ptr<sf::Texture> player_entity_;
-    inline static std::unique_ptr<sf::Texture> background_dirt_;
+    inline static std::unique_ptr<sf::Texture> background_dirt_with_grass_;
+    inline static std::unique_ptr<sf::Texture> background_brick_;
 };
 
 #endif  // BLOCKJUMP_ASSETS_MANAGER_H

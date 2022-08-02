@@ -41,7 +41,7 @@ int main()
 
         if(map_editor_events_system.Poll() == MapEditorEvent::Add)
         {
-            tiles.BeginPlacement();
+            tiles.BeginPlacement(nullptr);
 
             for (auto & e : grid.GetGridShapes())
             {

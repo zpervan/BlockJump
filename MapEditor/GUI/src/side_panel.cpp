@@ -14,15 +14,24 @@ void SidePanel::Show()
     ImGui::Text("Characters");
     ImGui::NewLine();
 
-    ImGui::ImageButton(*AssetsManager::GetPlayerEntity(), {30.0f, 30.0f},10);
+    ImGui::ImageButton(*AssetsManager::Player(), {Configuration::Button_Size.x, Configuration::Button_Size.y}, 10);
 
     ImGui::NewLine();
     ImGui::Text("Background");
     ImGui::NewLine();
 
-    if(ImGui::ImageButton(*AssetsManager::GetBackgroundDirt(), {30.0f, 30.0f}, 10))
+    /// @TODO: Automatically add buttons by detecting the number of assets
+    if(ImGui::ImageButton(*AssetsManager::DirtWithGrass(), {Configuration::Button_Size.x, Configuration::Button_Size.y}, 10))
     {
-        spdlog::debug("Pressing the background button");
+        spdlog::debug("Pressed background \"DirtWithGrass\" button");
+        map_editor_events_system_.Set(MapEditorEvent::Add);
+    }
+
+    ImGui::SameLine();
+
+    if(ImGui::ImageButton(*AssetsManager::Brick(), {Configuration::Button_Size.x, Configuration::Button_Size.y}, 10))
+    {
+        spdlog::debug("Pressed background \"Brick\" button");
         map_editor_events_system_.Set(MapEditorEvent::Add);
     }
 

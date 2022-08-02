@@ -14,13 +14,13 @@ const std::list<sf::RectangleShape*>& Tiles::GetTiles() const
     return tiles_;
 }
 
-void Tiles::BeginPlacement()
+void Tiles::BeginPlacement(const sf::Texture* tile_type)
 {
     if(!temporary_tile_)
     {
         spdlog::info("Begin tile placement...");
-        temporary_tile_ = new sf::RectangleShape({Configuration::tile_size, Configuration::tile_size});
-        temporary_tile_->setFillColor(sf::Color::Red);
+        temporary_tile_ = new sf::RectangleShape({Configuration::Tile_Size, Configuration::Tile_Size});
+        temporary_tile_->setTexture(tile_type);
     }
 }
 
