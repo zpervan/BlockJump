@@ -18,7 +18,8 @@ void Bootstrap::Initialize()
 #endif
     Configuration::Screen_Size = Bootstrap::ScreenSize();
     Configuration::Side_Bar_Position = ImVec2(0, 18);
-    Configuration::Side_Bar_Size = ImVec2(Configuration::Screen_Size.x * 0.2, Configuration::Screen_Size.y);
+    Configuration::Side_Bar_Size = ImVec2(Configuration::Screen_Size.x * 0.2f, Configuration::Screen_Size.y);
+    Configuration::Button_Size = ImVec2(30.0f, 30.0f);
 
     AssetsManager::Initialize();
 }

@@ -3,6 +3,7 @@
 
 #include "imgui.h"
 
+/// @TODO: Extract into a configurations file
 namespace Configuration
 {
 // Window
@@ -11,9 +12,10 @@ inline ImVec2 Screen_Size;
 // GUI components
 inline ImVec2 Side_Bar_Size;
 inline ImVec2 Side_Bar_Position;
+inline ImVec2 Button_Size;
 
 // Tiles
-inline constexpr float tile_size{50.0f};
+inline constexpr float Tile_Size{50.0f};
 }
 
 class Bootstrap
