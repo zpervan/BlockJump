@@ -2,7 +2,9 @@
 
 #include "MapEditor/Core/src/bootstrap.h"
 
-SidePanel::SidePanel(MapEditorEventSystem& map_editor_events_system) : map_editor_events_system_(map_editor_events_system){}
+SidePanel::SidePanel(TilesService& tiles) : tiles_(tiles)
+{
+}
 
 void SidePanel::Show()
 {
@@ -14,25 +16,29 @@ void SidePanel::Show()
     ImGui::Text("Characters");
     ImGui::NewLine();
 
-    ImGui::ImageButton(*AssetsManager::Player(), {Configuration::Button_Size.x, Configuration::Button_Size.y}, 10);
+    if (ImGui::ImageButton(*AssetsManager::Player(), {Configuration::Button_Size.x, Configuration::Button_Size.y}, padding_))
+    {
+        spdlog::debug("Pressed characters \"Player\" button");
+        tiles_.BeginPlacement(AssetsManager::Player());
+    }
 
     ImGui::NewLine();
     ImGui::Text("Background");
     ImGui::NewLine();
 
     /// @TODO: Automatically add buttons by detecting the number of assets
-    if(ImGui::ImageButton(*AssetsManager::DirtWithGrass(), {Configuration::Button_Size.x, Configuration::Button_Size.y}, 10))
+    if (ImGui::ImageButton(*AssetsManager::DirtWithGrass(), {Configuration::Button_Size.x, Configuration::Button_Size.y}, padding_))
     {
         spdlog::debug("Pressed background \"DirtWithGrass\" button");
-        map_editor_events_system_.Set(MapEditorEvent::Add);
+        tiles_.BeginPlacement(AssetsManager::DirtWithGrass());
     }
 
     ImGui::SameLine();
 
-    if(ImGui::ImageButton(*AssetsManager::Brick(), {Configuration::Button_Size.x, Configuration::Button_Size.y}, 10))
+    if (ImGui::ImageButton(*AssetsManager::Brick(), {Configuration::Button_Size.x, Configuration::Button_Size.y}, padding_))
     {
         spdlog::debug("Pressed background \"Brick\" button");
-        map_editor_events_system_.Set(MapEditorEvent::Add);
+        tiles_.BeginPlacement(AssetsManager::Brick());
     }
 
     ImGui::End();

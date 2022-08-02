@@ -9,6 +9,7 @@ cc_library(
     deps = [
         "//Assets:assets",
         "//MapEditor/Core:core",
+        "//MapEditor/Map:map",
         "@imguilib//:imgui",
         "@spdloglib//:spdlog",
     ],
