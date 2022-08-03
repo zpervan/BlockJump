@@ -5,3 +5,6 @@
 # Settings files
 **/.clwb
 **/.idea
+
+# Asset test files
+/Assets/maps/*
