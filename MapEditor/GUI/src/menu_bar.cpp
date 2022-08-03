@@ -1,13 +1,32 @@
 #include "menu_bar.h"
 
 #include <imgui.h>
+#include <spdlog/spdlog.h>
 
-MenuBar::MenuBar(MapEditorWindow& map_editor_window) : map_editor_window_(map_editor_window){}
+#include "MapEditor/Map/src/map_serialization.h"
+
+MenuBar::MenuBar(MapEditorWindow& map_editor_window, TilesService& tiles_service)
+    : map_editor_window_(map_editor_window), tiles_service_(tiles_service)
+{
+}
 
 void MenuBar::Show()
 {
     if (ImGui::BeginMainMenuBar())
     {
+        if (ImGui::BeginMenu("File"))
+        {
+            if (ImGui::MenuItem("Save", "Ctrl+S"))
+            {
+                spdlog::info("Saving map...");
+                MapSerialization::Serialize(tiles_service_.GetTiles());
+            }
+
+            ImGui::MenuItem("Load", nullptr);
+
+            ImGui::EndMenu();
+        }
+
         if (ImGui::BeginMenu("Application"))
         {
             ImGui::MenuItem("Restart", nullptr);
@@ -27,6 +46,7 @@ void MenuBar::Show()
 
             ImGui::EndMenu();
         }
+
         ImGui::EndMainMenuBar();
     }
 }

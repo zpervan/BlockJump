@@ -9,6 +9,7 @@
 #include "MapEditor/GUI/src/side_panel.h"
 #include "MapEditor/Map/src/grid.h"
 #include "MapEditor/Map/src/tiles_service.h"
+#include "MapEditor/Map/src/map_serialization.h"
 
 int main()
 {
@@ -23,12 +24,12 @@ int main()
     // Initialize map creation functionality
     Grid grid;
     grid.Create({30,18});
-    TilesService tiles{map_editor_events_system};
+    TilesService tiles_service{map_editor_events_system};
 
     /// @TODO: Consider to have some kind of dependency injection to avoid passing single objects to components
     // Initialize components - usually that use the map editor event system
-    SidePanel side_panel{tiles};
-    MenuBar menu_bar{window};
+    SidePanel side_panel{tiles_service};
+    MenuBar menu_bar{window, tiles_service};
 
     while (!window.IsDone())
     {
@@ -46,19 +47,22 @@ int main()
             {
                 if(e->getGlobalBounds().contains(window.GetMousePosition().x, window.GetMousePosition().y))
                 {
-                    tiles.GetTemporaryTile().shape->setPosition(e->getPosition());
+                    tiles_service.GetTemporaryTile().shape->setPosition(e->getPosition());
                 }
             }
-            window.Draw(tiles.GetTemporaryTile().shape.get());
+            window.Draw(tiles_service.GetTemporaryTile().shape.get());
         }
 
         if(map_editor_events_system.Poll() == MapEditorEvent::None)
         {
-            tiles.FinishPlacement();
+            if(tiles_service.GetTemporaryTile().shape)
+            {
+                tiles_service.FinishPlacement();
+            }
         }
 
         // Draw all placed tiles
-        for (const auto & tile : tiles.GetTiles())
+        for (const auto & tile : tiles_service.GetTiles())
         {
             if (!tile.shape)
             {

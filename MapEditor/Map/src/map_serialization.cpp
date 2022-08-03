@@ -28,6 +28,12 @@ constexpr auto map_file_path{"/home/zvonimir/Programming/BlockJump/Assets/maps/t
 
 void MapSerialization::Serialize(const std::list<Tile>& map_tiles)
 {
+    if(map_tiles.empty())
+    {
+        spdlog::warn("Map contains no data to save! Canceling saving process.");
+        return;
+    }
+
     GOOGLE_PROTOBUF_VERIFY_VERSION;
 
     auto* map = new MapMessages::Map();
