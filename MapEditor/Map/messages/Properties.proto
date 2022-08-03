@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package MapMessages;
+
+message Position
+{
+  float x = 1;
+  float y = 2;
+}

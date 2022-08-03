@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package MapMessages;
+
+import "MapEditor/Map/messages/Properties.proto";
+
+message Map
+{
+  Position player_position = 1;
+  repeated BackgroundTile background_tile = 2;
+}
+
+message BackgroundTile
+{
+  enum Type
+  {
+    DirtWithGrass = 0;
+    Brick = 1;
+  }
+
+  Position position = 1;
+  Type type = 2;
+}

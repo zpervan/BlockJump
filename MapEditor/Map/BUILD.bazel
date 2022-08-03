@@ -1,15 +1,28 @@
 load("@rules_cc//cc:defs.bzl", "cc_library")
+load("@rules_proto//proto:defs.bzl", "proto_library")
 
 cc_library(
     name = "map",
     srcs = glob(["src/*.cpp"]),
     hdrs = glob(["src/*.h"]),
+    linkopts = ["-lstdc++fs"],
     visibility = ["//visibility:public"],
     deps = [
+        ":map-serialization",
         "//MapEditor/Core:core",
         "@sfmllib//:sfml-graphics",
         "@sfmllib//:sfml-system",
         "@sfmllib//:sfml-window",
         "@spdloglib//:spdlog",
     ],
+)
+
+cc_proto_library(
+    name = "map-serialization",
+    deps = [":map-serialization-messages"],
+)
+
+proto_library(
+    name = "map-serialization-messages",
+    srcs = glob(["messages/*.proto"]),
 )
