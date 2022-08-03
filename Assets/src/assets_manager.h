@@ -4,6 +4,15 @@
 #include <SFML/Graphics/Texture.hpp>
 #include <memory>
 
+/// @brief Used to define the asset type. Must be aligned with the enum in Map.proto
+enum class AssetType
+{
+    None = 0,
+    Player,
+    DirtWithGrass,
+    Brick
+};
+
 /// @brief Contains all initialization and loading logic for assets used in the simulation.
 class AssetsManager
 {
@@ -12,9 +21,7 @@ class AssetsManager
     static void Initialize();
 
     /// Getters
-    static sf::Texture* Player();
-    static sf::Texture* DirtWithGrass();
-    static sf::Texture* Brick();
+    static sf::Texture* Get(AssetType type);
 
   private:
     static std::unique_ptr<sf::Texture> LoadAsset(const std::string& asset_name);

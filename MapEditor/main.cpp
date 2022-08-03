@@ -46,24 +46,26 @@ int main()
             {
                 if(e->getGlobalBounds().contains(window.GetMousePosition().x, window.GetMousePosition().y))
                 {
-                    tiles.GetTemporaryTile()->setPosition(e->getPosition());
+                    tiles.GetTemporaryTile().shape->setPosition(e->getPosition());
                 }
             }
-            window.Draw(tiles.GetTemporaryTile());
+            window.Draw(tiles.GetTemporaryTile().shape.get());
         }
 
         if(map_editor_events_system.Poll() == MapEditorEvent::None)
         {
-            if(tiles.GetTemporaryTile())
-            {
-                tiles.FinishPlacement();
-            }
+            tiles.FinishPlacement();
         }
 
         // Draw all placed tiles
         for (const auto & tile : tiles.GetTiles())
         {
-            window.Draw(tile.get());
+            if (!tile.shape)
+            {
+                continue;
+            }
+
+            window.Draw(tile.shape.get());
         }
 
         for (const auto & grid_line : grid.GetGridShapes())

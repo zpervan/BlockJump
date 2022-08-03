@@ -22,17 +22,25 @@ std::unique_ptr<sf::Texture> AssetsManager::LoadAsset(const std::string& asset_n
     return asset_object;
 }
 
-sf::Texture* AssetsManager::Player()
+sf::Texture* AssetsManager::Get(AssetType type)
 {
-    return player_entity_.get();
-}
+    sf::Texture* texture{nullptr};
 
-sf::Texture* AssetsManager::DirtWithGrass()
-{
-    return background_dirt_with_grass_.get();
-}
+    switch (type)
+    {
+        case AssetType::Player:
+            texture = player_entity_.get();
+            break;
+        case AssetType::DirtWithGrass:
+            texture = background_dirt_with_grass_.get();
+            break;
+        case AssetType::Brick:
+            texture = background_brick_.get();
+            break;
+        default:
+            spdlog::warn("Doesn't contain asset type!");
+            break;
+    }
 
-sf::Texture* AssetsManager::Brick()
-{
-    return background_brick_.get();
+    return texture;
 }

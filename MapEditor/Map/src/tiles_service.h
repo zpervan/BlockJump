@@ -2,26 +2,34 @@
 #define BLOCKJUMP_TILES_SERVICE_H
 
 #include <SFML/Graphics/RectangleShape.hpp>
-#include <memory>
 #include <list>
+#include <memory>
 
+#include "Assets/src/assets_manager.h"
 #include "MapEditor/Core/src/map_editor_events.h"
+
+
+struct Tile
+{
+    std::unique_ptr<sf::RectangleShape> shape{};
+    AssetType type{AssetType::None};
+};
 
 class TilesService
 {
   public:
     explicit TilesService(MapEditorEventSystem& map_editor_event_system);
 
-    void BeginPlacement(const sf::Texture* tile_type);
+    void BeginPlacement(AssetType type);
     void FinishPlacement();
 
-    const std::list<std::unique_ptr<sf::RectangleShape>>& GetTiles() const;
-    sf::RectangleShape* GetTemporaryTile();
+    const std::list<Tile>& GetTiles() const;
+    Tile& GetTemporaryTile();
 
   private:
     MapEditorEventSystem& map_editor_event_system_;
-    std::list<std::unique_ptr<sf::RectangleShape>> tiles_;
-    std::unique_ptr<sf::RectangleShape>temporary_tile_;
+    std::list<Tile> tiles_;
+    Tile temporary_tile_;
 };
 
 #endif  // BLOCKJUMP_TILES_SERVICE_H
