@@ -8,10 +8,9 @@
 #include "Assets/src/assets_manager.h"
 #include "MapEditor/Core/src/map_editor_events.h"
 
-
 struct Tile
 {
-    std::unique_ptr<sf::RectangleShape> shape{};
+    sf::RectangleShape shape{};
     AssetType type{AssetType::None};
 };
 
@@ -23,13 +22,14 @@ class TilesService
     void BeginPlacement(AssetType type);
     void FinishPlacement();
 
-    const std::list<Tile>& GetTiles() const;
-    Tile& GetTemporaryTile();
+    const std::vector<std::shared_ptr<Tile>>& GetTiles() const;
+    std::vector<std::shared_ptr<Tile>> CloneTiles() const;
+    Tile* GetTemporaryTile();
 
   private:
     MapEditorEventSystem& map_editor_event_system_;
-    std::list<Tile> tiles_;
-    Tile temporary_tile_;
+    std::vector<std::shared_ptr<Tile>> tiles_;
+    Tile* temporary_tile_;
 };
 
 #endif  // BLOCKJUMP_TILES_SERVICE_H

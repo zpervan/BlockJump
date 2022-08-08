@@ -7,12 +7,14 @@
 class MenuBar
 {
   public:
-    MenuBar(MapEditorWindow& map_editor_window, TilesService& tiles_service);
+    MenuBar(MapEditorWindow& map_editor_window,
+            TilesService& tiles_service,
+            MapEditorEventSystem& map_editor_event_system);
     void Show();
 
   private:
     MapEditorWindow & map_editor_window_;
-    TilesService& tiles_service_;
+    MapEditorEventSystem& map_editor_event_system_;
 };
 
 #endif  // BLOCKJUMP_MENU_BAR_H

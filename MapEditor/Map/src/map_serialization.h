@@ -10,7 +10,7 @@
 class MapSerialization
 {
   public:
-    static void Serialize(const std::list<Tile>& map_tiles);
+    static bool Serialize(const std::vector<std::shared_ptr<Tile>>&  map_tiles);
     static std::vector<sf::RectangleShape> Deserialize();
 };
 

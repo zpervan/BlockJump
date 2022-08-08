@@ -5,8 +5,11 @@
 
 #include "MapEditor/Map/src/map_serialization.h"
 
-MenuBar::MenuBar(MapEditorWindow& map_editor_window, TilesService& tiles_service)
-    : map_editor_window_(map_editor_window), tiles_service_(tiles_service)
+MenuBar::MenuBar(MapEditorWindow& map_editor_window,
+                 TilesService& tiles_service,
+                 MapEditorEventSystem& map_editor_event_system)
+    : map_editor_window_(map_editor_window),
+      map_editor_event_system_(map_editor_event_system)
 {
 }
 
@@ -19,7 +22,7 @@ void MenuBar::Show()
             if (ImGui::MenuItem("Save", "Ctrl+S"))
             {
                 spdlog::info("Saving map...");
-                MapSerialization::Serialize(tiles_service_.GetTiles());
+                map_editor_event_system_.Set(MapEditorEvent::Saving);
             }
 
             ImGui::MenuItem("Load", nullptr);

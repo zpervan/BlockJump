@@ -6,7 +6,9 @@ enum class MapEditorEvent
     None = 0,
     Add,
     Edit,
-    Delete
+    Delete,
+    Saving,
+    Loading
 };
 
 class MapEditorEventSystem

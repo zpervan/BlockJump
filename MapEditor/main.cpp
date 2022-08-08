@@ -1,6 +1,7 @@
 #include <imgui-SFML.h>
 
 #include <SFML/Graphics/RectangleShape.hpp>
+#include <future>
 
 #include "MapEditor/Core/src/bootstrap.h"
 #include "MapEditor/Core/src/map_editor_events.h"
@@ -25,11 +26,12 @@ int main()
     Grid grid;
     grid.Create({30,18});
     TilesService tiles_service{map_editor_events_system};
+    std::future<bool> serialization_result;
 
     /// @TODO: Consider to have some kind of dependency injection to avoid passing single objects to components
-    // Initialize components - usually that use the map editor event system
+    // Initialize GUI components
     SidePanel side_panel{tiles_service};
-    MenuBar menu_bar{window, tiles_service};
+    MenuBar menu_bar{window, tiles_service, map_editor_events_system};
 
     while (!window.IsDone())
     {
@@ -47,15 +49,30 @@ int main()
             {
                 if(e->getGlobalBounds().contains(window.GetMousePosition().x, window.GetMousePosition().y))
                 {
-                    tiles_service.GetTemporaryTile().shape->setPosition(e->getPosition());
+                    tiles_service.GetTemporaryTile()->shape.setPosition(e->getPosition());
                 }
             }
-            window.Draw(tiles_service.GetTemporaryTile().shape.get());
+            window.Draw(tiles_service.GetTemporaryTile()->shape);
+        }
+
+        if(map_editor_events_system.Poll() == MapEditorEvent::Saving)
+        {
+            if(!serialization_result.valid())
+            {
+                spdlog::debug("Calling serialization thread...");
+                serialization_result = std::async(std::launch::async, &MapSerialization::Serialize, tiles_service.CloneTiles());
+            }
+
+            if(serialization_result.get())
+            {
+                spdlog::debug("Finished with serialization thread.");
+                map_editor_events_system.Set(MapEditorEvent::None);
+            }
         }
 
         if(map_editor_events_system.Poll() == MapEditorEvent::None)
         {
-            if(tiles_service.GetTemporaryTile().shape)
+            if(tiles_service.GetTemporaryTile())
             {
                 tiles_service.FinishPlacement();
             }
@@ -64,17 +81,17 @@ int main()
         // Draw all placed tiles
         for (const auto & tile : tiles_service.GetTiles())
         {
-            if (!tile.shape)
+            if (!tile)
             {
                 continue;
             }
 
-            window.Draw(tile.shape.get());
+            window.Draw(tile->shape);
         }
 
         for (const auto & grid_line : grid.GetGridShapes())
         {
-            window.Draw(grid_line);
+            window.Draw(*grid_line);
         }
 
         ImGui::SFML::Render(window.Get());

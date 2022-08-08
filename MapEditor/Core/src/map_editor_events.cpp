@@ -12,6 +12,8 @@ static std::map<MapEditorEvent, std::string> mapped_map_editor_events{
     {MapEditorEvent::Add, "Add"},
     {MapEditorEvent::Delete, "Delete"},
     {MapEditorEvent::Edit, "Edit"},
+    {MapEditorEvent::Saving, "Saving"},
+    {MapEditorEvent::Loading, "Loading"},
 };
 }
 
