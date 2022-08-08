@@ -16,6 +16,7 @@ Used libraries:
 - [Google Test](https://github.com/google/googletest)
 - [ImGui-SFML](https://github.com/eliasdaler/imgui-sfml)
 - [ImGui](https://github.com/ocornut/imgui)
+- [ImFileBrowser](https://github.com/AirGuanZ/imgui-filebrowser)
 - [SFML](https://www.sfml-dev.org/)
 - [spdlog](https://github.com/gabime/spdlog)
 
