@@ -3,7 +3,7 @@
 #include <imgui.h>
 #include <spdlog/spdlog.h>
 
-#include "MapEditor/Map/src/map_serialization.h"
+#include "MapEditor/GUI/src/dialog_with_path.h"
 
 MenuBar::MenuBar(MapEditorWindow& map_editor_window,
                  TilesService& tiles_service,

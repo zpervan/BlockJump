@@ -8,7 +8,9 @@ enum class MapEditorEvent
     Edit,
     Delete,
     Saving,
-    Loading
+    SavingConfirmed,
+    Loading,
+    LoadingConfirmed
 };
 
 class MapEditorEventSystem

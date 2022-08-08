@@ -53,7 +53,7 @@ void MapEditorWindow::Update()
             mouse_position_.y = event_.mouseMove.y;
         }
 
-        if ((map_editor_event_system_.Poll() != MapEditorEvent::None) && (event_.type == sf::Event::MouseButtonPressed))
+        if ((map_editor_event_system_.Poll() == MapEditorEvent::Add) && (event_.type == sf::Event::MouseButtonPressed))
         {
             map_editor_event_system_.Set(MapEditorEvent::None);
         }

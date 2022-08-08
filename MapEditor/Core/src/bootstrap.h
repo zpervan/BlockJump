@@ -13,6 +13,9 @@ inline ImVec2 Screen_Size;
 inline ImVec2 Side_Bar_Size;
 inline ImVec2 Side_Bar_Position;
 inline ImVec2 Button_Size;
+inline ImGuiWindowFlags Window_Flags {ImGuiWindowFlags_NoCollapse |
+                                     ImGuiWindowFlags_NoMove |
+                                     ImGuiWindowFlags_NoResize};
 
 // Tiles
 inline constexpr float Tile_Size{50.0f};

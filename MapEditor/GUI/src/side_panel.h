@@ -9,22 +9,14 @@
 #include "MapEditor/Core/src/map_editor_events.h"
 #include "MapEditor/Map/src/tiles_service.h"
 
-namespace
-{
-ImGuiWindowFlags side_panel_flags_{ImGuiWindowFlags_NoCollapse |
-                                   ImGuiWindowFlags_NoMove |
-                                   ImGuiWindowFlags_NoResize |
-                                   ImGuiWindowFlags_NoFocusOnAppearing};
-}
-
 class SidePanel
 {
   public:
-    SidePanel(TilesService& tiles);
+    SidePanel(TilesService& tiles_service);
     void Show();
 
   private:
-    TilesService& tiles_;
+    TilesService& tiles_service_;
     int padding_{2};
 };
 

@@ -1,16 +1,16 @@
 #include <imgui-SFML.h>
 
-#include <SFML/Graphics/RectangleShape.hpp>
 #include <future>
 
 #include "MapEditor/Core/src/bootstrap.h"
 #include "MapEditor/Core/src/map_editor_events.h"
 #include "MapEditor/Core/src/map_editor_window.h"
+#include "MapEditor/GUI/src/dialog_with_path.h"
 #include "MapEditor/GUI/src/menu_bar.h"
 #include "MapEditor/GUI/src/side_panel.h"
 #include "MapEditor/Map/src/grid.h"
-#include "MapEditor/Map/src/tiles_service.h"
 #include "MapEditor/Map/src/map_serialization.h"
+#include "MapEditor/Map/src/tiles_service.h"
 
 int main()
 {
@@ -18,20 +18,22 @@ int main()
     Bootstrap::Initialize();
 
     // Initialize the rendering window and all necessary components
-    MapEditorEventSystem map_editor_events_system{};
-    MapEditorWindow window{map_editor_events_system, "Block Jump - Map Editor"};
+    MapEditorEventSystem map_editor_event_system{};
+    MapEditorWindow window{map_editor_event_system, "Block Jump - Map Editor"};
     (void)ImGui::SFML::Init(window.Get());
 
     // Initialize map creation functionality
     Grid grid;
     grid.Create({30,18});
-    TilesService tiles_service{map_editor_events_system};
+    TilesService tiles_service{map_editor_event_system};
     std::future<bool> serialization_result;
 
     /// @TODO: Consider to have some kind of dependency injection to avoid passing single objects to components
     // Initialize GUI components
     SidePanel side_panel{tiles_service};
-    MenuBar menu_bar{window, tiles_service, map_editor_events_system};
+    MenuBar menu_bar{window, tiles_service, map_editor_event_system};
+    DialogWithPath save_dialog{map_editor_event_system, MapEditorEvent::SavingConfirmed};
+    DialogWithPath load_dialog{map_editor_event_system, MapEditorEvent::LoadingConfirmed};
 
     while (!window.IsDone())
     {
@@ -43,7 +45,7 @@ int main()
 
         window.BeginDraw();
 
-        if(map_editor_events_system.Poll() == MapEditorEvent::Add)
+        if(map_editor_event_system.Poll() == MapEditorEvent::Add)
         {
             for (auto & e : grid.GetGridShapes())
             {
@@ -55,22 +57,38 @@ int main()
             window.Draw(tiles_service.GetTemporaryTile()->shape);
         }
 
-        if(map_editor_events_system.Poll() == MapEditorEvent::Saving)
+        if(map_editor_event_system.Poll() == MapEditorEvent::Saving)
         {
-            if(!serialization_result.valid())
+            save_dialog.Show("Save", "Please select a path to save your map.");
+        }
+
+        if(map_editor_event_system.Poll() == MapEditorEvent::SavingConfirmed)
+        {
+            if (!serialization_result.valid())
             {
                 spdlog::debug("Calling serialization thread...");
                 serialization_result = std::async(std::launch::async, &MapSerialization::Serialize, tiles_service.CloneTiles());
             }
 
-            if(serialization_result.get())
+            if (serialization_result.get())
             {
                 spdlog::debug("Finished with serialization thread.");
-                map_editor_events_system.Set(MapEditorEvent::None);
+                map_editor_event_system.Set(MapEditorEvent::None);
             }
         }
 
-        if(map_editor_events_system.Poll() == MapEditorEvent::None)
+        if(map_editor_event_system.Poll() == MapEditorEvent::Loading)
+        {
+            load_dialog.Show("Load map", "Please select a map to load.");
+        }
+
+        if(map_editor_event_system.Poll() == MapEditorEvent::LoadingConfirmed)
+        {
+            spdlog::debug("TODO: Implement loading functionality");
+        }
+
+
+        if(map_editor_event_system.Poll() == MapEditorEvent::None)
         {
             if(tiles_service.GetTemporaryTile())
             {
