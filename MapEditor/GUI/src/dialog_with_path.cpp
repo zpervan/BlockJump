@@ -10,6 +10,7 @@ DialogWithPath::DialogWithPath(MapEditorEventSystem& map_editor_event_system, Ma
     file_browser_ = ImGui::FileBrowser(ImGuiFileBrowserFlags_SelectDirectory | ImGuiFileBrowserFlags_CloseOnEsc);
     file_browser_.SetTitle("Select path");
     file_browser_.SetTypeFilters({".map"});
+    map_name_.reserve(128);
 }
 
 void DialogWithPath::Show(const std::string& title, const std::string& message)
@@ -36,8 +37,11 @@ void DialogWithPath::Show(const std::string& title, const std::string& message)
         ImGui::SameLine();
         ImGui::Text("%s", path_.c_str());
 
-        ImGui::Separator();
+        ImGui::Checkbox("Remember location?", &rememberLocation);
 
+        ImGui::Text("Map name:"); ImGui::SameLine(); ImGui::InputText(" ", map_name_.data(), map_name_.size());
+
+        ImGui::Separator();
         if (ImGui::Button("OK", ImVec2(120, 0)))
         {
             map_editor_event_system_.Set(MapEditorEvent::SavingConfirmed);

@@ -18,7 +18,9 @@ class DialogWithPath
     MapEditorEventSystem& map_editor_event_system_;
     ImGui::FileBrowser file_browser_;
     std::string path_;
+    std::string map_name_;
     bool isOpen{false};
+    bool rememberLocation{false};
 };
 
 #endif
