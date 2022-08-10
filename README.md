@@ -2,7 +2,7 @@
 
 ## BlockJump ##
 
-A simple jump-and-run platformer game. Also includes a map editor for creating custom maps.
+A simple jump-and-run platform game. Also includes a map editor for creating custom maps.
 
 Current state of the game:
 ![](.github/assets/game_preview.gif)
