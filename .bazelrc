@@ -17,6 +17,10 @@ build:windows --client_env=CC="C:/Program Files (x86)/Microsoft Visual Studio/20
 build:windows --client_env=CXX="C:/Program Files (x86)/Microsoft Visual Studio/2019/Professional/VC/Tools/MSVC/14.29.30037/bin/Hostx64/x64/cl.exe"
 build:windows --cxxopt=/std:c++17
 
+build:windows-ci --client_env=CC="C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/Tools/MSVC/14.32.31326/bin/Hostx64/x64/cl.exe"
+build:windows-ci --client_env=CXX="C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/Tools/MSVC/14.32.31326/bin/Hostx64/x64/cl.exe"
+build:windows-ci --cxxopt=/std:c++17
+
 # Debug build options
 build:linux_debug --config=linux
 build:linux_debug --compilation_mode=dbg

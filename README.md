@@ -1,4 +1,4 @@
-![Actions Status](https://github.com/zpervan/BlockJump/workflows/CI/badge.svg) [![Build status](https://ci.appveyor.com/api/projects/status/54b7f257m3p781aj/branch/main?svg=true)](https://ci.appveyor.com/project/zpervan/blockjump/branch/main)
+[![Linux](https://github.com/zpervan/BlockJump/actions/workflows/ubuntu_ci.yml/badge.svg)](https://github.com/zpervan/BlockJump/actions/workflows/ubuntu_ci.yml) [![Windows](https://github.com/zpervan/BlockJump/actions/workflows/windows_ci.yml/badge.svg)](https://github.com/zpervan/BlockJump/actions/workflows/windows_ci.yml)
 
 ## BlockJump ##
 
