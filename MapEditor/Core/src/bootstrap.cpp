@@ -3,6 +3,7 @@
 #include <spdlog/spdlog.h>
 
 #include "Assets/src/assets_manager.h"
+#include "MapEditor/Core/src/configuration.h"
 
 /// @TODO: Add Windows option
 #ifdef __linux__

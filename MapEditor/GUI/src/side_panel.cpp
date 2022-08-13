@@ -1,6 +1,6 @@
 #include "side_panel.h"
 
-#include "MapEditor/Core/src/bootstrap.h"
+#include "MapEditor/Core/src/configuration.h"
 
 SidePanel::SidePanel(TilesService& tiles_service) : tiles_service_(tiles_service)
 {

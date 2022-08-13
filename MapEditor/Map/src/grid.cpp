@@ -1,6 +1,6 @@
 #include "grid.h"
 
-#include "MapEditor/Core/src/bootstrap.h"
+#include "MapEditor/Core/src/configuration.h"
 
 void Grid::Create(sf::Vector2i grid_size)
 {

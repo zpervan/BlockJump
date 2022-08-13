@@ -2,7 +2,7 @@
 
 #include <spdlog/spdlog.h>
 
-#include "MapEditor/Core/src/bootstrap.h"
+#include "MapEditor/Core/src/configuration.h"
 
 TilesService::TilesService(MapEditorEventSystem& map_editor_event_system)
     : map_editor_event_system_(map_editor_event_system), temporary_tile_(nullptr)

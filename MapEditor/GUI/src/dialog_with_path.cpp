@@ -2,7 +2,7 @@
 
 #include <spdlog/spdlog.h>
 
-#include "MapEditor/Core/src/bootstrap.h"
+#include "MapEditor/Core/src/configuration.h"
 #include "MapEditor/GUI/src/button.h"
 
 DialogWithPath::DialogWithPath(MapEditorEventSystem& map_editor_event_system, MapEditorEvent map_editor_event)
@@ -11,7 +11,6 @@ DialogWithPath::DialogWithPath(MapEditorEventSystem& map_editor_event_system, Ma
     file_browser_ = ImGui::FileBrowser(ImGuiFileBrowserFlags_SelectDirectory | ImGuiFileBrowserFlags_CloseOnEsc);
     file_browser_.SetTitle("Select path");
     file_browser_.SetTypeFilters({".map"});
-    map_name_.reserve(128);
 }
 
 void DialogWithPath::Show(const std::string& title, const std::string& message)
@@ -40,7 +39,9 @@ void DialogWithPath::Show(const std::string& title, const std::string& message)
 
         ImGui::Checkbox("Remember location?", &remember_location_);
 
-        ImGui::Text("Map name:"); ImGui::SameLine(); ImGui::InputText(" ", map_name_.data(), map_name_.size());
+        ImGui::Text("Map name:"); ImGui::SameLine();
+
+        ImGui::InputText("##MapName", Configuration::Map_Name, IM_ARRAYSIZE(Configuration::Map_Name));
 
         ImGui::Separator();
 
