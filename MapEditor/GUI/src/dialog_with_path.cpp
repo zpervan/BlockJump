@@ -3,6 +3,7 @@
 #include <spdlog/spdlog.h>
 
 #include "MapEditor/Core/src/bootstrap.h"
+#include "MapEditor/GUI/src/button.h"
 
 DialogWithPath::DialogWithPath(MapEditorEventSystem& map_editor_event_system, MapEditorEvent map_editor_event)
     : map_editor_event_system_(map_editor_event_system), path_("...")
@@ -18,12 +19,12 @@ void DialogWithPath::Show(const std::string& title, const std::string& message)
     ImVec2 center = ImGui::GetMainViewport()->GetCenter();
     ImGui::SetNextWindowPos(center, ImGuiCond_Always, ImVec2(0.5f, 0.5f));
 
-    if(!isOpen)
+    if(!is_open_)
     {
-        isOpen = true;
+        is_open_ = true;
     }
 
-    if (ImGui::Begin(title.c_str(), &isOpen, Configuration::Window_Flags | ImGuiWindowFlags_AlwaysAutoResize))
+    if (ImGui::Begin(title.c_str(), &is_open_, Configuration::Window_Flags | ImGuiWindowFlags_AlwaysAutoResize))
     {
         ImGui::Text("%s", message.c_str());
 
@@ -37,25 +38,28 @@ void DialogWithPath::Show(const std::string& title, const std::string& message)
         ImGui::SameLine();
         ImGui::Text("%s", path_.c_str());
 
-        ImGui::Checkbox("Remember location?", &rememberLocation);
+        ImGui::Checkbox("Remember location?", &remember_location_);
 
         ImGui::Text("Map name:"); ImGui::SameLine(); ImGui::InputText(" ", map_name_.data(), map_name_.size());
 
         ImGui::Separator();
-        if (ImGui::Button("OK", ImVec2(120, 0)))
-        {
+
+        auto savingConfirmedCallback = [this]() {
             map_editor_event_system_.Set(MapEditorEvent::SavingConfirmed);
-            isOpen = false;
-        }
+            is_open_ = false;
+        };
+
+        Button::Show("OK", savingConfirmedCallback, !std::filesystem::exists(path_));
 
         ImGui::SetItemDefaultFocus();
         ImGui::SameLine();
 
-        if (ImGui::Button("Cancel", ImVec2(120, 0)))
-        {
+        auto savingCanceledCallback = [this]() {
             map_editor_event_system_.Set(MapEditorEvent::None);
-            isOpen = false;
-        }
+            is_open_ = false;
+        };
+
+        Button::Show("Cancel", savingCanceledCallback);
 
         ImGui::End();
 

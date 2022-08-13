@@ -19,8 +19,8 @@ class DialogWithPath
     ImGui::FileBrowser file_browser_;
     std::string path_;
     std::string map_name_;
-    bool isOpen{false};
-    bool rememberLocation{false};
+    bool is_open_{false};
+    bool remember_location_{false};
 };
 
 #endif
