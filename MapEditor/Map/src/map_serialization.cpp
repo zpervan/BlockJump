@@ -1,14 +1,14 @@
+#define _SILENCE_EXPERIMENTAL_FILESYSTEM_DEPRECATION_WARNING 1
+
 #include "map_serialization.h"
 
 #include <spdlog/spdlog.h>
-
+/// @TODO: Use non-experimental version of filesystem
 #include <experimental/filesystem>
 #include <fstream>
 #include <map>
 
 #include "MapEditor/Map/messages/Map.pb.h"
-
-namespace fs = std::experimental::filesystem;
 
 namespace
 {

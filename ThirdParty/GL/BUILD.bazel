@@ -28,21 +28,39 @@ cc_library(
     ],
     hdrs = glob(["glew-2.2.0/include/GL/*.h"]),
     includes = ["glew-2.2.0/include/GL"],
-    linkopts = [
-        "-lGL",
-        "-ldl",
-        "-lpthread",
-    ],
+    linkopts = select({
+        "@bazel_tools//platforms:windows": [],
+        "@bazel_tools//platforms:linux": [
+            "-lGL",
+            "-ldl",
+            "-lpthread",
+        ],
+    }),
     strip_include_prefix = "glew-2.2.0/include",
     deps = [":glfw"],
 )
 
 cc_library(
     name = "glfw",
-    srcs = ["glfw-3.3.5/lib/libglfw3.a"],
+    srcs = select({
+        "@bazel_tools//platforms:windows": glob([
+            "glfw-3.3.5/lib/*.lib",
+            "glfw-3.3.5/lib/*.dll",
+        ]),
+        "@bazel_tools//platforms:linux": [
+            "glfw-3.3.5/lib/libglfw3.a",
+        ],
+    }),
     hdrs = glob(["glfw-3.3.5/include/GLFW/*.h"]),
     includes = ["glfw-3.3.5/include/GLFW"],
-    linkopts = ["-lX11"],
+    linkopts = select({
+        "@bazel_tools//platforms:windows": [
+            "-DEFAULTLIB:opengl32.lib",
+            "-DEFAULTLIB:gdi32.lib",
+            "-DEFAULTLIB:shell32.lib",
+        ],
+        "@bazel_tools//platforms:linux": ["-lX11"],
+    }),
     strip_include_prefix = "glfw-3.3.5/include",
 )
 

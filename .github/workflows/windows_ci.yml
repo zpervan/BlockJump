@@ -19,7 +19,9 @@ jobs:
           version: 5.2.0
       - run: bazel version
 
-      - name: Build BlockJump game
+      - name: Build Project | All
         run: |
           bazel build //:main --config=windows-ci -c dbg
-          bazel build //:main --config=windows-ci -c opt
+          bazel build //:main --config=windows-ci -c opt          
+          bazel build //:map-editor --config=windows-ci -c dbg
+          bazel build //:map-editor --config=windows-ci -c opt
