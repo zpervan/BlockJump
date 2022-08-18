@@ -30,6 +30,7 @@ copy_directory(
 cc_binary(
     name = "map-editor",
     srcs = ["MapEditor/main.cpp"],
+    data = ["//:copy-assets-map-editor"],
     deps = [
         "//MapEditor/Core:core",
         "//MapEditor/GUI:gui",
@@ -37,4 +38,10 @@ cc_binary(
         "@imguilib//:imgui",
         "@spdloglib//:spdlog",
     ],
+)
+
+copy_directory(
+    name = "copy-assets-map-editor",
+    src = "Assets",
+    out = "Assets",
 )

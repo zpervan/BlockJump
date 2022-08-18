@@ -1,16 +1,14 @@
 load("@rules_cc//cc:defs.bzl", "cc_library")
 
 cc_library(
-    name = "gui",
+    name = "library_common",
     srcs = glob(["src/*.cpp"]),
     hdrs = glob(["src/*.h"]),
-    data = ["//Assets:sprites"],
     visibility = ["//visibility:public"],
     deps = [
-        "//Library:library_common",
-        "//MapEditor/Core:core",
-        "//MapEditor/Map:map",
-        "@imguilib//:imgui",
+        "@sfmllib//:sfml-graphics",
+        "@sfmllib//:sfml-system",
+        "@sfmllib//:sfml-window",
         "@spdloglib//:spdlog",
     ],
 )

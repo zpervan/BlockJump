@@ -2,7 +2,7 @@
 
 #include <spdlog/spdlog.h>
 
-#include "Assets/src/assets_manager.h"
+#include "Library/src/assets_manager.h"
 #include "MapEditor/Core/src/configuration.h"
 
 #include <GLFW/glfw3.h>

@@ -5,7 +5,7 @@
 #include <imgui.h>
 #include <spdlog/spdlog.h>
 
-#include "Assets/src/assets_manager.h"
+#include "Library/src/assets_manager.h"
 #include "MapEditor/Core/src/map_editor_events.h"
 #include "MapEditor/Map/src/tiles_service.h"
 

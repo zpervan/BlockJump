@@ -5,7 +5,7 @@
 #include <list>
 #include <memory>
 
-#include "Assets/src/assets_manager.h"
+#include "Library/src/assets_manager.h"
 #include "MapEditor/Core/src/map_editor_events.h"
 
 struct Tile

@@ -1,6 +1,6 @@
 #include "Game/Core/src/game.h"
 
-#include "Assets/src/assets_manager.h"
+#include "Library/src/assets_manager.h"
 #include "Game/World/src/block.h"
 #include "Game/World/src/utility.h"
 #include "Game/constants.h"

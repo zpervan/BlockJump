@@ -1,20 +1,5 @@
-load("@rules_cc//cc:defs.bzl", "cc_library")
-
-package(default_visibility = ["//visibility:public"])
-
-cc_library(
-    name = "assets",
-    srcs = glob(["src/*.cpp"]),
-    hdrs = glob(["src/*.h"]),
-    deps = [
-        "@sfmllib//:sfml-graphics",
-        "@sfmllib//:sfml-system",
-        "@sfmllib//:sfml-window",
-        "@spdloglib//:spdlog",
-    ],
-)
-
 filegroup(
     name = "sprites",
     srcs = glob(["sprites/*.png"]),
+    visibility = ["//visibility:public"],
 )

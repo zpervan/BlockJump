@@ -6,7 +6,7 @@ cc_library(
     hdrs = glob(["src/*.h"]),
     visibility = ["//visibility:public"],
     deps = [
-        "//Assets:assets",
+        "//Library:library_common",
         "@imguilib//:imgui",
         "@sfmllib//:sfml-graphics",
         "@sfmllib//:sfml-system",

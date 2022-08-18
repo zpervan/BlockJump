@@ -20,9 +20,9 @@ cc_library(
     visibility = ["//visibility:public"],
     deps = [
         "//:game-bootstrap",
-        "//Assets:assets",
         "//Game/Entities:entities",
         "//Game/World:world",
+        "//Library:library_common",
         "@gllib//:glew",
         "@gllib//:glfw",
         "@sfmllib//:sfml-graphics",
