@@ -1,5 +1,14 @@
 workspace(name = "BlockJump")
 
+local_repository(
+    name = "bazel_skylib",
+    path = "ThirdParty/BazelSkylib/",
+)
+
+load("@bazel_skylib//:workspace.bzl", "bazel_skylib_workspace")
+
+bazel_skylib_workspace()
+
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
@@ -17,7 +26,6 @@ rules_proto_dependencies()
 
 rules_proto_toolchains()
 
-### @TODO: Check if we can leverage transitive dependencies from imguilib to get GL libraries
 local_repository(
     name = "gllib",
     path = "ThirdParty/GL/",
