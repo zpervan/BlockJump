@@ -28,4 +28,9 @@ import_run_configurations:
   .clion_targets/map_editor_linux_debug_run.xml
   .clion_targets/map_editor_linux_release_build.xml
   .clion_targets/map_editor_linux_release_run.xml
+  .clion_targets/map_editor_windows_debug_build.xml
+  .clion_targets/map_editor_windows_debug_run.xml
+  .clion_targets/map_editor_windows_release_build.xml
+  .clion_targets/map_editor_windows_release_run.xml
   .clion_targets/imgui_demo_linux_debug_run.xml
+  .clion_targets/imgui_demo_windows_debug_run.xml

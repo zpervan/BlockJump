@@ -28,6 +28,9 @@ build:linux_debug --strip=never
 build:linux_debug --cxxopt=-ggdb3
 build:linux_debug --cxxopt=-O0
 
+build:windows_debug --config=windows
+build:windows_debug --compilation_mode=dbg
+
 # Address sanitizer - Linux only!
 build:san --config=linux_debug
 build:san --cxxopt=-fsanitize=address
