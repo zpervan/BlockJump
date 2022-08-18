@@ -1,10 +1,12 @@
 load("@rules_cc//cc:defs.bzl", "cc_binary")
+load("@bazel_skylib//rules:copy_directory.bzl", "copy_directory")
 
 # Game rules
 
 cc_binary(
     name = "main",
     srcs = ["Game/main.cpp"],
+    data = ["//:copy-assets-game"],
     deps = [
         "//Game/Core:game",
         "@spdloglib//:spdlog",
@@ -15,6 +17,12 @@ cc_library(
     name = "game-bootstrap",
     srcs = ["Game/constants.h"],
     visibility = ["//visibility:public"],
+)
+
+copy_directory(
+    name = "copy-assets-game",
+    src = "Assets",
+    out = "Game/Assets",
 )
 
 # Map editor rules

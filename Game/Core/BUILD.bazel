@@ -11,8 +11,8 @@ cc_library(
     hdrs = glob(["src/*.h"]),
     data = ["//Assets:sprites"],
     linkopts = select({
-        ":windows": [],
-        "//conditions:default": [
+        "@bazel_tools//platforms:windows": ["-DEFAULTLIB:user32.lib"],
+        "@bazel_tools//platforms:linux": [
             "-pthread",
             "-lX11",
         ],
@@ -23,6 +23,8 @@ cc_library(
         "//Assets:assets",
         "//Game/Entities:entities",
         "//Game/World:world",
+        "@gllib//:glew",
+        "@gllib//:glfw",
         "@sfmllib//:sfml-graphics",
         "@sfmllib//:sfml-system",
         "@sfmllib//:sfml-window",

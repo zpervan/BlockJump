@@ -5,10 +5,7 @@
 #include "Assets/src/assets_manager.h"
 #include "MapEditor/Core/src/configuration.h"
 
-/// @TODO: Add Windows option
-#ifdef __linux__
 #include <GLFW/glfw3.h>
-#endif
 
 void Bootstrap::Initialize()
 {
@@ -28,16 +25,12 @@ void Bootstrap::Initialize()
 ImVec2 Bootstrap::ScreenSize()
 {
     ImVec2 window_size{0, 0};
-
-#ifdef __linux__
     glfwInit();
-
     const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
 
     window_size.x = mode->width;
     /// @TODO: Subtract the OS menu bar height to get the actual application height
     window_size.y = mode->height - 100.0f;
-#endif
 
     return window_size;
 }
