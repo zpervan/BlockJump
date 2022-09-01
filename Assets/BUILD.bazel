@@ -1,5 +1,15 @@
+load("@bazel_skylib//rules:copy_directory.bzl", "copy_directory")
+
+package(default_visibility = ["//visibility:public"])
+
 filegroup(
     name = "sprites",
-    srcs = glob(["sprites/*.png"]),
+    srcs = glob(["Sprites/*.png"]),
     visibility = ["//visibility:public"],
+)
+
+copy_directory(
+    name = "copy_sprites",
+    src = "Sprites",
+    out = "Sprites",
 )

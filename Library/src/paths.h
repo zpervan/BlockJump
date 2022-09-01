@@ -14,10 +14,10 @@
 
 namespace
 {
-#ifdef _WIN32
-static constexpr auto Assets_Directory{"\\Assets\\sprites\\"};
-#elif __linux__
-static constexpr auto Assets_Directory{"/Assets/sprites/"};
+#ifdef WIN32
+static constexpr auto Sprites_Directory{"\\Assets\\Sprites\\"};
+#else
+static constexpr auto Sprites_Directory{"/Assets/Sprites/"};
 #endif
 }
 
@@ -26,7 +26,7 @@ namespace Paths
 
 /// @brief Returns the path of the application executable based on OS.
 /// @return Path to executable root directory
-std::filesystem::path RootPath()
+inline std::filesystem::path RootPath()
 {
 #ifdef WIN32
     wchar_t szPath[MAX_PATH];
@@ -39,16 +39,13 @@ std::filesystem::path RootPath()
 #endif
 
     const auto root_path = std::filesystem::path(szPath).parent_path();
-    spdlog::debug("Root path: {}", root_path.string());
 
     return root_path;
 }
 
-std::string AssetsPath()
+inline std::string SpritesDirectoryPath()
 {
-    const auto assets_path = RootPath().string() + Assets_Directory;
-    spdlog::debug("Assets path: {}", assets_path);
-    return assets_path;
+    return RootPath().string() + Sprites_Directory;
 }
 
 }  // namespace Paths

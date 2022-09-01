@@ -1,12 +1,11 @@
 load("@rules_cc//cc:defs.bzl", "cc_binary")
-load("@bazel_skylib//rules:copy_directory.bzl", "copy_directory")
 
 # Game rules
 
 cc_binary(
     name = "main",
     srcs = ["Game/main.cpp"],
-    data = ["//:copy-assets-game"],
+    data = ["//Assets:copy_sprites"],
     deps = [
         "//Game/Core:game",
         "@spdloglib//:spdlog",
@@ -19,18 +18,12 @@ cc_library(
     visibility = ["//visibility:public"],
 )
 
-copy_directory(
-    name = "copy-assets-game",
-    src = "Assets",
-    out = "Game/Assets",
-)
-
 # Map editor rules
 
 cc_binary(
     name = "map-editor",
     srcs = ["MapEditor/main.cpp"],
-    data = ["//:copy-assets-map-editor"],
+    data = ["//Assets:copy_sprites"],
     deps = [
         "//MapEditor/Core:core",
         "//MapEditor/GUI:gui",
@@ -38,10 +31,4 @@ cc_binary(
         "@imguilib//:imgui",
         "@spdloglib//:spdlog",
     ],
-)
-
-copy_directory(
-    name = "copy-assets-map-editor",
-    src = "Assets",
-    out = "Assets",
 )
