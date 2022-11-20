@@ -67,7 +67,7 @@ void DialogWithPath::Show(const std::string& title, const std::string& message)
         file_browser_.Display();
         if(file_browser_.HasSelected())
         {
-            path_ = file_browser_.GetSelected().u8string();
+            path_ = file_browser_.GetSelected().generic_string();
             file_browser_.ClearSelected();
         }
     }

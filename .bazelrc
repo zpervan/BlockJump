@@ -1,14 +1,14 @@
 # Workaround for Bazel sync and proper intellisense on Linux
-build --action_env=BAZEL_CXXOPTS="-std=c++17"
+build --action_env=BAZEL_CXXOPTS="-std=c++2a"
 
 # Release build options
 build --strip=always
 build --compilation_mode=opt
 
 # Build flavors
-build:linux --client_env=CC="/usr/bin/clang"
-build:linux --client_env=CXX="/usr/bin/clang++"
-build:linux --cxxopt=-std=c++17
+build:linux --client_env=CC="/usr/bin/gcc"
+build:linux --client_env=CXX="/usr/bin/g++"
+build:linux --cxxopt=-std=c++2a
 ## @TODO: Temporary disabled due to imgui-SFML error
 #build:linux --cxxopt=-Werror
 build:linux --cxxopt=-Wpedantic

@@ -4,7 +4,7 @@
 
 #include <spdlog/spdlog.h>
 /// @TODO: Use non-experimental version of filesystem
-#include <experimental/filesystem>
+#include <filesystem>
 #include <fstream>
 #include <map>
 
