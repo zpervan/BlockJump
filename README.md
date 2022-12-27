@@ -22,7 +22,7 @@ Used libraries:
 
 #### Ubuntu ####
 
-1. Install [Bazel](https://www.bazel.build/). Installation instructions can be found 
+1. Install [Bazel](https://www.bazel.build/) 6.0.0. Installation instructions can be found 
 [here](https://bazel.build/install/ubuntu).
 2. Open your terminal and install the following dependencies
 ```shell
@@ -31,7 +31,7 @@ $ sudo apt install bazel libgl-dev freeglut3-dev
 
 #### Windows (Unstable) ####
 
-1. Install [Bazel](https://www.bazel.build/). Installation instructions can be found
+1. Install [Bazel](https://www.bazel.build/) 6.0.0. Installation instructions can be found
       [here](https://bazel.build/install/windowsl).
 2. Install Microsoft Visual Studio 19 - Community edition environment. Not sure about other MSVC version.
 

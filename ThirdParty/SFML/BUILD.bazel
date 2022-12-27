@@ -6,25 +6,25 @@ package(default_visibility = ["//visibility:public"])
 
 config_setting(
     name = "windows_debug_build",
-    constraint_values = ["@bazel_tools//platforms:windows"],
+    constraint_values = ["@platforms//os:windows"],
     values = {"compilation_mode": "dbg"},
 )
 
 config_setting(
     name = "windows_release_build",
-    constraint_values = ["@bazel_tools//platforms:windows"],
+    constraint_values = ["@platforms//os:windows"],
     values = {"compilation_mode": "opt"},
 )
 
 config_setting(
     name = "linux_debug_build",
-    constraint_values = ["@bazel_tools//platforms:linux"],
+    constraint_values = ["@platforms//os:linux"],
     values = {"compilation_mode": "dbg"},
 )
 
 config_setting(
     name = "linux_release_build",
-    constraint_values = ["@bazel_tools//platforms:linux"],
+    constraint_values = ["@platforms//os:linux"],
     values = {"compilation_mode": "opt"},
 )
 

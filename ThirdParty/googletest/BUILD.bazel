@@ -179,3 +179,40 @@ cc_library(
         "//conditions:default": [],
     }),
 )
+
+cc_test(
+    name = "gtest_samples",
+    size = "small",
+    # All Samples except:
+    #   sample9 (main)
+    #   sample10 (main and takes a command line option and needs to be separate)
+    srcs = [
+        "googletest/samples/sample1_unittest.cc",
+        "googletest/samples/sample2_unittest.cc",
+        "googletest/samples/sample3_unittest.cc",
+        "googletest/samples/sample4_unittest.cc",
+        "googletest/samples/sample5_unittest.cc",
+        "googletest/samples/sample6_unittest.cc",
+        "googletest/samples/sample7_unittest.cc",
+        "googletest/samples/sample8_unittest.cc",
+    ],
+    linkstatic = 0,
+    deps = [
+        "gtest_sample_lib",
+        ":gtest_main",
+    ],
+)
+
+cc_test(
+    name = "sample9_unittest",
+    size = "small",
+    srcs = ["googletest/samples/sample9_unittest.cc"],
+    deps = [":gtest"],
+)
+
+cc_test(
+    name = "sample10_unittest",
+    size = "small",
+    srcs = ["googletest/samples/sample10_unittest.cc"],
+    deps = [":gtest"],
+)
