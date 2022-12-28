@@ -18,6 +18,7 @@
 #include <cassert>
 #include <cmath> // abs
 #include <cstddef> // offsetof, NULL, size_t
+#include <cstdint> // uint8_t
 #include <cstring> // memcpy
 
 #include <algorithm>
@@ -144,8 +145,7 @@ void loadMouseCursor(ImGuiMouseCursor imguiCursorType, sf::Cursor::Type sfmlCurs
 void updateMouseCursor(sf::Window& window);
 
 // data
-const unsigned int NULL_JOYSTICK_ID = sf::Joystick::Count;
-const unsigned int NULL_JOYSTICK_BUTTON = sf::Joystick::ButtonCount;
+constexpr unsigned int NULL_JOYSTICK_ID = sf::Joystick::Count;
 
 struct StickInfo {
     sf::Joystick::Axis xAxis;
@@ -191,7 +191,7 @@ struct WindowContext {
     sf::Vector2i touchPos;
 
     unsigned int joystickId;
-    ImGuiKey_ joystickMapping[sf::Joystick::ButtonCount];
+    ImGuiKey joystickMapping[sf::Joystick::ButtonCount];
     StickInfo dPadInfo;
     StickInfo lStickInfo;
     StickInfo rStickInfo;
@@ -555,6 +555,9 @@ void ProcessEvent(const sf::Event& event) {
 
     if (s_currWindowCtx->windowHasFocus) {
         switch (event.type) {
+        case sf::Event::Resized:
+            io.DisplaySize = ImVec2(event.size.width, event.size.height);
+            break;
         case sf::Event::MouseMoved:
             io.AddMousePosEvent(event.mouseMove.x, event.mouseMove.y);
             s_currWindowCtx->mouseMoved = true;
@@ -847,7 +850,7 @@ void SetJoystickMapping(int key, unsigned int joystickButton) {
     assert(s_currWindowCtx);
     // This function now expects ImGuiKey_* values.
     // For partial backwards compatibility, also expect some ImGuiNavInput_* values.
-    ImGuiKey_ finalKey;
+    ImGuiKey finalKey;
     switch (key) {
     case ImGuiNavInput_Activate:
         finalKey = ImGuiKey_GamepadFaceDown;
@@ -871,7 +874,7 @@ void SetJoystickMapping(int key, unsigned int joystickButton) {
         break;
     default:
         assert(key >= ImGuiKey_NamedKey_BEGIN && key < ImGuiKey_NamedKey_END);
-        finalKey = static_cast<ImGuiKey_>(key);
+        finalKey = static_cast<ImGuiKey>(key);
     }
     assert(joystickButton < sf::Joystick::ButtonCount);
     s_currWindowCtx->joystickMapping[joystickButton] = finalKey;
@@ -1311,7 +1314,7 @@ void initDefaultJoystickMapping() {
 
 void updateJoystickButtonState(ImGuiIO& io) {
     for (int i = 0; i < sf::Joystick::ButtonCount; ++i) {
-        ImGuiKey_ key = s_currWindowCtx->joystickMapping[i];
+        ImGuiKey key = s_currWindowCtx->joystickMapping[i];
         if (key != ImGuiKey_None) {
             bool isPressed = sf::Joystick::isButtonPressed(s_currWindowCtx->joystickId, i);
             if (s_currWindowCtx->windowHasFocus || !isPressed) {
@@ -1321,7 +1324,7 @@ void updateJoystickButtonState(ImGuiIO& io) {
     }
 }
 
-void updateJoystickAxis(ImGuiIO& io, ImGuiKey_ key, sf::Joystick::Axis axis, float threshold,
+void updateJoystickAxis(ImGuiIO& io, ImGuiKey key, sf::Joystick::Axis axis, float threshold,
                         float maxThreshold, bool inverted) {
     float pos = sf::Joystick::getAxisPosition(s_currWindowCtx->joystickId, axis);
     if (inverted) {
@@ -1335,7 +1338,7 @@ void updateJoystickAxis(ImGuiIO& io, ImGuiKey_ key, sf::Joystick::Axis axis, flo
     }
 }
 
-void updateJoystickAxisPair(ImGuiIO& io, ImGuiKey_ key1, ImGuiKey_ key2, sf::Joystick::Axis axis,
+void updateJoystickAxisPair(ImGuiIO& io, ImGuiKey key1, ImGuiKey key2, sf::Joystick::Axis axis,
                             float threshold, bool inverted) {
     updateJoystickAxis(io, key1, axis, -threshold, -100, inverted);
     updateJoystickAxis(io, key2, axis, threshold, 100, inverted);
@@ -1376,8 +1379,8 @@ void setClipboardText(void* /*userData*/, const char* text) {
 }
 
 const char* getClipboardText(void* /*userData*/) {
-    std::basic_string<sf::Uint8> tmp = sf::Clipboard::getString().toUtf8();
-    s_clipboardText = std::string(tmp.begin(), tmp.end());
+    std::basic_string<std::uint8_t> tmp = sf::Clipboard::getString().toUtf8();
+    s_clipboardText.assign(tmp.begin(), tmp.end());
     return s_clipboardText.c_str();
 }
 

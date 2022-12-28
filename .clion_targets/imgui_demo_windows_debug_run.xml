@@ -1,4 +1,4 @@
-<configuration default="false" name="ImguiDemo | Run | Debug | Linux" type="BlazeCommandRunConfigurationType" factoryName="Bazel Command">
+<configuration default="false" name="ImguiDemo | Run | Debug | Windows" type="BlazeCommandRunConfigurationType" factoryName="Bazel Command">
     <blaze-settings handler-id="BlazeCLionRunConfigurationHandlerProvider" blaze-command="run" kind="cc_binary">
         <blaze-target>@imguilib//:imgui-demo</blaze-target>
         <blaze-user-flag>--config=windows_debug</blaze-user-flag>
