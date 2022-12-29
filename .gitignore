@@ -1,10 +1,12 @@
-# Build folders
+# Folders
 **/*build*/
 **/bazel-*
-
-# Settings files
 **/.clwb
 **/.idea
+
+# Files
+**/*.out
+**/*.exe
 
 # Asset test files
 /Assets/maps/*

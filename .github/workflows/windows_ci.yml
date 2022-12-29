@@ -2,9 +2,13 @@ name: Windows
 
 on:
   push:
-  pull_request:
     branches:
       - main
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
 
 jobs:
   build:
@@ -13,15 +17,25 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: ilammy/msvc-dev-cmd@v1
+      - uses: actions/setup-go@v3
+        with:
+          go-version: "1.19"
+
       - name: Setup Bazel
         uses: abhinavsingh/setup-bazel@v3
         with:
-          version: 5.2.0
+          version: 6.0.0
       - run: bazel version
 
-      - name: Build Project | All
+      - name: Build game
         run: |
           bazel build //:main --config=windows-ci -c dbg
           bazel build //:main --config=windows-ci -c opt          
           bazel build //:map-editor --config=windows-ci -c dbg
           bazel build //:map-editor --config=windows-ci -c opt
+
+      - name: Build server
+        run: |
+          cd Server
+          go mod tidy
+          go build -o server.exe .
