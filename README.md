@@ -1,5 +1,7 @@
-[![Linux](https://github.com/zpervan/BlockJump/actions/workflows/ubuntu_ci.yml/badge.svg)](https://github.com/zpervan/BlockJump/actions/workflows/ubuntu_ci.yml) [![Windows](https://github.com/zpervan/BlockJump/actions/workflows/windows_ci.yml/badge.svg)](https://github.com/zpervan/BlockJump/actions/workflows/windows_ci.yml)
-
+[![Game(Ubuntu)](https://github.com/zpervan/BlockJump/actions/workflows/ubuntu_game.yml/badge.svg)](https://github.com/zpervan/BlockJump/actions/workflows/ubuntu_game.yml)
+[![Game(Windows)](https://github.com/zpervan/BlockJump/actions/workflows/windows_game.yml/badge.svg)](https://github.com/zpervan/BlockJump/actions/workflows/windows_game.yml)
+[![Server(Ubuntu)](https://github.com/zpervan/BlockJump/actions/workflows/ubuntu_server.yml/badge.svg)](https://github.com/zpervan/BlockJump/actions/workflows/ubuntu_server.yml)
+[![Server(Windows)](https://github.com/zpervan/BlockJump/actions/workflows/windows_server.yml/badge.svg)](https://github.com/zpervan/BlockJump/actions/workflows/windows_server.yml)
 ## BlockJump ##
 
 A simple jump-and-run platformer game. Also includes a map editor for creating custom maps.
@@ -13,6 +15,7 @@ Current state of the map editor:
 ### Development setup ###
 
 Used libraries:
+- [curlcpp](https://github.com/JosephP91/curlcpp)
 - [Google Test](https://github.com/google/googletest)
 - [ImGui-SFML](https://github.com/eliasdaler/imgui-sfml)
 - [ImGui](https://github.com/ocornut/imgui)
@@ -28,14 +31,27 @@ Used libraries:
 ```shell
 $ sudo apt install bazel libgl-dev freeglut3-dev
 ```
+3. Install the needed [protobuf](https://github.com/protocolbuffers/protobuf/tags) generator
+4. Install the following `protobuf` dependencies for Go. Position your terminal in the `Server` folder and execute the following:
+```shell
+$ go install google.golang.org/protobuf/cmd/protoc-gen-go
+$ go install google.golang.org/grpc/cmd/protoc-gen-go-grpc
+```
 
-#### Windows (Unstable) ####
+#### Windows ####
 
 1. Install [Bazel](https://www.bazel.build/) 6.0.0. Installation instructions can be found
       [here](https://bazel.build/install/windowsl).
 2. Install Microsoft Visual Studio 19 - Community edition environment. Not sure about other MSVC version.
 
-NOTE: Only the game can be run, the map editor still needs some special attention to get it work.
+3. Install the needed [protobuf](https://github.com/protocolbuffers/protobuf/tags) generator
+4. Install the following `protobuf` dependencies for Go. Position your terminal in the `Server` folder and execute the following:
+```shell
+$ go install google.golang.org/protobuf/cmd/protoc-gen-go
+$ go install google.golang.org/grpc/cmd/protoc-gen-go-grpc
+```
+
+NOTE: Debug mode should work fine in both cases
 
 ### Run ###
 
@@ -46,5 +62,11 @@ $ bazel run //:main --config=linux # or --config=linux_debug for debug mode
 And on Windows:
 ```shell
 > bazel run //:main --config=windows
+```
+
+Running the server:
+```shell
+$ cd Server
+$ go run .
 ```
 
