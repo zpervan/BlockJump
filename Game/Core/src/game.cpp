@@ -1,15 +1,17 @@
 #include "Game/Core/src/game.h"
 
-#include "Library/src/assets_manager.h"
+#include <spdlog/spdlog.h>
+
+#include "Game/Core/src/game_events.h"
 #include "Game/World/src/block.h"
 #include "Game/World/src/utility.h"
 #include "Game/constants.h"
-
-#include <spdlog/spdlog.h>
+#include "Library/src/assets_manager.h"
 
 Game::Game()
     : window_(new GameWindow(Constants::TITLE)),
-      player_entity_(std::make_unique<PlayerEntity>(sf::Vector2f(25, 50)))
+      player_entity_(std::make_unique<PlayerEntity>(sf::Vector2f(25, 50))),
+      event_system_(std::make_unique<GameEventSystem>())
 {
     AssetsManager::Initialize();
 
@@ -111,9 +113,11 @@ Game::~Game()
 void Game::AddGravity()
 {
     const auto new_player_position_y{player_entity_->GetEntity()->getPosition().y + (Constants::GRAVITY / 250)};
-    const sf::FloatRect new_player_position{{player_entity_->GetPosition().x, new_player_position_y}, player_entity_->GetEntity()->getSize()};
+    const sf::FloatRect new_player_position{{player_entity_->GetPosition().x, new_player_position_y},
+                                            player_entity_->GetEntity()->getSize()};
 
-    if((player_entity_->GetEntityState() == EntityState::Jumping) || !Utility::IsColliding(new_player_position, background_objects_))
+    if ((player_entity_->GetEntityState() == EntityState::Jumping) ||
+        !Utility::IsColliding(new_player_position, background_objects_))
     {
         player_entity_->GetEntity()->setPosition({player_entity_->GetPosition().x, new_player_position_y});
     }
