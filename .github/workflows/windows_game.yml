@@ -1,4 +1,4 @@
-name: Windows
+name: Game(Windows)
 
 on:
   push:
@@ -24,7 +24,7 @@ jobs:
       - name: Setup Bazel
         uses: abhinavsingh/setup-bazel@v3
         with:
-          version: 6.0.0
+          version: 5.4.0
       - run: bazel version
 
       - name: Build game
@@ -33,9 +33,3 @@ jobs:
           bazel build //:main --config=windows-ci -c opt          
           bazel build //:map-editor --config=windows-ci -c dbg
           bazel build //:map-editor --config=windows-ci -c opt
-
-      - name: Build server
-        run: |
-          cd Server
-          go mod tidy
-          go build -o server.exe .

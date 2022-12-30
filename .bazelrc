@@ -14,7 +14,7 @@ build:linux --cxxopt=-std=c++2a
 build:linux --cxxopt=-Wpedantic
 
 build:windows --enable_runfiles
-build:windows --cxxopt="/std:c++17"
+build:windows --cxxopt="/std:c++20"
 
 build:windows-opt --config=windows
 build:windows-opt --compilation_mode=opt

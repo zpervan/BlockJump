@@ -1,0 +1,38 @@
+name: Game(Ubuntu)
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Bazel5.4.0
+        uses: abhinavsingh/setup-bazel@v3
+        with:
+          version: 5.4.0
+        run: bazel version
+
+      - name: Install game dependencies
+        run: |
+          sudo apt update
+          sudo apt install libgl-dev freeglut3-dev
+
+      - name: Build game
+        run: |
+          bazel build //... --config=linux -c dbg
+          bazel build //... --config=linux -c opt
+
+# Enable when tests are created
+#      - name: Run Tests | All
+#        run: bazel test //...
