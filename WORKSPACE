@@ -27,6 +27,11 @@ rules_proto_dependencies()
 rules_proto_toolchains()
 
 local_repository(
+    name = "curlcpplib",
+    path = "ThirdParty/curlcpp/",
+)
+
+local_repository(
     name = "gllib",
     path = "ThirdParty/GL/",
 )

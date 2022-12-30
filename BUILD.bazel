@@ -8,6 +8,7 @@ cc_binary(
     data = ["//Assets:copy_sprites"],
     deps = [
         "//Game/Core:game",
+        "@curlcpplib//:curlcpp",
         "@spdloglib//:spdlog",
     ],
 )
