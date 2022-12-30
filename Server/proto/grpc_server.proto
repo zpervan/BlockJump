@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+option go_package = "./proto";
+
+import "connect.proto";
+import "stream.proto";
+
+service Grpc {
+  rpc Connect (ConnectRequest) returns (ConnectResponse) {}
+  rpc Stream (stream StreamRequest) returns (stream StreamResponse) {}
+}

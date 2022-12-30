@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+option go_package = "./proto";
+
+message ConnectRequest {
+  string Id = 1;
+  string Name = 2;
+  string Password = 3;
+}
+
+message ConnectResponse {
+  string Token = 1;
+  int32 Status = 2;
+  // @TODO: Define how the initial game state should be represented (i.e. entity pose, current map name, etc.)
+  // repeated Entity entities = 2;
+}
