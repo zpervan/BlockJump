@@ -6,8 +6,8 @@ build --strip=always
 build --compilation_mode=opt
 
 # Build flavors
-build:linux --client_env=CC="/usr/bin/gcc"
-build:linux --client_env=CXX="/usr/bin/g++"
+build:linux --client_env=CC="/usr/bin/clang-12"
+build:linux --client_env=CXX="/usr/bin/clang++-12"
 build:linux --cxxopt=-std=c++2a
 ## @TODO: Temporary disabled due to imgui-SFML error
 #build:linux --cxxopt=-Werror
