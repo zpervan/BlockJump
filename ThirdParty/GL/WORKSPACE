@@ -19,3 +19,8 @@ local_repository(
     name = "GLM",
     path = "glm-0.9.9.8/",
 )
+
+#local_repository(
+#    name = "freeglut",
+#    path = "freeglut-3.4.0/",
+#)

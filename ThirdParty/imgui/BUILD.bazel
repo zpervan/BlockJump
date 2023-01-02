@@ -50,6 +50,7 @@ cc_library(
         "backends",
     ],
     deps = [
+        "@gllib//:freeglut",
         "@gllib//:glew",
         "@gllib//:glfw",
         "@sfmllib//:sfml-graphics",

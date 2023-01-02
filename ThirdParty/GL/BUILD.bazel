@@ -91,3 +91,17 @@ cc_library(
         "glm-0.9.9.8/simd",
     ],
 )
+
+cc_library(
+    name = "freeglut",
+    srcs = select({
+        "@platforms//os:windows": [],
+        "@platforms//os:linux": glob([
+            "freeglut-3.4.0/lib/*.so*",
+            "freeglut-3.4.0/lib/*.a*",
+        ]),
+    }),
+    hdrs = glob(["freeglut-3.4.0/include/GL/*.h"]),
+    includes = ["freeglut-3.4.0//include"],
+    strip_include_prefix = "freeglut-3.4.0/include",
+)
