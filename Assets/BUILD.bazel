@@ -13,3 +13,18 @@ copy_directory(
     src = "Sprites",
     out = "Sprites",
 )
+
+filegroup(
+    name = "fonts",
+    srcs = glob([
+        "Fonts/*.otf",
+        "Fonts/*.ttf",
+    ]),
+    visibility = ["//visibility:public"],
+)
+
+copy_directory(
+    name = "copy_fonts",
+    src = "Fonts",
+    out = "Fonts",
+)

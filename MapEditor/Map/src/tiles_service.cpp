@@ -29,7 +29,7 @@ void TilesService::BeginPlacement(AssetType type)
 
         temporary_tile_ = new Tile;
         temporary_tile_->shape.setSize({Configuration::Tile_Size, Configuration::Tile_Size});
-        temporary_tile_->shape.setTexture(AssetsManager::Get(type));
+        temporary_tile_->shape.setTexture(AssetsManager::GetTexture(type));
         temporary_tile_->type = type;
     }
 }

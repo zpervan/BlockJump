@@ -1,4 +1,4 @@
-#include "Game/Core/src/game.h"
+#include "Game/game.h"
 
 #include <spdlog/spdlog.h>
 
@@ -11,59 +11,71 @@
 Game::Game()
     : window_(new GameWindow(Constants::TITLE)),
       player_entity_(std::make_unique<PlayerEntity>(sf::Vector2f(25, 50))),
-      event_system_(std::make_unique<GameEventSystem>())
+      game_event_system_(std::make_unique<GameEventSystem>())
 {
     AssetsManager::Initialize();
+    main_menu_ = std::make_unique<GUI::MainMenu>(window_.get(), game_event_system_.get());
 
     background_objects_.reserve(6);
 
+    // @TODO: Move in-memory map generation somewhere more appropriate
     // @TODO: Create a non-player entity factory or builder
     Block* rec{new Block()};
     rec->SetSize({50, 50});
     rec->SetPosition({500, 505});
-    rec->SetTexture(AssetsManager::Get(AssetType::DirtWithGrass));
+    rec->SetTexture(AssetsManager::GetTexture(AssetType::DirtWithGrass));
     background_objects_.emplace_back(rec);
 
     Block* rec1{new Block()};
     rec1->SetSize({100, 50});
     rec1->SetPosition({500, 750});
-    rec1->SetTexture(AssetsManager::Get(AssetType::DirtWithGrass));
+    rec1->SetTexture(AssetsManager::GetTexture(AssetType::DirtWithGrass));
     background_objects_.emplace_back(rec1);
 
     Block* rec2{new Block()};
     rec2->SetSize({50, 100});
     rec2->SetPosition({100, 300});
-    rec2->SetTexture(AssetsManager::Get(AssetType::Brick));
+    rec2->SetTexture(AssetsManager::GetTexture(AssetType::Brick));
     background_objects_.emplace_back(rec2);
 
     Block* rec3{new Block()};
     rec3->SetSize({400, 50});
     rec3->SetPosition({700, 850});
-    rec3->SetTexture(AssetsManager::Get(AssetType::Brick));
+    rec3->SetTexture(AssetsManager::GetTexture(AssetType::Brick));
     background_objects_.emplace_back(rec3);
 
     Block* rec4{new Block()};
     rec4->SetSize({150, 50});
     rec4->SetPosition({850, 800});
-    rec4->SetTexture(AssetsManager::Get(AssetType::Brick));
+    rec4->SetTexture(AssetsManager::GetTexture(AssetType::Brick));
     background_objects_.emplace_back(rec4);
 
     Block* ground{new Block()};
     ground->SetSize({1280, 200});
     ground->SetPosition({0, 900});
-    ground->SetTexture(AssetsManager::Get(AssetType::DirtWithGrass));
+    ground->SetTexture(AssetsManager::GetTexture(AssetType::DirtWithGrass));
     background_objects_.emplace_back(ground);
 
-    player_entity_->SetTexture(AssetsManager::Get(AssetType::Player));
-    window_->SetView({player_entity_->GetPosition(), {Constants::VIEW_THRESHOLD_X, Constants::VIEW_THRESHOLD_Y}});
+    player_entity_->SetTexture(AssetsManager::GetTexture(AssetType::Player));
+    // @TODO: Set it after the menu screen is done
+    // window_->SetView({player_entity_->GetPosition(), {Constants::VIEW_THRESHOLD_X, Constants::VIEW_THRESHOLD_Y}});
+    game_event_system_->Set(GameEvents::Menu);
 }
 
 void Game::Run()
 {
     while (!window_->IsDone())
     {
-        Update();
-        Display();
+        if (game_event_system_->Poll() == GameEvents::Menu)
+        {
+            main_menu_->Show();
+        }
+
+        if (game_event_system_->Poll() == GameEvents::Start)
+        {
+            Update();
+            Display();
+        }
     }
 }
 

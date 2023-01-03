@@ -1,25 +1,28 @@
 #ifndef BLOCKJUMP_PATHS_H
 #define BLOCKJUMP_PATHS_H
 
+#include <spdlog/spdlog.h>
+
 #include <filesystem>
 #include <string>
-#include <spdlog/spdlog.h>
 
 #ifdef _WIN32
 #include <windows.h>
 #else
-#include <unistd.h>
 #include <linux/limits.h>
+#include <unistd.h>
 #endif
 
 namespace
 {
 #ifdef WIN32
-static constexpr auto Sprites_Directory{"\\Assets\\Sprites\\"};
+constexpr auto Sprites_Directory{"\\Assets\\Sprites\\"};
+constexpr auto Fonts_Directory{"\\Assets\\Fonts\\"};
 #else
-static constexpr auto Sprites_Directory{"/Assets/Sprites/"};
+constexpr auto Sprites_Directory{"/Assets/Sprites/"};
+constexpr auto Fonts_Directory{"/Assets/Fonts/"};
 #endif
-}
+}  // namespace
 
 namespace Paths
 {
@@ -38,14 +41,18 @@ inline std::filesystem::path RootPath()
     szPath[count] = '\0';
 #endif
 
-    const auto root_path = std::filesystem::path(szPath).parent_path();
-
+    auto root_path = std::filesystem::path(szPath).parent_path();
     return root_path;
 }
 
 inline std::string SpritesDirectoryPath()
 {
     return RootPath().string() + Sprites_Directory;
+}
+
+inline std::string FontsDirectoryPath()
+{
+    return RootPath().string() + Fonts_Directory;
 }
 
 }  // namespace Paths

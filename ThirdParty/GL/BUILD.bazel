@@ -102,6 +102,6 @@ cc_library(
         ]),
     }),
     hdrs = glob(["freeglut-3.4.0/include/GL/*.h"]),
-    includes = ["freeglut-3.4.0//include"],
+    includes = ["freeglut-3.4.0/include"],
     strip_include_prefix = "freeglut-3.4.0/include",
 )

@@ -120,3 +120,8 @@ void GameWindow::UpdatePlayerView(const sf::Vector2f& player_position)
         SetView(view_);
     }
 }
+
+sf::RenderWindow* GameWindow::GetWindow()
+{
+    return &window_;
+}

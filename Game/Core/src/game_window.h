@@ -17,6 +17,7 @@ class GameWindow
     void UpdatePlayerView(const sf::Vector2f& player_position);
     bool IsDone();
 
+    sf::RenderWindow* GetWindow();
     sf::Vector2u GetWindowSize();
     void SetView(const sf::View& view);
     const sf::View& GetView() const;

@@ -7,7 +7,7 @@
 class BackgroundObject
 {
   public:
-    virtual ~BackgroundObject() = default;;
+    virtual ~BackgroundObject() = default;
 
     virtual void SetSize(sf::Vector2f size) = 0;
     virtual void SetPosition(sf::Vector2f position) = 0;
@@ -16,7 +16,7 @@ class BackgroundObject
     virtual void SetFillColor(sf::Color color) = 0;
 
     /// @TODO: Create more generic return type - template or sf::drawable?
-    virtual sf::RectangleShape * Get() = 0;
+    virtual sf::RectangleShape* Get() = 0;
 };
 
 #endif  // BLOCKJUMP_BACKGROUND_OBJECT_H

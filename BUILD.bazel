@@ -5,10 +5,34 @@ load("@rules_cc//cc:defs.bzl", "cc_binary")
 cc_binary(
     name = "main",
     srcs = ["Game/main.cpp"],
-    data = ["//Assets:copy_sprites"],
+    data = ["//Assets:copy_fonts"],
     deps = [
-        "//Game/Core:game",
+        "//:game",
         "@curlcpplib//:curlcpp",
+        "@spdloglib//:spdlog",
+    ],
+)
+
+cc_library(
+    name = "game",
+    srcs = ["Game/game.cpp"],
+    hdrs = ["Game/game.h"],
+    data = [
+        "//Assets:copy_sprites",
+        "//Assets:sprites",
+    ],
+    linkopts = select({
+        "@platforms//os:windows": ["-DEFAULTLIB:user32.lib"],
+        "@platforms//os:linux": [
+            "-pthread",
+            "-lX11",
+        ],
+    }),
+    visibility = ["//visibility:public"],
+    deps = [
+        "//Game/Entities:entities",
+        "//Game/GUI:gui",
+        "//Game/World:world",
         "@spdloglib//:spdlog",
     ],
 )

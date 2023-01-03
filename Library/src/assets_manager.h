@@ -1,6 +1,7 @@
 #ifndef BLOCKJUMP_ASSETS_MANAGER_H
 #define BLOCKJUMP_ASSETS_MANAGER_H
 
+#include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <memory>
 
@@ -21,14 +22,17 @@ class AssetsManager
     static void Initialize();
 
     /// Getters
-    static sf::Texture* Get(AssetType type);
+    static sf::Texture* GetTexture(AssetType type);
+    static sf::Font* GetFont();
 
   private:
     static std::unique_ptr<sf::Texture> LoadAsset(const std::string& asset_name);
+    static std::unique_ptr<sf::Font> LoadFont(const std::string& font_name);
 
     inline static std::unique_ptr<sf::Texture> player_entity_;
     inline static std::unique_ptr<sf::Texture> background_dirt_with_grass_;
     inline static std::unique_ptr<sf::Texture> background_brick_;
+    inline static std::unique_ptr<sf::Font> main_menu_font_;
 };
 
 #endif  // BLOCKJUMP_ASSETS_MANAGER_H

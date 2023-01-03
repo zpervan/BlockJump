@@ -12,6 +12,7 @@ void AssetsManager::Initialize()
     player_entity_ = LoadAsset("player.png");
     background_dirt_with_grass_ = LoadAsset("dirt_with_grass.png");
     background_brick_ = LoadAsset("brick.png");
+    main_menu_font_ = LoadFont("CodeNewRoman.otf");
 }
 
 std::unique_ptr<sf::Texture> AssetsManager::LoadAsset(const std::string& asset_name)
@@ -19,12 +20,22 @@ std::unique_ptr<sf::Texture> AssetsManager::LoadAsset(const std::string& asset_n
     auto asset_object{std::make_unique<sf::Texture>()};
 
     const std::string asset_path{Paths::SpritesDirectoryPath() + asset_name};
-    assert(asset_object->loadFromFile(asset_path) && "Asset does not exist!");
+    assert(asset_object->loadFromFile(asset_path) && "Asset doesn't exist!");
 
     return asset_object;
 }
 
-sf::Texture* AssetsManager::Get(AssetType type)
+std::unique_ptr<sf::Font> AssetsManager::LoadFont(const std::string& font_name)
+{
+    auto font_object{std::make_unique<sf::Font>()};
+
+    const std::string font_path{Paths::FontsDirectoryPath() + font_name};
+    assert(font_object->loadFromFile(font_path) && "Font doesn't exist!");
+
+    return font_object;
+}
+
+sf::Texture* AssetsManager::GetTexture(AssetType type)
 {
     sf::Texture* texture{nullptr};
 
@@ -45,4 +56,9 @@ sf::Texture* AssetsManager::Get(AssetType type)
     }
 
     return texture;
+}
+
+sf::Font* AssetsManager::GetFont()
+{
+    return main_menu_font_.get();
 }

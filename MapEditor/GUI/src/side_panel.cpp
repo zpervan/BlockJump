@@ -16,7 +16,7 @@ void SidePanel::Show()
     ImGui::Text("Characters");
     ImGui::NewLine();
 
-    if (ImGui::ImageButton(*AssetsManager::Get(AssetType::Player), {Configuration::Button_Size.x, Configuration::Button_Size.y}, padding_))
+    if (ImGui::ImageButton(*AssetsManager::GetTexture(AssetType::Player), {Configuration::Button_Size.x, Configuration::Button_Size.y}, padding_))
     {
         spdlog::debug("Pressed characters \"Player\" button");
         tiles_service_.BeginPlacement(AssetType::Player);
@@ -27,7 +27,7 @@ void SidePanel::Show()
     ImGui::NewLine();
 
     /// @TODO: Automatically add buttons by detecting the number of assets
-    if (ImGui::ImageButton(*AssetsManager::Get(AssetType::DirtWithGrass), {Configuration::Button_Size.x, Configuration::Button_Size.y}, padding_))
+    if (ImGui::ImageButton(*AssetsManager::GetTexture(AssetType::DirtWithGrass), {Configuration::Button_Size.x, Configuration::Button_Size.y}, padding_))
     {
         spdlog::debug("Pressed background \"DirtWithGrass\" button");
         tiles_service_.BeginPlacement(AssetType::DirtWithGrass);
@@ -35,7 +35,7 @@ void SidePanel::Show()
 
     ImGui::SameLine();
 
-    if (ImGui::ImageButton(*AssetsManager::Get(AssetType::Brick), {Configuration::Button_Size.x, Configuration::Button_Size.y}, padding_))
+    if (ImGui::ImageButton(*AssetsManager::GetTexture(AssetType::Brick), {Configuration::Button_Size.x, Configuration::Button_Size.y}, padding_))
     {
         spdlog::debug("Pressed background \"Brick\" button");
         tiles_service_.BeginPlacement(AssetType::Brick);

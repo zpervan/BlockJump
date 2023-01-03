@@ -1,5 +1,4 @@
-#include "Game/Core/src/game.h"
-
+#include "Game/game.h"
 #include "spdlog/spdlog.h"
 
 /// @TODO: Create texture manager/handler class

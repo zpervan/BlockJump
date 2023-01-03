@@ -5,7 +5,8 @@ enum class GameEvents
 {
     None = 0,
     Start,
-    Quit
+    Quit,
+    Menu
 };
 
 class GameEventSystem

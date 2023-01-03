@@ -1,14 +1,13 @@
 load("@rules_cc//cc:defs.bzl", "cc_library")
 
 cc_library(
-    name = "core",
+    name = "gui",
     srcs = glob(["src/*.cpp"]),
     hdrs = glob(["src/*.h"]),
     visibility = ["//visibility:public"],
     deps = [
-        "//:game-bootstrap",
-        "@gllib//:glew",
-        "@gllib//:glfw",
+        "//Game/Core:core",
+        "//Library:library_common",
         "@sfmllib//:sfml-graphics",
         "@sfmllib//:sfml-system",
         "@sfmllib//:sfml-window",
