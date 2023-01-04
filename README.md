@@ -22,6 +22,7 @@ Used libraries:
 - [ImFileBrowser](https://github.com/AirGuanZ/imgui-filebrowser)
 - [SFML](https://www.sfml-dev.org/)
 - [spdlog](https://github.com/gabime/spdlog)
+- [stduuid](https://github.com/mariusbancila/stduuid)
 
 #### Ubuntu ####
 

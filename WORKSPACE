@@ -55,3 +55,8 @@ local_repository(
     name = "spdloglib",
     path = "ThirdParty/spdlog/",
 )
+
+local_repository(
+    name = "stduuidlib",
+    path = "ThirdParty/stduuid/",
+)
