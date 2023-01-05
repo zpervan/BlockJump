@@ -12,7 +12,8 @@ void AssetsManager::Initialize()
     player_entity_ = LoadAsset("player.png");
     background_dirt_with_grass_ = LoadAsset("dirt_with_grass.png");
     background_brick_ = LoadAsset("brick.png");
-    main_menu_font_ = LoadFont("CodeNewRoman.otf");
+    header_font_ = LoadFont("KGHAPPY.ttf");
+    button_font_ = LoadFont("CodeNewRoman.otf");
 }
 
 std::unique_ptr<sf::Texture> AssetsManager::LoadAsset(const std::string& asset_name)
@@ -37,28 +38,30 @@ std::unique_ptr<sf::Font> AssetsManager::LoadFont(const std::string& font_name)
 
 sf::Texture* AssetsManager::GetTexture(AssetType type)
 {
-    sf::Texture* texture{nullptr};
-
     switch (type)
     {
         case AssetType::Player:
-            texture = player_entity_.get();
-            break;
+            return player_entity_.get();
         case AssetType::DirtWithGrass:
-            texture = background_dirt_with_grass_.get();
-            break;
+            return background_dirt_with_grass_.get();
         case AssetType::Brick:
-            texture = background_brick_.get();
-            break;
+            return background_brick_.get();
         default:
-            spdlog::warn("Doesn't contain asset type!");
-            break;
+            spdlog::error("Doesn't contain asset of that type!");
+            return nullptr;
     }
-
-    return texture;
 }
 
-sf::Font* AssetsManager::GetFont()
+sf::Font* AssetsManager::GetFont(FontType font)
 {
-    return main_menu_font_.get();
+    switch (font)
+    {
+        case FontType::Header:
+            return header_font_.get();
+        case FontType::Button:
+            return button_font_.get();
+        default:
+            spdlog::error("Doesn't contain font of that type!");
+            return nullptr;
+    }
 }

@@ -14,6 +14,13 @@ enum class AssetType
     Brick
 };
 
+/// @brief Used to select which type of font to fetch
+enum class FontType
+{
+    Header = 0,
+    Button
+};
+
 /// @brief Contains all initialization and loading logic for assets used in the simulation.
 class AssetsManager
 {
@@ -23,7 +30,7 @@ class AssetsManager
 
     /// Getters
     static sf::Texture* GetTexture(AssetType type);
-    static sf::Font* GetFont();
+    static sf::Font* GetFont(FontType font);
 
   private:
     static std::unique_ptr<sf::Texture> LoadAsset(const std::string& asset_name);
@@ -32,7 +39,8 @@ class AssetsManager
     inline static std::unique_ptr<sf::Texture> player_entity_;
     inline static std::unique_ptr<sf::Texture> background_dirt_with_grass_;
     inline static std::unique_ptr<sf::Texture> background_brick_;
-    inline static std::unique_ptr<sf::Font> main_menu_font_;
+    inline static std::unique_ptr<sf::Font> button_font_;
+    inline static std::unique_ptr<sf::Font> header_font_;
 };
 
 #endif  // BLOCKJUMP_ASSETS_MANAGER_H

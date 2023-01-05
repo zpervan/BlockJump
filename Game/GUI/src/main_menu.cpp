@@ -3,6 +3,7 @@
 #include <spdlog/spdlog.h>
 
 #include "Game/GUI/src/gui_constans.h"
+#include "Game/constants.h"
 
 namespace GUI
 {
@@ -10,8 +11,10 @@ namespace GUI
 MainMenu::MainMenu(GameWindow* window, GameEventSystem* game_event_system)
     : window_(window), game_event_system_(game_event_system)
 {
+    InitializeHeader();
+
     const std::vector<std::string> button_labels{"Start", "Online Game", "Options", "Exit"};
-    PositionButtons(button_labels);
+    InitializeButtons(button_labels);
 }
 
 void MainMenu::Show()
@@ -33,10 +36,27 @@ void MainMenu::Show()
         window_->GetWindow()->draw(button.Text());
     }
 
+    window_->GetWindow()->draw(header_text_);
     window_->EndDraw();
 }
 
-void MainMenu::PositionButtons(const std::vector<std::string>& labels)
+void MainMenu::InitializeHeader()
+{
+    header_text_.setString(::Constants::TITLE);
+    header_text_.setCharacterSize(50);
+    header_text_.setFont(*AssetsManager::GetFont(FontType::Header));
+    header_text_.setFillColor(sf::Color::Black);
+
+    // Calculate header position
+    const float window_x_center = window_->GetWindow()->getSize().x / 2.0f;
+    const float start_y_position = window_->GetWindow()->getSize().y * 0.1f;
+    const float half_word_width = header_text_.getGlobalBounds().width / 2.0f;
+    const float header_x_position = window_x_center - half_word_width;
+
+    header_text_.setPosition(header_x_position, start_y_position);
+}
+
+void MainMenu::InitializeButtons(const std::vector<std::string>& labels)
 {
     const float window_x_center = window_->GetWindow()->getSize().x / 2.0f;
     const float start_y_position = window_->GetWindow()->getSize().y * 0.3f;

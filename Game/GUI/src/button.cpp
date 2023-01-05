@@ -12,7 +12,7 @@ namespace GUI
 
 Button::Button()
 {
-    text_.setFont(*AssetsManager::GetFont());
+    text_.setFont(*AssetsManager::GetFont(FontType::Button));
     text_.setFillColor(GUI::Constants::MAINMENU_BUTTON_TEXT_COLOR);
     text_.setCharacterSize(GUI::Constants::MAINMENU_BUTTON_TEXT_SIZE);
     background_.setFillColor(GUI::Constants::MAINMENU_BUTTON_BACKGROUND_COLOR);

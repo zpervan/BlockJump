@@ -21,12 +21,13 @@ class MainMenu
     void Show();
 
   private:
-    void PositionButtons(const std::vector<std::string>& labels);
-    float CalculateButtonTextCenter(std::size_t button_index, sf::FloatRect bounds);
+    void InitializeHeader();
+    void InitializeButtons(const std::vector<std::string>& labels);
 
     GameWindow* window_;
     GameEventSystem* game_event_system_;
     std::vector<Button> buttons_;
+    sf::Text header_text_;
 };
 
 }  // namespace GUI
