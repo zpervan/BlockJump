@@ -5,6 +5,7 @@
 
 #include "Game/Core/src/game_events.h"
 #include "Game/Core/src/game_window.h"
+#include "Game/GUI/src/button.h"
 #include "Library/src/assets_manager.h"
 
 namespace GUI
@@ -22,7 +23,7 @@ class MainMenu
   private:
     GameWindow* window_;
     GameEventSystem* game_event_system_;
-    std::vector<sf::Text> texts_;
+    std::vector<Button> buttons_;
 };
 
 }  // namespace GUI

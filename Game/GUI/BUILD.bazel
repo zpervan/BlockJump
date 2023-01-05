@@ -12,5 +12,6 @@ cc_library(
         "@sfmllib//:sfml-system",
         "@sfmllib//:sfml-window",
         "@spdloglib//:spdlog",
+        "@stduuidlib//:stduuid",
     ],
 )

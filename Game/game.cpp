@@ -76,13 +76,13 @@ void Game::Run()
             Update();
             Display();
         }
+
+        window_->Update();
     }
 }
 
 void Game::Update()
 {
-    window_->Update();
-
     player_entity_->Move(background_objects_);
     player_entity_->Update();
 
