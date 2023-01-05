@@ -7,10 +7,11 @@ namespace GUI::Constants
 {
 
 const sf::Color MAINMENU_BUTTON_BACKGROUND_COLOR{158, 150, 111, 62};
+const sf::Color MAINMENU_BUTTON_HOVERED_COLOR{240, 120, 36, 255};
 const sf::Vector2f MAINMENU_BUTTON_BACKGROUND_SIZE{200.0f, 40.0f};
 
 const sf::Color MAINMENU_BUTTON_TEXT_COLOR{128, 126, 158, 62};
-const unsigned int MAINMENU_BUTTON_TEXT_SIZE{28};
+const unsigned int MAINMENU_BUTTON_TEXT_SIZE{32};
 
 }  // namespace GUI::Constants
 

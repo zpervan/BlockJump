@@ -1,7 +1,10 @@
 #include "button.h"
 
+#include <spdlog/spdlog.h>
+
 #include <SFML/Window/Mouse.hpp>
 
+#include "Game/GUI/src/gui_constans.h"
 #include "Library/src/assets_manager.h"
 
 namespace GUI
@@ -10,13 +13,41 @@ namespace GUI
 Button::Button()
 {
     text_.setFont(*AssetsManager::GetFont());
-    text_.setFillColor(sf::Color::Black);
-    text_.setCharacterSize(32);
+    text_.setFillColor(GUI::Constants::MAINMENU_BUTTON_TEXT_COLOR);
+    text_.setCharacterSize(GUI::Constants::MAINMENU_BUTTON_TEXT_SIZE);
+    background_.setFillColor(GUI::Constants::MAINMENU_BUTTON_BACKGROUND_COLOR);
+    background_.setSize(GUI::Constants::MAINMENU_BUTTON_BACKGROUND_SIZE);
 }
 
 bool Button::IsPressed()
 {
-    return sf::Mouse::isButtonPressed(sf::Mouse::Left);
+    const bool is_pressed = sf::Mouse::isButtonPressed(sf::Mouse::Left);
+
+    if (is_pressed)
+    {
+        spdlog::debug("Button with label {} is pressed", text_.getString().toAnsiString());
+    }
+
+    return is_pressed;
+}
+
+bool Button::IsHovered(sf::Vector2f mouse_coordinates)
+{
+    const bool is_hovered = background_.getGlobalBounds().contains(mouse_coordinates);
+
+    if (is_hovered)
+    {
+        text_.setFillColor(GUI::Constants::MAINMENU_BUTTON_HOVERED_COLOR);
+        background_.setOutlineColor(GUI::Constants::MAINMENU_BUTTON_HOVERED_COLOR);
+        background_.setOutlineThickness(3.0f);
+    }
+    else
+    {
+        text_.setFillColor(sf::Color::Black);
+        background_.setOutlineColor(sf::Color::Transparent);
+    }
+
+    return is_hovered;
 }
 
 sf::RectangleShape& Button::Background()
