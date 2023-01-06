@@ -5,6 +5,8 @@ enum class GameEvents
 {
     None = 0,
     Start,
+    OnlineGame,
+    Options,
     Quit,
     Menu
 };

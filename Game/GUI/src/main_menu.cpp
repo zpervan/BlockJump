@@ -28,8 +28,7 @@ void MainMenu::Show()
     {
         if (button.IsHovered(mouse_game_coordinates) && button.IsPressed())
         {
-            // @TODO: Implement function execution when specific button is pressed
-            game_event_system_->Set(GameEvents::Start);
+            button.ExecuteFunction();
         }
 
         window_->GetWindow()->draw(button.Background());
@@ -78,6 +77,19 @@ void MainMenu::InitializeButtons(const std::vector<std::string>& labels)
 
         buttons_.emplace_back(std::move(button));
     }
+
+    // @TODO: Make it more flexible by checking the button type
+    const auto start_function = [this]() { game_event_system_->Set(GameEvents::Start); };
+    buttons_[0].SetFunction(start_function);
+
+    const auto online_game_function = [this]() { game_event_system_->Set(GameEvents::OnlineGame); };
+    buttons_[1].SetFunction(online_game_function);
+
+    const auto options_function = [this]() { game_event_system_->Set(GameEvents::Options); };
+    buttons_[2].SetFunction(options_function);
+
+    const auto quit_function = [this]() { game_event_system_->Set(GameEvents::Quit); };
+    buttons_[3].SetFunction(quit_function);
 }
 
 }  // namespace GUI

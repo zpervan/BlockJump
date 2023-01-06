@@ -60,4 +60,14 @@ sf::Text& Button::Text()
     return text_;
 }
 
+void Button::SetFunction(std::function<void()> function)
+{
+    function_ = function;
+}
+
+void Button::ExecuteFunction()
+{
+    function_();
+}
+
 }  // namespace GUI

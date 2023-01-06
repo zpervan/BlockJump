@@ -13,26 +13,34 @@ class Button
   public:
     Button();
 
-    /// @brief Checks whether the button is pressed
+    /// @brief Checks whether the button is pressed.
     /// @return @c true if pressed, @c false otherwise
     bool IsPressed();
 
-    /// @brief Checks whether the button is hovered
+    /// @brief Checks whether the button is hovered.
     /// @param mouse_coordinates Mouse coordinates in the current window
     /// @return @c true if hovered, @c false otherwise
     bool IsHovered(sf::Vector2f mouse_coordinates);
 
-    /// @brief Contains the textual part of the button which is represented with a @c sf::Text
+    /// @brief Contains the textual part of the button which is represented with a @c sf::Text.
     /// @return Text related functionality and data
     sf::Text& Text();
 
-    /// @brief Contains the background part of the button which is represented with a @c sf::RectangleShape
+    /// @brief Contains the background part of the button which is represented with a @c sf::RectangleShape.
     /// @return Background related functionality and data
     sf::RectangleShape& Background();
+
+    /// @brief Set the button functionality in case when it's clicked.
+    /// @param function Function which will be executed
+    void SetFunction(std::function<void()> function);
+
+    /// @brief Execute the associated button functionality.
+    void ExecuteFunction();
 
   private:
     sf::Text text_;
     sf::RectangleShape background_;
+    std::function<void()> function_;
 };
 
 }  // namespace GUI

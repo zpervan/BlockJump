@@ -66,15 +66,33 @@ void Game::Run()
 {
     while (!window_->IsDone())
     {
-        if (game_event_system_->Poll() == GameEvents::Menu)
+        const auto event = game_event_system_->Poll();
+
+        if (event == GameEvents::Menu)
         {
             main_menu_->Show();
         }
 
-        if (game_event_system_->Poll() == GameEvents::Start)
+        if (event == GameEvents::Start)
         {
             Update();
             Display();
+        }
+
+        // @TODO: Implement functionalities for events
+        if ((event == GameEvents::Options) || (event == GameEvents::OnlineGame) || (event == GameEvents::Quit))
+        {
+            window_->BeginDraw();
+
+            sf::Text not_implemented_text{};
+            not_implemented_text.setCharacterSize(32);
+            not_implemented_text.setFont(*AssetsManager::GetFont(FontType::Header));
+            not_implemented_text.setString("Functionality not implemented");
+            not_implemented_text.setFillColor(sf::Color::Black);
+
+            window_->Draw(not_implemented_text);
+
+            window_->EndDraw();
         }
 
         window_->Update();
