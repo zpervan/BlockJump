@@ -15,6 +15,7 @@ Game::Game()
 {
     AssetsManager::Initialize();
     main_menu_ = std::make_unique<GUI::MainMenu>(window_.get(), game_event_system_.get());
+    online_game_screen_ = std::make_unique<GUI::OnlineGameScreen>(window_.get(), game_event_system_.get());
 
     background_objects_.reserve(6);
 
@@ -73,6 +74,11 @@ void Game::Run()
             main_menu_->Show();
         }
 
+        if (event == GameEvents::OnlineGame)
+        {
+            online_game_screen_->Show();
+        }
+
         if (event == GameEvents::Start)
         {
             Update();
@@ -80,7 +86,7 @@ void Game::Run()
         }
 
         // @TODO: Implement functionalities for events
-        if ((event == GameEvents::Options) || (event == GameEvents::OnlineGame) || (event == GameEvents::Quit))
+        if ((event == GameEvents::Options) || (event == GameEvents::Quit))
         {
             window_->BeginDraw();
 

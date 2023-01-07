@@ -12,6 +12,7 @@ namespace GUI
 
 Button::Button()
 {
+    /// @TODO: Make button attribute initialization more generic (remove MAINMENU constants)
     text_.setFont(*AssetsManager::GetFont(FontType::Button));
     text_.setFillColor(GUI::Constants::MAINMENU_BUTTON_TEXT_COLOR);
     text_.setCharacterSize(GUI::Constants::MAINMENU_BUTTON_TEXT_SIZE);

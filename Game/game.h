@@ -8,6 +8,7 @@
 #include "Game/Core/src/game_window.h"
 #include "Game/Entities/src/player_entity.h"
 #include "Game/GUI/src/main_menu.h"
+#include "Game/GUI/src/online_game_screen.h"
 #include "Game/World/src/background_object.h"
 
 /// @brief Manages the lifetime and screen content of the game window.
@@ -39,6 +40,7 @@ class Game
     std::vector<BackgroundObject *> background_objects_;
     std::unique_ptr<GameEventSystem> game_event_system_;
     std::unique_ptr<GUI::MainMenu> main_menu_;
+    std::unique_ptr<GUI::OnlineGameScreen> online_game_screen_;
 };
 
 #endif  // BLOCKJUMP_GAME_H

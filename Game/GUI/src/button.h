@@ -8,6 +8,7 @@
 namespace GUI
 {
 
+/// @TODO: Add @c SetPosition functionality to move the text and background simultaneously
 class Button
 {
   public:
