@@ -11,6 +11,7 @@ message ConnectRequest {
 message ConnectResponse {
   string Token = 1;
   int32 Status = 2;
+  string ServerName = 3;
   // @TODO: Define how the initial game state should be represented (i.e. entity pose, current map name, etc.)
   // repeated Entity entities = 2;
 }

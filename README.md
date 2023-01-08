@@ -54,6 +54,14 @@ $ go install google.golang.org/grpc/cmd/protoc-gen-go-grpc
 
 NOTE: Debug mode should work fine in both cases
 
+### Generating server files ###
+In order to successfully launch the server, you need to generate the gRPC files from the `Server/message` folder. Make sure you have installed the environment successfully.
+Do the following to generate the files:
+```shell
+$ cd Server/messages
+$ protoc --go_out=../proto --go_opt=paths=source_relative --go-grpc_out=../proto --go-grpc_opt=paths=source_relative *.proto 
+```
+For more information, you can have a look [this](https://itnext.io/build-grpc-server-with-golang-go-step-by-step-b3f5abcf9e0e) blog post.
 ### Run ###
 
 To run the game, use the following command for Ubuntu:
@@ -64,7 +72,6 @@ And on Windows:
 ```shell
 > bazel run //:main --config=windows
 ```
-
 Running the server:
 ```shell
 $ cd Server
