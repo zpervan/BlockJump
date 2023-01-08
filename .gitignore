@@ -7,6 +7,7 @@
 # Files
 **/*.out
 **/*.exe
+/Server/proto/*.pb.go
 
 # Asset test files
 /Assets/maps/*
