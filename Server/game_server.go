@@ -7,7 +7,7 @@ import (
 )
 
 type GameServer struct {
-	UnimplementedGrpcServer
+	proto.UnimplementedGrpcServer
 }
 
 func (gs *GameServer) Connect(ctx context.Context, _ *proto.ConnectRequest) (*proto.ConnectResponse, error) {

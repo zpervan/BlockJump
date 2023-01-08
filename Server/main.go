@@ -17,7 +17,7 @@ func main() {
 	}
 
 	server := grpc.NewServer()
-	proto.RegisterGrpcServer(server, &proto.GameServer{})
+	proto.RegisterGrpcServer(server, &GameServer{})
 	if err := server.Serve(listener); err != nil {
 		log.Fatalf("failed to serve: %v", err)
 	}
