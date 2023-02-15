@@ -1,10 +1,11 @@
 #ifndef BLOCKJUMP_BUTTON_H
 #define BLOCKJUMP_BUTTON_H
 
+#include <SFML/Audio/Sound.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Text.hpp>
-#include <string>
 #include <functional>
+#include <string>
 
 namespace GUI
 {
@@ -32,6 +33,15 @@ class Button
     /// @return Background related functionality and data
     sf::RectangleShape& Background();
 
+    /// @brief Associate a sound when the button is active.
+    /// @param sound Sound which will be added to the button
+    /// @todo Define specific sounds for specific action like click or hover
+    void SetSound(const sf::SoundBuffer& sound);
+
+    /// @brief Get the sound associated with the button.
+    /// @return Sound associated with button
+    const sf::Sound* Sound();
+
     /// @brief Set the button functionality in case when it's clicked.
     /// @param function Function which will be executed
     void SetFunction(std::function<void()> function);
@@ -39,10 +49,14 @@ class Button
     /// @brief Execute the associated button functionality.
     void ExecuteFunction();
 
+  public:
+    bool is_active{false};
+
   private:
     sf::Text text_;
     sf::RectangleShape background_;
     std::function<void()> function_;
+    std::unique_ptr<sf::Sound> sound_;
 };
 
 }  // namespace GUI

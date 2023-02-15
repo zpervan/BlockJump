@@ -16,8 +16,6 @@ MainMenu::MainMenu(GameWindow* window, GameEventSystem* game_event_system)
 
     const std::vector<std::string> button_labels{"Start", "Online Game", "Options", "Exit"};
     InitializeButtons(button_labels);
-
-    menu_click_.setBuffer(*AssetsManager::GetSound(SoundType::Click));
 }
 
 void MainMenu::Show()
@@ -29,12 +27,7 @@ void MainMenu::Show()
 
     for (auto& button : buttons_)
     {
-        if (button.IsHovered(mouse_game_coordinates))
-        {
-            menu_click_.play();
-        }
-
-        if (button.IsPressed())
+        if (button.IsHovered(mouse_game_coordinates) && button.IsPressed())
         {
             button.ExecuteFunction();
         }
@@ -82,6 +75,7 @@ void MainMenu::InitializeButtons(const std::vector<std::string>& labels)
 
         // Calculate button background position
         button.Background().setPosition(window_x_center - background_half_width, start_y_position + (y_step * i));
+        button.SetSound(*AssetsManager::GetSound(SoundType::Click));
 
         buttons_.emplace_back(std::move(button));
     }

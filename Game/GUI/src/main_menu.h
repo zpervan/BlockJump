@@ -29,7 +29,6 @@ class MainMenu
     GameEventSystem* game_event_system_;
     std::vector<Button> buttons_;
     sf::Text header_text_;
-    sf::Sound menu_click_;
 };
 
 }  // namespace GUI
