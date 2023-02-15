@@ -4,7 +4,9 @@ package(default_visibility = ["//visibility:public"])
 
 filegroup(
     name = "sprites",
-    srcs = glob(["Sprites/*.png"]),
+    srcs = glob([
+        "Sprites/*.png"
+        ]),
     visibility = ["//visibility:public"],
 )
 
@@ -27,4 +29,18 @@ copy_directory(
     name = "copy_fonts",
     src = "Fonts",
     out = "Fonts",
+)
+
+filegroup(
+    name = "sounds",
+    srcs = glob([
+        "Sounds/*.wav",
+    ]),
+    visibility = ["//visibility:public"],
+)
+
+copy_directory(
+    name = "copy_sounds",
+    src = "Sounds",
+    out = "Sounds",
 )
