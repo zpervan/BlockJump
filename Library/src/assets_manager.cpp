@@ -14,6 +14,7 @@ void AssetsManager::Initialize()
     background_brick_ = LoadAsset("brick.png");
     header_font_ = LoadFont("KGHAPPY.ttf");
     button_font_ = LoadFont("CodeNewRoman.otf");
+    click_sound_ = LoadSound("click.wav");
 }
 
 std::unique_ptr<sf::Texture> AssetsManager::LoadAsset(const std::string& asset_name)
@@ -36,6 +37,16 @@ std::unique_ptr<sf::Font> AssetsManager::LoadFont(const std::string& font_name)
     return font_object;
 }
 
+std::unique_ptr<sf::SoundBuffer> AssetsManager::LoadSound(const std::string& sound_name)
+{
+    auto sound_object{std::make_unique<sf::SoundBuffer>()};
+
+    const std::string sounds_path{Paths::SoundsDirectoryPath() + sound_name};
+    assert(sound_object->loadFromFile(sounds_path) && "Sound doesn't exist!");
+
+    return sound_object;
+}
+
 sf::Texture* AssetsManager::GetTexture(AssetType type)
 {
     switch (type)
@@ -52,9 +63,9 @@ sf::Texture* AssetsManager::GetTexture(AssetType type)
     }
 }
 
-sf::Font* AssetsManager::GetFont(FontType font)
+sf::Font* AssetsManager::GetFont(FontType type)
 {
-    switch (font)
+    switch (type)
     {
         case FontType::Header:
             return header_font_.get();
@@ -64,4 +75,17 @@ sf::Font* AssetsManager::GetFont(FontType font)
             spdlog::error("Doesn't contain font of that type!");
             return nullptr;
     }
+}
+
+sf::SoundBuffer* AssetsManager::GetSound(SoundType type)
+{
+    switch (type)
+    {
+        case SoundType::Click:
+            return click_sound_.get();
+        default:
+            spdlog::error("Doesn't contain sound of that type!");
+            return nullptr;
+    }
+    return nullptr;
 }

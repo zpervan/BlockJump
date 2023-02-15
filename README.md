@@ -30,7 +30,7 @@ Used libraries:
 [here](https://bazel.build/install/ubuntu).
 2. Open your terminal and install the following dependencies
 ```shell
-$ sudo apt install bazel libgl-dev freeglut3-dev
+$ sudo apt install bazel libgl-dev freeglut3-dev libopenal1
 ```
 3. Install the needed [protobuf](https://github.com/protocolbuffers/protobuf/tags) generator
 4. Install the following `protobuf` dependencies for Go. Position your terminal in the `Server` folder and execute the following:

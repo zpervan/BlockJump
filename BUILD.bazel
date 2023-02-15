@@ -19,7 +19,9 @@ cc_library(
     hdrs = ["Game/game.h"],
     data = [
         "//Assets:copy_sprites",
+        "//Assets:copy_sounds",
         "//Assets:sprites",
+        "//Assets:sounds"
     ],
     linkopts = select({
         "@platforms//os:windows": ["-DEFAULTLIB:user32.lib"],

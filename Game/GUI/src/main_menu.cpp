@@ -4,6 +4,7 @@
 
 #include "Game/GUI/src/gui_constans.h"
 #include "Game/constants.h"
+#include "Library/src/assets_manager.h"
 
 namespace GUI
 {
@@ -15,6 +16,8 @@ MainMenu::MainMenu(GameWindow* window, GameEventSystem* game_event_system)
 
     const std::vector<std::string> button_labels{"Start", "Online Game", "Options", "Exit"};
     InitializeButtons(button_labels);
+
+    menu_click_.setBuffer(*AssetsManager::GetSound(SoundType::Click));
 }
 
 void MainMenu::Show()
@@ -26,7 +29,12 @@ void MainMenu::Show()
 
     for (auto& button : buttons_)
     {
-        if (button.IsHovered(mouse_game_coordinates) && button.IsPressed())
+        if (button.IsHovered(mouse_game_coordinates))
+        {
+            menu_click_.play();
+        }
+
+        if (button.IsPressed())
         {
             button.ExecuteFunction();
         }

@@ -1,6 +1,7 @@
 #ifndef BLOCKJUMP_MAIN_MENU_H
 #define BLOCKJUMP_MAIN_MENU_H
 
+#include <SFML/Audio/Sound.hpp>
 #include <SFML/Graphics/Text.hpp>
 
 #include "Game/Core/src/game_events.h"
@@ -28,6 +29,7 @@ class MainMenu
     GameEventSystem* game_event_system_;
     std::vector<Button> buttons_;
     sf::Text header_text_;
+    sf::Sound menu_click_;
 };
 
 }  // namespace GUI

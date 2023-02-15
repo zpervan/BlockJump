@@ -16,11 +16,13 @@
 namespace
 {
 #ifdef WIN32
-constexpr auto Sprites_Directory{"\\Assets\\Sprites\\"};
-constexpr auto Fonts_Directory{"\\Assets\\Fonts\\"};
+constexpr auto SPRITES_DIRECTORY{"\\Assets\\Sprites\\"};
+constexpr auto FONTS_DIRECTORY{"\\Assets\\Fonts\\"};
+constexpr auto SOUNDS_DIRECTORY{"\\Assets\\Sounds\\"};
 #else
-constexpr auto Sprites_Directory{"/Assets/Sprites/"};
-constexpr auto Fonts_Directory{"/Assets/Fonts/"};
+constexpr auto SPRITES_DIRECTORY{"/Assets/Sprites/"};
+constexpr auto FONTS_DIRECTORY{"/Assets/Fonts/"};
+constexpr auto SOUNDS_DIRECTORY{"/Assets/Sounds/"};
 #endif
 }  // namespace
 
@@ -47,12 +49,17 @@ inline std::filesystem::path RootPath()
 
 inline std::string SpritesDirectoryPath()
 {
-    return RootPath().string() + Sprites_Directory;
+    return RootPath().string() + SPRITES_DIRECTORY;
 }
 
 inline std::string FontsDirectoryPath()
 {
-    return RootPath().string() + Fonts_Directory;
+    return RootPath().string() + FONTS_DIRECTORY;
+}
+
+inline std::string SoundsDirectoryPath()
+{
+    return RootPath().string() + SOUNDS_DIRECTORY;
 }
 
 }  // namespace Paths
