@@ -4,31 +4,31 @@ option go_package = "./proto";
 
 message Position
 {
-  float X = 1;
-  float Y = 2;
+    float x = 1;
+    float y = 2;
 }
 
 message Orientation
 {
-  float Angle = 1;
+    float angle = 1;
 }
 
 message Entity
 {
-  string Id = 1;
-  Position Position = 2;
-  Orientation Orientation = 3;
+    string id = 1;
+    Position position = 2;
+    Orientation orientation = 3;
 }
 
 message StreamRequest
 {
-  oneof action
-  {
-    Entity Player_entity = 1;
-  }
+    oneof action
+    {
+        Entity player_entity = 1;
+    }
 }
 
 message StreamResponse
 {
-  repeated Entity Entities = 1;
+    repeated Entity entities = 1;
 }

@@ -5,11 +5,14 @@ import (
 	"google.golang.org/grpc"
 	"log"
 	"net"
+	"server/core"
 	"server/proto"
 )
 
 func main() {
-	fmt.Println("starting game server")
+	logger := core.NewLogger()
+
+	logger.Info("starting server...")
 
 	listener, err := net.Listen("tcp", ":9000")
 	if err != nil {
@@ -19,6 +22,6 @@ func main() {
 	server := grpc.NewServer()
 	proto.RegisterGrpcServer(server, &GameServer{})
 	if err := server.Serve(listener); err != nil {
-		log.Fatalf("failed to serve: %v", err)
+		logger.Fatal("failed to serve: " + err.Error())
 	}
 }
