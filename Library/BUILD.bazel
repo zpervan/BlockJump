@@ -5,6 +5,14 @@ cc_library(
     srcs = glob(["src/*.cpp"]),
     hdrs = glob(["src/*.h"]),
     visibility = ["//visibility:public"],
+    data = [
+        "//Assets:copy_fonts",
+        "//Assets:copy_sprites",
+        "//Assets:copy_sounds",
+        "//Assets:fonts",
+        "//Assets:sprites",
+        "//Assets:sounds"
+    ],
     deps = [
         "@sfmllib//:sfml-audio",
         "@sfmllib//:sfml-graphics",

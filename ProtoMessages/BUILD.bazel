@@ -1,0 +1,19 @@
+load("@rules_proto//proto:defs.bzl", "proto_library")
+
+package(default_visibility = ["//visibility:public"])
+
+proto_library(
+    name = "google-proto-messages",
+    srcs = glob(["google/protobuf/*.proto", "google/protobuf/compiler/*.proto"]),
+)
+
+proto_library(
+    name = "server-messages",
+    srcs = glob(["server/*.proto"]),
+    deps = [":google-proto-messages"]
+)
+
+proto_library(
+    name = "map-serialization-messages",
+    srcs = glob(["map/*.proto"]),
+)

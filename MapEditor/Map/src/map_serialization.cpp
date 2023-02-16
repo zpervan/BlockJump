@@ -8,7 +8,7 @@
 #include <fstream>
 #include <map>
 
-#include "MapEditor/Map/messages/Map.pb.h"
+#include "ProtoMessages/map/Map.pb.h"
 
 namespace
 {

@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package MapMessages;
 
-import "MapEditor/Map/messages/Properties.proto";
+import "ProtoMessages/map/Properties.proto";
 
 message Map
 {

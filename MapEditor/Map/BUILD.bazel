@@ -19,10 +19,5 @@ cc_library(
 
 cc_proto_library(
     name = "map-serialization",
-    deps = [":map-serialization-messages"],
-)
-
-proto_library(
-    name = "map-serialization-messages",
-    srcs = glob(["messages/*.proto"]),
+    deps = ["//ProtoMessages:map-serialization-messages"],
 )

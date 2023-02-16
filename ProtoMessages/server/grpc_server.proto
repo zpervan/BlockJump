@@ -2,8 +2,8 @@ syntax = "proto3";
 
 option go_package = "./proto";
 
-import "google/protobuf/empty.proto";
-import "stream.proto";
+import "ProtoMessages/google/protobuf/empty.proto";
+import "ProtoMessages/server/stream.proto";
 
 service BlockJump {
     rpc TestConnection (DummyRequest) returns (DummyResponse) {}
