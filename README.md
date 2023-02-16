@@ -26,7 +26,7 @@ Used libraries:
 
 #### Ubuntu ####
 
-1. Install [Bazel](https://www.bazel.build/) 6.0.0. Installation instructions can be found 
+1. Install [Bazel](https://www.bazel.build/) 5.4.0. Installation instructions can be found 
 [here](https://bazel.build/install/ubuntu).
 2. Open your terminal and install the following dependencies
 ```shell
@@ -41,7 +41,7 @@ $ go install google.golang.org/grpc/cmd/protoc-gen-go-grpc
 
 #### Windows ####
 
-1. Install [Bazel](https://www.bazel.build/) 6.0.0. Installation instructions can be found
+1. Install [Bazel](https://www.bazel.build/) 5.4.0. Installation instructions can be found
       [here](https://bazel.build/install/windowsl).
 2. Install Microsoft Visual Studio 19 - Community edition environment. Not sure about other MSVC version.
 
@@ -55,11 +55,10 @@ $ go install google.golang.org/grpc/cmd/protoc-gen-go-grpc
 NOTE: Debug mode should work fine in both cases
 
 ### Generating server files ###
-In order to successfully launch the server, you need to generate the gRPC files from the `Server/message` folder. Make sure you have installed the environment successfully.
-Do the following to generate the files:
+In order to successfully launch the server, you need to generate the gRPC files from the `ProtoMessages/server` folder. Make sure you have installed the environment successfully.
+Navigate to the root of the project in your terminal and do the following:
 ```shell
-$ cd Server/messages
-$ protoc --go_out=../proto --go_opt=paths=source_relative --go-grpc_out=../proto --go-grpc_opt=paths=source_relative *.proto 
+$ protoc --go_out=Server --go-grpc_out=Server ProtoMessages/server/*.proto
 ```
 For more information, you can have a look [this](https://itnext.io/build-grpc-server-with-golang-go-step-by-step-b3f5abcf9e0e) blog post.
 ### Run ###
