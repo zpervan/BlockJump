@@ -6,6 +6,7 @@
 
 # Files
 /Server/proto/*.pb.go
+/Server/go.sum
 
 # Asset test files
 /Assets/maps/*

@@ -31,7 +31,7 @@ jobs:
       - name: Generate Go proto files
         run: |
           export PATH="$PATH:$(pwd)/Tools/protoc/linux"
-          cd Server/messages
+          cd Messages
           protoc --go_out=../proto --go_opt=paths=source_relative --go-grpc_out=../proto --go-grpc_opt=paths=source_relative *.proto
 
       - name: Build server
