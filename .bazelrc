@@ -1,5 +1,6 @@
 # Workaround for Bazel sync and proper intellisense on Linux
-build --action_env=BAZEL_CXXOPTS="-std=c++2a"
+# @TODO: Downgraded to C++17 as gRPC is currently not compliant with C++20. Bump it up once it's fixed.
+build --action_env=BAZEL_CXXOPTS="-std=c++17"
 
 # Release build options
 build --strip=always
@@ -8,13 +9,15 @@ build --compilation_mode=opt
 # Build flavors
 build:linux --client_env=CC="/usr/bin/gcc"
 build:linux --client_env=CXX="/usr/bin/g++"
-build:linux --cxxopt=-std=c++2a
+#build:linux --cxxopt=-std=c++2a
+build:linux --cxxopt=-std=c++17
 ## @TODO: Temporary disabled due to imgui-SFML error
 #build:linux --cxxopt=-Werror
 build:linux --cxxopt=-Wpedantic
 
 build:windows --enable_runfiles
-build:windows --cxxopt="/std:c++20"
+#build:windows --cxxopt="/std:c++20"
+build:windows --cxxopt="/std:c++17"
 
 build:windows-opt --config=windows
 build:windows-opt --compilation_mode=opt

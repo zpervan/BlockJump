@@ -2,14 +2,13 @@ syntax = "proto3";
 
 option go_package = "./proto";
 
-import "ProtoMessages/google/protobuf/empty.proto";
 import "ProtoMessages/server/stream.proto";
 
 service BlockJump {
     rpc TestConnection (DummyRequest) returns (DummyResponse) {}
     rpc ConnectToServer (ConnectRequest) returns (ConnectResponse) {}
     rpc ConnectToGame (DummyRequest) returns (DummyResponse) {}
-    rpc ListAllGames (google.protobuf.Empty) returns (ListOfGames) {}
+    rpc ListAllGames (EmptyRequest) returns (ListOfGames) {}
     rpc Stream (stream StreamRequest) returns (stream StreamResponse) {}
 }
 
@@ -24,6 +23,8 @@ message Error {
     ErrorCode code = 1;
     string message = 2;
 }
+
+message EmptyRequest {}
 
 message DummyRequest {
     string dummy_data = 1;
