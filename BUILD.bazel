@@ -1,5 +1,4 @@
 load("@rules_cc//cc:defs.bzl", "cc_binary")
-load("@rules_proto_grpc//cpp:defs.bzl", "cpp_grpc_library")
 
 # Game rules
 
@@ -11,7 +10,6 @@ cc_binary(
         "//:game",
         "@curlcpplib//:curlcpp",
         "@spdloglib//:spdlog",
-        "//:server"
     ],
 )
 
@@ -39,11 +37,6 @@ cc_library(
     name = "game-bootstrap",
     srcs = ["Game/constants.h"],
     visibility = ["//visibility:public"],
-)
-
-cpp_grpc_library(
-    name = "server",
-    protos = ["//ProtoMessages:server-messages"],
 )
 
 # Map editor rules

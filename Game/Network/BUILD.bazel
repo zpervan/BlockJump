@@ -1,0 +1,18 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+load("@rules_proto_grpc//cpp:defs.bzl", "cpp_grpc_library")
+
+cpp_grpc_library(
+    name = "rpc",
+    protos = ["//ProtoMessages:server-messages"],
+)
+
+cc_library(
+    name = "network",
+    srcs = glob(["src/*.cpp"]),
+    hdrs = glob(["src/*.h"]),
+    visibility = ["//visibility:public"],
+    deps = [
+        ":rpc",
+        "@spdloglib//:spdlog",
+    ],
+)

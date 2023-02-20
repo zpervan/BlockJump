@@ -1,12 +1,16 @@
 #include "online_game_screen.h"
 
+#include <spdlog/spdlog.h>
+
 #include "Library/src/assets_manager.h"
 
 namespace GUI
 {
 
 OnlineGameScreen::OnlineGameScreen(GameWindow* game_window, GameEventSystem* game_event_system)
-    : window_(game_window), game_event_system_(game_event_system)
+    : window_(game_window),
+      game_event_system_(game_event_system),
+      client_(new Network::Client(grpc::CreateChannel("localhost:3500", grpc::InsecureChannelCredentials())))
 {
     InitializeDrawables();
 }
@@ -32,9 +36,17 @@ void OnlineGameScreen::Show()
         back_button_->ExecuteFunction();
     }
 
+    if (ping_button_->IsHovered(mouse_game_coordinates) && ping_button_->IsPressed())
+    {
+        ping_button_->ExecuteFunction();
+    }
+
     /// @TODO: Refactor so it can be added to the drawable list, ideally as a single Button object
     window_->Draw(back_button_->Text());
     window_->Draw(back_button_->Background());
+
+    window_->Draw(ping_button_->Text());
+    window_->Draw(ping_button_->Background());
 
     drawables_.clear();
 
@@ -70,6 +82,22 @@ void OnlineGameScreen::InitializeDrawables()
     back_button->SetFunction([this]() { game_event_system_->Set(GameEvents::Menu); });
 
     back_button_.reset(back_button);
+
+    auto* ping_button = new Button;
+    ping_button->Text().setString("Ping Server");
+    ping_button->Text().setFillColor(sf::Color::Black);
+    ping_button->Text().setPosition(window_size.x * 0.85, window_size.y * 0.05);
+    ping_button->Background().setPosition(window_size.x * 0.85, window_size.y * 0.05);
+    ping_button->SetFunction([this]() {
+        spdlog::debug("Pinging server...");
+
+        rpc::DummyRequest request;
+        request.set_dummy_data("Test ping from game client");
+
+        spdlog::debug(fmt::format("Response from client: {}", client_->TestConnection(request)));
+    });
+
+    ping_button_.reset(ping_button);
 }
 
 }  // namespace GUI
