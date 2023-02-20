@@ -1,7 +1,7 @@
 #ifndef BLOCKJUMP_UTILITY_H
 #define BLOCKJUMP_UTILITY_H
 
-#include "Game/Entities/src/entity.h"
+#include "Game/Entities/src/base_entity.h"
 #include "Game/World/src/background_object.h"
 
 namespace Utility

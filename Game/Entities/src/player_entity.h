@@ -1,12 +1,11 @@
 #ifndef BLOCKJUMP_PLAYER_ENTITY_H
 #define BLOCKJUMP_PLAYER_ENTITY_H
 
-#include "Game/Entities/src/entity.h"
-#include "Game/World/src/background_object.h"
-
 #include <SFML/Graphics/RectangleShape.hpp>
-
 #include <memory>
+
+#include "Game/Entities/src/base_entity.h"
+#include "Game/World/src/background_object.h"
 
 /// @brief Contains all the information about the player entity.
 /// @verbatim
@@ -14,7 +13,7 @@
 /// * Position (x,y)
 /// * Orientation (angle in degrees)
 /// @endverbatim
-class PlayerEntity : public Entity
+class PlayerEntity : public BaseEntity
 {
   public:
     explicit PlayerEntity(sf::Vector2f startingPosition);

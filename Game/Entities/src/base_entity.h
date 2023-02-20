@@ -15,7 +15,7 @@ enum class EntityState
 
 /// @TODO: Reconsider to use GetEntity() to directly set data
 /// @brief Represents the base class for each entity created in the game.
-class Entity
+class BaseEntity
 {
   public: /* Functions */
     void Update();
