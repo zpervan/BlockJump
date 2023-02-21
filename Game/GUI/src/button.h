@@ -7,6 +7,8 @@
 #include <functional>
 #include <string>
 
+#include "Game/Core/src/game_window.h"
+
 namespace GUI
 {
 
@@ -14,11 +16,15 @@ namespace GUI
 class Button
 {
   public:
-    Button();
+    explicit Button();
 
     /// @brief Checks whether the button is pressed.
     /// @return @c true if pressed, @c false otherwise
     bool IsPressed();
+
+    /// @brief Checks whether the button received a single click.
+    /// @return @c true if clicked, @c false otherwise
+    bool IsClicked();
 
     /// @brief Checks whether the button is hovered.
     /// @param mouse_coordinates Mouse coordinates in the current window
@@ -48,9 +54,6 @@ class Button
 
     /// @brief Execute the associated button functionality.
     void ExecuteFunction();
-
-  public:
-    bool is_active{false};
 
   private:
     sf::Text text_;

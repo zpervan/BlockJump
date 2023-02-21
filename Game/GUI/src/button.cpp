@@ -11,6 +11,9 @@
 namespace GUI
 {
 
+static bool is_clicked{false};
+static bool is_hovered{false};
+
 Button::Button()
 {
     /// @TODO: Make button attribute initialization more generic (remove MAINMENU constants)
@@ -28,39 +31,59 @@ bool Button::IsPressed()
 
     if (is_pressed)
     {
-        spdlog::debug("Button with label {} is pressed", text_.getString().toAnsiString());
+        spdlog::debug("Button with label \"{}\" is pressed", text_.getString().toAnsiString());
     }
 
     return is_pressed;
 }
 
+bool Button::IsClicked()
+{
+    const bool is_pressed = sf::Mouse::isButtonPressed(sf::Mouse::Left);
+
+    if (is_pressed && !is_clicked)
+    {
+        spdlog::debug("Button with label \"{}\" is clicked", text_.getString().toAnsiString());
+        is_clicked = true;
+        return is_clicked;
+    }
+
+    if (!is_pressed)
+    {
+        is_clicked = false;
+        return is_clicked;
+    }
+
+    return false;
+}
+
 bool Button::IsHovered(sf::Vector2f mouse_coordinates)
 {
-    const bool is_hovered = background_.getGlobalBounds().contains(mouse_coordinates);
+    const bool contains_mouse = background_.getGlobalBounds().contains(mouse_coordinates);
 
     // @TODO: Consider to move somewhere else as this is too much functionality for a simple checker
-    if (is_hovered)
+    if (contains_mouse)
     {
         text_.setFillColor(GUI::Constants::MAINMENU_BUTTON_HOVERED_COLOR);
         background_.setOutlineColor(GUI::Constants::MAINMENU_BUTTON_HOVERED_COLOR);
         background_.setOutlineThickness(3.0f);
 
         // To trigger the sound only once, leverage the @c is_active state variable
-        if ((sound_ != nullptr) && !is_active)
+        if ((sound_ != nullptr) && !is_hovered)
         {
             sound_->play();
         }
 
-        is_active = true;
+        is_hovered = true;
     }
     else
     {
         text_.setFillColor(sf::Color::Black);
         background_.setOutlineColor(sf::Color::Transparent);
-        is_active = false;
+        is_hovered = false;
     }
 
-    return is_hovered;
+    return contains_mouse;
 }
 
 sf::RectangleShape& Button::Background()
@@ -92,7 +115,6 @@ void Button::SetFunction(std::function<void()> function)
 {
     function_ = std::move(function);
 }
-
 void Button::ExecuteFunction()
 {
     function_();

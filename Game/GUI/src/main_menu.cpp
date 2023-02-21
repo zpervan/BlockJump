@@ -65,7 +65,7 @@ void MainMenu::InitializeButtons(const std::vector<std::string>& labels)
 
     for (std::size_t i{0}; i < labels.size(); i++)
     {
-        Button button{};
+        Button button;
         button.Text().setString(labels[i]);
 
         // Calculate button text position

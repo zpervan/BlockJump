@@ -31,12 +31,13 @@ void OnlineGameScreen::Show()
 
     const auto mouse_position = sf::Mouse::getPosition(*window_->GetWindow());
     const auto mouse_game_coordinates = window_->GetWindow()->mapPixelToCoords(mouse_position);
-    if (back_button_->IsHovered(mouse_game_coordinates) && back_button_->IsPressed())
+
+    if (back_button_->IsHovered(mouse_game_coordinates) && back_button_->IsClicked())
     {
         back_button_->ExecuteFunction();
     }
 
-    if (ping_button_->IsHovered(mouse_game_coordinates) && ping_button_->IsPressed())
+    if (ping_button_->IsHovered(mouse_game_coordinates) && ping_button_->IsClicked())
     {
         ping_button_->ExecuteFunction();
     }
@@ -76,14 +77,14 @@ void OnlineGameScreen::InitializeDrawables()
 
     server_list_background_.reset(server_list_background);
 
-    auto* back_button = new Button;
+    auto* back_button = new Button();
     back_button->Text().setString("Back");
     back_button->Text().setFillColor(sf::Color::Black);
     back_button->SetFunction([this]() { game_event_system_->Set(GameEvents::Menu); });
 
     back_button_.reset(back_button);
 
-    auto* ping_button = new Button;
+    auto* ping_button = new Button();
     ping_button->Text().setString("Ping Server");
     ping_button->Text().setFillColor(sf::Color::Black);
     ping_button->Text().setPosition(window_size.x * 0.85, window_size.y * 0.05);

@@ -11,6 +11,8 @@ enum class GameEvents
     Menu
 };
 
+/// @brief Contains all custom game events.
+/// @TODO: Consider to add SFML events so we have a single place for event management
 class GameEventSystem
 {
   public:
