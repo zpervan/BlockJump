@@ -5,12 +5,12 @@
 namespace Network
 {
 
-std::string Client::TestConnection(const rpc::DummyRequest& request)
+grpc::Status Client::TestConnection(const rpc::DummyRequest& request)
 {
     grpc::ClientContext context;
     rpc::DummyResponse response;
 
-    const auto status = stub_->TestConnection(&context, request, &response);
+    auto status = stub_->TestConnection(&context, request, &response);
     if (status.ok())
     {
         spdlog::info("Ping was successful");
@@ -20,7 +20,7 @@ std::string Client::TestConnection(const rpc::DummyRequest& request)
         spdlog::warn("Failed to ping server");
     }
 
-    return response.dummy_data();
+    return status;
 }
 
 }  // namespace Network

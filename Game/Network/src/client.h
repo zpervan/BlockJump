@@ -32,8 +32,8 @@ class Client
 
     /// @brief Send a dummy request in order to check whether the connection to the server is alive.
     /// @param request Dummy request
-    /// @return Response from the server
-    std::string TestConnection(const rpc::DummyRequest& request);
+    /// @return Server status
+    grpc::Status TestConnection(const rpc::DummyRequest& request);
 
   private:
     std::unique_ptr<rpc::BlockJump::Stub> stub_;

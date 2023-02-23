@@ -2,10 +2,16 @@
 
 #include <spdlog/spdlog.h>
 
+#include <memory>
+
 #include "Library/src/assets_manager.h"
 
 namespace GUI
 {
+
+constexpr auto server_status_text{"Server status: "};
+constexpr auto alive_text{"Alive"};
+constexpr auto na_text{"N/A"};
 
 OnlineGameScreen::OnlineGameScreen(GameWindow* game_window, GameEventSystem* game_event_system)
     : window_(game_window),
@@ -21,6 +27,11 @@ void OnlineGameScreen::Show()
 
     drawables_.emplace_back(header_text_.get());
     drawables_.emplace_back(server_list_background_.get());
+
+    is_server_alive_ ? server_status_text_->setString(std::string(server_status_text).append(alive_text))
+                     : server_status_text_->setString(std::string(server_status_text).append(na_text));
+
+    drawables_.emplace_back(server_status_text_.get());
 
     /// @TODO: Add hoverable list elements (make new component)
 
@@ -84,18 +95,39 @@ void OnlineGameScreen::InitializeDrawables()
 
     back_button_.reset(back_button);
 
+    const auto server_status = client_->TestConnection(rpc::DummyRequest());
+
+    if (server_status.ok())
+    {
+        is_server_alive_ = true;
+    }
+
+    server_status_text_ = std::make_unique<sf::Text>();
+    server_status_text_->setFont(*AssetsManager::GetFont(FontType::Button));
+    server_status_text_->setFillColor(sf::Color::Black);
+    server_status_text_->setPosition(window_size.x * 0.65f, window_size.y * 0.05f);
+    is_server_alive_ ? server_status_text_->setString(std::string(server_status_text).append(alive_text))
+                     : server_status_text_->setString(std::string(server_status_text).append(na_text));
+
     auto* ping_button = new Button();
-    ping_button->Text().setString("Ping Server");
+    ping_button->Text().setString("Recheck");
     ping_button->Text().setFillColor(sf::Color::Black);
     ping_button->Text().setPosition(window_size.x * 0.85, window_size.y * 0.05);
     ping_button->Background().setPosition(window_size.x * 0.85, window_size.y * 0.05);
     ping_button->SetFunction([this]() {
-        spdlog::debug("Pinging server...");
+        spdlog::info("Pinging server...");
+        const auto status = client_->TestConnection(rpc::DummyRequest());
 
-        rpc::DummyRequest request;
-        request.set_dummy_data("Test ping from game client");
-
-        spdlog::debug(fmt::format("Response from client: {}", client_->TestConnection(request)));
+        if (status.ok())
+        {
+            spdlog::info("Server responded with \"OK\"");
+            is_server_alive_ = true;
+        }
+        else
+        {
+            spdlog::warn("Server is not reachable");
+            is_server_alive_ = false;
+        }
     });
 
     ping_button_.reset(ping_button);
