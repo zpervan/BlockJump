@@ -32,8 +32,7 @@ void MainMenu::Show()
             button.ExecuteFunction();
         }
 
-        window_->GetWindow()->draw(button.Background());
-        window_->GetWindow()->draw(button.Text());
+        window_->GetWindow()->draw(button);
     }
 
     window_->GetWindow()->draw(header_text_);

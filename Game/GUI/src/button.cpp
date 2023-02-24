@@ -117,4 +117,10 @@ void Button::ExecuteFunction()
     function_();
 }
 
+void Button::draw(sf::RenderTarget& target, sf::RenderStates states) const
+{
+    target.draw(text_);
+    target.draw(background_);
+}
+
 }  // namespace GUI

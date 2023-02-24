@@ -53,12 +53,8 @@ void OnlineGameScreen::Show()
         ping_button_->ExecuteFunction();
     }
 
-    /// @TODO: Refactor so it can be added to the drawable list, ideally as a single Button object
-    window_->Draw(back_button_->Text());
-    window_->Draw(back_button_->Background());
-
-    window_->Draw(ping_button_->Text());
-    window_->Draw(ping_button_->Background());
+    window_->Draw(*back_button_);
+    window_->Draw(*ping_button_);
 
     drawables_.clear();
 

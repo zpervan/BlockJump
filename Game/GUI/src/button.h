@@ -13,7 +13,7 @@ namespace GUI
 {
 
 /// @TODO: Add @c SetPosition functionality to move the text and background simultaneously
-class Button
+class Button : public sf::Drawable
 {
   public:
     explicit Button();
@@ -55,7 +55,10 @@ class Button
     /// @brief Execute the associated button functionality.
     void ExecuteFunction();
 
-  private:
+  private: /* Functions */
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
+  private: /* Data members */
     sf::Text text_;
     sf::RectangleShape background_;
     std::function<void()> function_;
