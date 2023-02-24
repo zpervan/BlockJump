@@ -8,9 +8,10 @@ import "ProtoMessages/server/stream.proto";
 
 service BlockJump {
     rpc TestConnection (DummyRequest) returns (DummyResponse) {}
+    rpc CreateGame (Game) returns (Empty) {}
     rpc ConnectToServer (ConnectRequest) returns (ConnectResponse) {}
     rpc ConnectToGame (DummyRequest) returns (DummyResponse) {}
-    rpc ListAllGames (EmptyRequest) returns (ListOfGames) {}
+    rpc ListAllGames (Empty) returns (ListOfGames) {}
     rpc Stream (stream StreamRequest) returns (stream StreamResponse) {}
 }
 
@@ -26,7 +27,7 @@ message Error {
     string message = 2;
 }
 
-message EmptyRequest {}
+message Empty {}
 
 message DummyRequest {
     string dummy_data = 1;
@@ -37,9 +38,8 @@ message DummyResponse {
 }
 
 message ConnectRequest {
-    string id = 1;
-    string username = 2;
-    string password = 3;
+    string username = 1;
+    string password = 2;
 }
 
 message ConnectResponse {
@@ -57,5 +57,7 @@ message ListOfGames {
 
 message Game {
     string name = 1;
-    int32 player_count = 2;
+    string map_name = 2;
+    int32 ping = 3;
+    int32 player_count = 4;
 }
