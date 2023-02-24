@@ -27,7 +27,7 @@ void MainMenu::Show()
 
     for (auto& button : buttons_)
     {
-        if (button.IsHovered(mouse_game_coordinates) && button.IsPressed())
+        if (button.IsHovered(mouse_game_coordinates) && button.IsClicked())
         {
             button.ExecuteFunction();
         }

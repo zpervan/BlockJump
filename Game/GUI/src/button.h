@@ -60,6 +60,9 @@ class Button
     sf::RectangleShape background_;
     std::function<void()> function_;
     std::unique_ptr<sf::Sound> sound_;
+
+    bool is_hovered_{false};
+    bool is_clicked_{false};
 };
 
 }  // namespace GUI

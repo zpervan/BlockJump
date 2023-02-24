@@ -11,9 +11,6 @@
 namespace GUI
 {
 
-static bool is_clicked{false};
-static bool is_hovered{false};
-
 Button::Button()
 {
     /// @TODO: Make button attribute initialization more generic (remove MAINMENU constants)
@@ -41,17 +38,17 @@ bool Button::IsClicked()
 {
     const bool is_pressed = sf::Mouse::isButtonPressed(sf::Mouse::Left);
 
-    if (is_pressed && !is_clicked)
+    if (is_pressed && !is_clicked_)
     {
         spdlog::debug("Button with label \"{}\" is clicked", text_.getString().toAnsiString());
-        is_clicked = true;
-        return is_clicked;
+        is_clicked_ = true;
+        return is_clicked_;
     }
 
     if (!is_pressed)
     {
-        is_clicked = false;
-        return is_clicked;
+        is_clicked_ = false;
+        return is_clicked_;
     }
 
     return false;
@@ -68,19 +65,19 @@ bool Button::IsHovered(sf::Vector2f mouse_coordinates)
         background_.setOutlineColor(GUI::Constants::MAINMENU_BUTTON_HOVERED_COLOR);
         background_.setOutlineThickness(3.0f);
 
-        // To trigger the sound only once, leverage the @c is_active state variable
-        if ((sound_ != nullptr) && !is_hovered)
+        // We want to play the sound only once, therefore check if the button is already hovered
+        if ((sound_ != nullptr) && !is_hovered_)
         {
             sound_->play();
         }
 
-        is_hovered = true;
+        is_hovered_ = true;
     }
     else
     {
         text_.setFillColor(sf::Color::Black);
         background_.setOutlineColor(sf::Color::Transparent);
-        is_hovered = false;
+        is_hovered_ = false;
     }
 
     return contains_mouse;
