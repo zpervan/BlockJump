@@ -61,6 +61,11 @@ void GameWindow::Update()
     }
 }
 
+void GameWindow::ExitGame()
+{
+    is_done_ = true;
+}
+
 bool GameWindow::IsDone()
 {
     return is_done_;

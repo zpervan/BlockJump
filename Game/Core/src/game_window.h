@@ -15,6 +15,7 @@ class GameWindow
     void Update();
     void Draw(sf::Drawable& drawable);
     void UpdatePlayerView(const sf::Vector2f& player_position);
+    void ExitGame();
     bool IsDone();
 
     sf::RenderWindow* GetWindow();

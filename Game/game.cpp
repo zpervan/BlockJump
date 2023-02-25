@@ -3,6 +3,7 @@
 #include <spdlog/spdlog.h>
 
 #include "Game/Core/src/game_events.h"
+#include "Game/GUI/src/gui_constans.h"
 #include "Game/World/src/block.h"
 #include "Game/World/src/utility.h"
 #include "Game/constants.h"
@@ -16,6 +17,7 @@ Game::Game()
     AssetsManager::Initialize();
     main_menu_ = std::make_unique<GUI::MainMenu>(window_.get(), game_event_system_.get());
     online_game_screen_ = std::make_unique<GUI::OnlineGameScreen>(window_.get(), game_event_system_.get());
+    not_implemented_screen_ = std::make_unique<GUI::NotImplementedScreen>(window_.get(), game_event_system_.get());
 
     background_objects_.reserve(6);
 
@@ -67,38 +69,28 @@ void Game::Run()
 {
     while (!window_->IsDone())
     {
-        const auto event = game_event_system_->Poll();
-
-        if (event == GameEvents::Menu)
+        switch (game_event_system_->Poll())
         {
-            main_menu_->Show();
-        }
+            case GameEvents::Menu:
+                main_menu_->Show();
+                break;
 
-        if (event == GameEvents::OnlineGame)
-        {
-            online_game_screen_->Show();
-        }
+            case GameEvents::Quit:
+                window_->ExitGame();
+                break;
 
-        if (event == GameEvents::Start)
-        {
-            Update();
-            Display();
-        }
+            case GameEvents::OnlineGame:
+                online_game_screen_->Show();
+                break;
 
-        // @TODO: Implement functionalities for events
-        if ((event == GameEvents::Options) || (event == GameEvents::Quit))
-        {
-            window_->BeginDraw();
+            case GameEvents::Start:
+                Update();
+                Display();
+                break;
 
-            sf::Text not_implemented_text{};
-            not_implemented_text.setCharacterSize(32);
-            not_implemented_text.setFont(*AssetsManager::GetFont(FontType::Header));
-            not_implemented_text.setString("Functionality not implemented");
-            not_implemented_text.setFillColor(sf::Color::Black);
-
-            window_->Draw(not_implemented_text);
-
-            window_->EndDraw();
+            default:
+                not_implemented_screen_->Show();
+                break;
         }
 
         window_->Update();
