@@ -32,25 +32,37 @@ class Button : public sf::Drawable
     bool IsHovered(sf::Vector2f mouse_coordinates);
 
     /// @brief Contains the textual part of the button which is represented with a @c sf::Text.
-    /// @return Text related functionality and data
-    sf::Text& Text();
+    /// @return Text related functionality and data - read only
+    const sf::Text& Text();
 
     /// @brief Contains the background part of the button which is represented with a @c sf::RectangleShape.
-    /// @return Background related functionality and data
-    sf::RectangleShape& Background();
+    /// @return Background related functionality and data - read only
+    const sf::RectangleShape& Background();
+
+    /// @brief Get the sound associated with the button.
+    /// @return Sound associated with button
+    const sf::Sound* Sound();
 
     /// @brief Associate a sound when the button is active.
     /// @param sound Sound which will be added to the button
     /// @todo Define specific sounds for specific action like click or hover
     void SetSound(const sf::SoundBuffer& sound);
 
-    /// @brief Get the sound associated with the button.
-    /// @return Sound associated with button
-    const sf::Sound* Sound();
-
     /// @brief Set the button functionality in case when it's clicked.
     /// @param function Function which will be executed
     void SetFunction(std::function<void()> function);
+
+    /// @brief Set the button label which will be displayed in the game.
+    /// @param text Label string
+    void SetLabel(const std::string& text);
+
+    /// @brief Set the size of a character in pixels.
+    /// @param size Pixel size
+    void SetTextSize(uint size);
+
+    /// @brief Set the button position. The upper left corner is taken in consideration.
+    /// @param position
+    void SetPosition(sf::Vector2f position);
 
     /// @brief Execute the associated button functionality.
     void ExecuteFunction();

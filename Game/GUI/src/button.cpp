@@ -16,9 +16,8 @@ Button::Button()
     /// @TODO: Make button attribute initialization more generic (remove MAINMENU constants)
     text_.setFont(*AssetsManager::GetFont(FontType::Button));
     text_.setFillColor(GUI::Constants::MAINMENU_BUTTON_TEXT_COLOR);
-    text_.setCharacterSize(GUI::Constants::MAINMENU_BUTTON_TEXT_SIZE);
-    background_.setFillColor(GUI::Constants::MAINMENU_BUTTON_BACKGROUND_COLOR);
-    background_.setSize(GUI::Constants::MAINMENU_BUTTON_BACKGROUND_SIZE);
+    background_.setFillColor(sf::Color::Transparent);
+
     sound_ = nullptr;
 }
 
@@ -83,12 +82,12 @@ bool Button::IsHovered(sf::Vector2f mouse_coordinates)
     return contains_mouse;
 }
 
-sf::RectangleShape& Button::Background()
+const sf::RectangleShape& Button::Background()
 {
     return background_;
 }
 
-sf::Text& Button::Text()
+const sf::Text& Button::Text()
 {
     return text_;
 }
@@ -108,10 +107,33 @@ const sf::Sound* Button::Sound()
     return sound_.get();
 }
 
+void Button::SetLabel(const std::string& text)
+{
+    text_.setString(text);
+}
+
+void Button::SetTextSize(uint size)
+{
+    text_.setCharacterSize(size);
+
+    // Add padding around the letters as the local or global bounds are not returning the height properly
+    const float background_width = text_.getLocalBounds().width + 5.0f;
+    const float background_height = size + 10.0f;
+
+    background_.setSize({background_width, background_height});
+}
+
+void Button::SetPosition(sf::Vector2f position)
+{
+    text_.setPosition(position.x, position.y);
+    background_.setPosition(position);
+}
+
 void Button::SetFunction(std::function<void()> function)
 {
     function_ = std::move(function);
 }
+
 void Button::ExecuteFunction()
 {
     function_();

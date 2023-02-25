@@ -4,6 +4,7 @@
 
 #include <memory>
 
+#include "Game/GUI/src/gui_constans.h"
 #include "Library/src/assets_manager.h"
 
 namespace GUI
@@ -63,37 +64,31 @@ void OnlineGameScreen::Show()
 
 void OnlineGameScreen::InitializeDrawables()
 {
-    auto* header_text = new sf::Text;
-    header_text->setFont(*AssetsManager::GetFont(FontType::Header));
-    header_text->setString("Available games");
-    header_text->setFillColor(sf::Color::Black);
+    header_text_ = std::make_unique<sf::Text>();
+    header_text_->setFont(*AssetsManager::GetFont(FontType::Header));
+    header_text_->setString("Available games");
+    header_text_->setFillColor(sf::Color::Black);
 
-    const auto word_half_width = header_text->getGlobalBounds().width / 2.0f;
+    const auto word_half_width = header_text_->getGlobalBounds().width / 2.0f;
     const auto window_size = window_->GetWindow()->getSize();
-    header_text->setPosition((window_size.x / 2.0f) - word_half_width, window_size.y * 0.05);
+    header_text_->setPosition((window_size.x / 2.0f) - word_half_width, window_size.y * 0.05);
 
-    header_text_.reset(header_text);
+    server_list_background_ = std::make_unique<sf::RectangleShape>();
+    server_list_background_->setFillColor({107, 104, 104, 255});
+    server_list_background_->setSize({window_size.x * 0.9f, window_size.y * 0.8f});
 
-    auto* server_list_background = new sf::RectangleShape;
-    server_list_background->setFillColor({107, 104, 104, 255});
-    server_list_background->setSize({window_size.x * 0.9f, window_size.y * 0.8f});
-
-    const auto background_half_width = server_list_background->getSize().x / 2.0f;
+    const auto background_half_width = server_list_background_->getSize().x / 2.0f;
     const auto header_position_bottom = header_text_->getGlobalBounds().top + header_text_->getGlobalBounds().height;
-    server_list_background->setPosition((window_size.x / 2.0f) - background_half_width, header_position_bottom + 10.0f);
+    server_list_background_->setPosition((window_size.x / 2.0f) - background_half_width, header_position_bottom + 10.0f);
 
-    server_list_background_.reset(server_list_background);
+    back_button_ = std::make_unique<Button>();
+    back_button_->SetLabel("Back");
+    back_button_->SetTextSize(GUI::Constants::MAINMENU_BUTTON_TEXT_SIZE);
+    back_button_->SetPosition({window_size.x * 0.1f, window_size.y * 0.05f});
+    back_button_->SetSound(*AssetsManager::GetSound(SoundType::Click));
+    back_button_->SetFunction([this]() { game_event_system_->Set(GameEvents::Menu); });
 
-    auto* back_button = new Button();
-    back_button->Text().setString("Back");
-    back_button->Text().setFillColor(sf::Color::Black);
-    back_button->SetFunction([this]() { game_event_system_->Set(GameEvents::Menu); });
-
-    back_button_.reset(back_button);
-
-    const auto server_status = client_->TestConnection(rpc::DummyRequest());
-
-    if (server_status.ok())
+    if (client_->TestConnection(rpc::DummyRequest()).ok())
     {
         is_server_alive_ = true;
     }
@@ -105,16 +100,15 @@ void OnlineGameScreen::InitializeDrawables()
     is_server_alive_ ? server_status_text_->setString(std::string(server_status_text).append(alive_text))
                      : server_status_text_->setString(std::string(server_status_text).append(na_text));
 
-    auto* ping_button = new Button();
-    ping_button->Text().setString("Recheck");
-    ping_button->Text().setFillColor(sf::Color::Black);
-    ping_button->Text().setPosition(window_size.x * 0.85, window_size.y * 0.05);
-    ping_button->Background().setPosition(window_size.x * 0.85, window_size.y * 0.05);
-    ping_button->SetFunction([this]() {
+    ping_button_ = std::make_unique<Button>();
+    ping_button_->SetLabel("Recheck");
+    ping_button_->SetTextSize(GUI::Constants::MAINMENU_BUTTON_TEXT_SIZE);
+    ping_button_->SetPosition({window_size.x * 0.85f, window_size.y * 0.05f});
+    ping_button_->SetSound(*AssetsManager::GetSound(SoundType::Click));
+    ping_button_->SetFunction([this]() {
         spdlog::info("Pinging server...");
-        const auto status = client_->TestConnection(rpc::DummyRequest());
 
-        if (status.ok())
+        if (client_->TestConnection(rpc::DummyRequest()).ok())
         {
             spdlog::info("Server responded with \"OK\"");
             is_server_alive_ = true;
@@ -125,8 +119,6 @@ void OnlineGameScreen::InitializeDrawables()
             is_server_alive_ = false;
         }
     });
-
-    ping_button_.reset(ping_button);
 }
 
 }  // namespace GUI
