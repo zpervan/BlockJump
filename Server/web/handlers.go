@@ -2,6 +2,7 @@ package web
 
 import (
 	"context"
+	"fmt"
 	"server/core"
 	"server/proto"
 )
@@ -31,14 +32,17 @@ func (gs *GameServer) TestConnection(_ context.Context, in *proto.DummyRequest) 
 	return &proto.DummyResponse{DummyData: "received following data - " + in.DummyData}, nil
 }
 
+// CreateGame todo: Add some input data validation
 func (gs *GameServer) CreateGame(_ context.Context, in *proto.Game) (*proto.Empty, error) {
-    // todo: Add some input data validation
-    gs.logger.Info("creating new game")
-    gs.listOfGames.AvailableGames = append(gs.listOfGames.AvailableGames, in)
-    return &proto.Empty{}, nil
+	message := fmt.Sprintf("creating new game.\nname: %s\nmap name: %s", in.Name, in.MapName)
+	gs.logger.Info(message)
+
+	gs.listOfGames.AvailableGames = append(gs.listOfGames.AvailableGames, in)
+	return &proto.Empty{}, nil
 }
 
 func (gs *GameServer) ListAllGames(_ context.Context, _ *proto.Empty) (*proto.ListOfGames, error) {
-    gs.logger.Info("fetching list of all games")
-    return gs.listOfGames, nil
+	message := fmt.Sprintf("fetching all available online games. count: %d", len(gs.listOfGames.AvailableGames))
+	gs.logger.Info(message)
+	return gs.listOfGames, nil
 }

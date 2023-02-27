@@ -50,22 +50,23 @@ void OnlineGameScreen::Show()
 
 void OnlineGameScreen::InitializeDrawables()
 {
-    const auto word_half_width = header_text_->getGlobalBounds().width / 2.0f;
-    const auto window_size = window_->GetWindow()->getSize();
-
     header_text_ = std::make_unique<sf::Text>();
-    header_text_->setPosition((window_size.x / 2.0f) - word_half_width, window_size.y * 0.05);
     header_text_->setFont(*AssetsManager::GetFont(FontType::Header));
     header_text_->setString("Available games");
     header_text_->setFillColor(sf::Color::Black);
 
-    const auto background_half_width = server_list_background_->getSize().x / 2.0f;
-    const auto header_position_bottom = header_text_->getGlobalBounds().top + header_text_->getGlobalBounds().height;
+    const auto word_half_width = header_text_->getGlobalBounds().width / 2.0f;
+    const auto window_size = window_->GetWindow()->getSize();
+    header_text_->setPosition((window_size.x / 2.0f) - word_half_width, window_size.y * 0.05);
 
     server_list_background_ = std::make_unique<sf::RectangleShape>();
-    server_list_background_->setPosition((window_size.x / 2.0f) - background_half_width, header_position_bottom + 10.0f);
     server_list_background_->setFillColor({107, 104, 104, 255});
     server_list_background_->setSize({window_size.x * 0.9f, window_size.y * 0.8f});
+
+    const auto background_half_width = server_list_background_->getSize().x / 2.0f;
+    const auto header_position_bottom = header_text_->getGlobalBounds().top + header_text_->getGlobalBounds().height;
+    server_list_background_->setPosition((window_size.x / 2.0f) - background_half_width,
+                                         header_position_bottom + 10.0f);
 
     back_button_ = std::make_unique<Button>();
     back_button_->SetLabel("Back");
@@ -74,10 +75,7 @@ void OnlineGameScreen::InitializeDrawables()
     back_button_->SetSound(*AssetsManager::GetSound(SoundType::Click));
     back_button_->SetFunction([this]() { game_event_system_->Set(GameEvents::Menu); });
 
-    if (client_->TestConnection(rpc::DummyRequest()).ok())
-    {
-        is_server_alive_ = true;
-    }
+    is_server_alive_ = client_->TestConnection(rpc::DummyRequest()).ok();
 
     server_status_text_ = std::make_unique<sf::Text>();
     server_status_text_->setFont(*AssetsManager::GetFont(FontType::Button));
@@ -92,17 +90,35 @@ void OnlineGameScreen::InitializeDrawables()
     ping_button_->SetPosition({window_size.x * 0.85f, window_size.y * 0.05f});
     ping_button_->SetSound(*AssetsManager::GetSound(SoundType::Click));
     ping_button_->SetFunction([this]() {
-        spdlog::info("Pinging server...");
+        rpc::DummyRequest dummy_request{};
+        dummy_request.set_dummy_data("Testing");
+        is_server_alive_ = client_->TestConnection(dummy_request).ok();
 
-        if (client_->TestConnection(rpc::DummyRequest()).ok())
+        if (is_server_alive_)
         {
             spdlog::info("Server responded with \"OK\"");
-            is_server_alive_ = true;
         }
         else
         {
             spdlog::warn("Server is not reachable");
-            is_server_alive_ = false;
+            return;
+        }
+
+        const auto list_of_games = client_->ListAllGames();
+
+        if (!list_of_games.has_value())
+        {
+            spdlog::info("No online games available");
+            return;
+        }
+
+        /// @TODO: Assign games to buttons in the online game list window
+        for (const auto& game : list_of_games.value()->available_games())
+        {
+            spdlog::debug("Game name: {}", game.name());
+            spdlog::debug("Map name: {}", game.map_name());
+            spdlog::debug("Player count: {}", game.player_count());
+            spdlog::debug("Ping: {}", game.ping());
         }
     });
 

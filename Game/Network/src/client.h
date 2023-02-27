@@ -4,6 +4,7 @@
 #include <grpcpp/grpcpp.h>
 
 #include <memory>
+#include <optional>
 
 #include "ProtoMessages/server/grpc_server.grpc.pb.h"
 #include "ProtoMessages/server/grpc_server.pb.h"
@@ -19,7 +20,7 @@ class Client
     /// @brief Network client constructor which accepts a gRPC channel which is used to establish a connection to the
     /// server.
     /// @param channel Connection endpoint to the server
-    explicit Client(const std::shared_ptr<grpc::Channel>& channel) : stub_(rpc::BlockJump::NewStub(channel)){};
+    explicit Client(const std::shared_ptr<grpc::Channel>& channel);
     ~Client() = default;
 
     // Copy and move operation are disabled, therefore enforce to have a single and fixed instance of the network client
@@ -35,8 +36,11 @@ class Client
     /// @return Server status
     grpc::Status TestConnection(const rpc::DummyRequest& request);
 
+    std::optional<rpc::ListOfGames*> ListAllGames();
+
   private:
     std::unique_ptr<rpc::BlockJump::Stub> stub_;
+    std::unique_ptr<rpc::ListOfGames> list_of_games_;
 };
 
 }  // namespace Network
