@@ -26,60 +26,46 @@ void OnlineGameScreen::Show()
 {
     window_->BeginDraw();
 
-    drawables_.emplace_back(header_text_.get());
-    drawables_.emplace_back(server_list_background_.get());
-
     is_server_alive_ ? server_status_text_->setString(std::string(server_status_text).append(alive_text))
                      : server_status_text_->setString(std::string(server_status_text).append(na_text));
 
-    drawables_.emplace_back(server_status_text_.get());
-
-    /// @TODO: Add hoverable list elements (make new component)
-
-    for (auto drawable : drawables_)
+    for (std::size_t i{0}; i < drawables_.size(); i++)
     {
-        window_->Draw(*drawable);
+        if (const auto button = dynamic_cast<Button*>(drawables_[i]); button != nullptr)
+        {
+            const auto mouse_position = sf::Mouse::getPosition(*window_->GetWindow());
+            const auto mouse_game_coordinates = window_->GetWindow()->mapPixelToCoords(mouse_position);
+
+            if (button->IsHovered(mouse_game_coordinates) && button->IsClicked())
+            {
+                button->ExecuteFunction();
+            }
+        }
+
+        window_->Draw(*drawables_[i]);
     }
-
-    const auto mouse_position = sf::Mouse::getPosition(*window_->GetWindow());
-    const auto mouse_game_coordinates = window_->GetWindow()->mapPixelToCoords(mouse_position);
-
-    if (back_button_->IsHovered(mouse_game_coordinates) && back_button_->IsClicked())
-    {
-        back_button_->ExecuteFunction();
-    }
-
-    if (ping_button_->IsHovered(mouse_game_coordinates) && ping_button_->IsClicked())
-    {
-        ping_button_->ExecuteFunction();
-    }
-
-    window_->Draw(*back_button_);
-    window_->Draw(*ping_button_);
-
-    drawables_.clear();
 
     window_->EndDraw();
 }
 
 void OnlineGameScreen::InitializeDrawables()
 {
+    const auto word_half_width = header_text_->getGlobalBounds().width / 2.0f;
+    const auto window_size = window_->GetWindow()->getSize();
+
     header_text_ = std::make_unique<sf::Text>();
+    header_text_->setPosition((window_size.x / 2.0f) - word_half_width, window_size.y * 0.05);
     header_text_->setFont(*AssetsManager::GetFont(FontType::Header));
     header_text_->setString("Available games");
     header_text_->setFillColor(sf::Color::Black);
 
-    const auto word_half_width = header_text_->getGlobalBounds().width / 2.0f;
-    const auto window_size = window_->GetWindow()->getSize();
-    header_text_->setPosition((window_size.x / 2.0f) - word_half_width, window_size.y * 0.05);
-
-    server_list_background_ = std::make_unique<sf::RectangleShape>();
-    server_list_background_->setFillColor({107, 104, 104, 255});
-    server_list_background_->setSize({window_size.x * 0.9f, window_size.y * 0.8f});
-
     const auto background_half_width = server_list_background_->getSize().x / 2.0f;
     const auto header_position_bottom = header_text_->getGlobalBounds().top + header_text_->getGlobalBounds().height;
+
+    server_list_background_ = std::make_unique<sf::RectangleShape>();
     server_list_background_->setPosition((window_size.x / 2.0f) - background_half_width, header_position_bottom + 10.0f);
+    server_list_background_->setFillColor({107, 104, 104, 255});
+    server_list_background_->setSize({window_size.x * 0.9f, window_size.y * 0.8f});
 
     back_button_ = std::make_unique<Button>();
     back_button_->SetLabel("Back");
@@ -119,6 +105,12 @@ void OnlineGameScreen::InitializeDrawables()
             is_server_alive_ = false;
         }
     });
+
+    drawables_.emplace_back(server_status_text_.get());
+    drawables_.emplace_back(header_text_.get());
+    drawables_.emplace_back(server_list_background_.get());
+    drawables_.emplace_back(ping_button_.get());
+    drawables_.emplace_back(back_button_.get());
 }
 
 }  // namespace GUI
