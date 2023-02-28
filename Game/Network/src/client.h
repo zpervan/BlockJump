@@ -32,10 +32,13 @@ class Client
     Client operator=(const Client& rhs) = delete;
 
     /// @brief Send a dummy request in order to check whether the connection to the server is alive.
+    /// The empty @c rpc::DummyRequest server just to fulfill the gRPC interface request requirement.
     /// @param request Dummy request
     /// @return Server status
-    grpc::Status TestConnection(const rpc::DummyRequest& request);
+    grpc::Status TestConnection(const rpc::DummyRequest& request = rpc::DummyRequest());
 
+    /// @brief Returns a list of all online games available on the server.
+    /// @return List of available online games if they exist
     std::optional<rpc::ListOfGames*> ListAllGames();
 
   private:

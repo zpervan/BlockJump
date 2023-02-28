@@ -13,6 +13,7 @@ namespace GUI
 constexpr auto server_status_text{"Server status: "};
 constexpr auto alive_text{"Alive"};
 constexpr auto na_text{"N/A"};
+constexpr auto online_game_element_label{"Name: {} | Map: {} | Players: {} | Ping: {}"};
 
 OnlineGameScreen::OnlineGameScreen(GameWindow* game_window, GameEventSystem* game_event_system)
     : window_(game_window),
@@ -59,14 +60,13 @@ void OnlineGameScreen::InitializeDrawables()
     const auto window_size = window_->GetWindow()->getSize();
     header_text_->setPosition((window_size.x / 2.0f) - word_half_width, window_size.y * 0.05);
 
-    server_list_background_ = std::make_unique<sf::RectangleShape>();
-    server_list_background_->setFillColor({107, 104, 104, 255});
-    server_list_background_->setSize({window_size.x * 0.9f, window_size.y * 0.8f});
+    games_list_background_ = std::make_unique<sf::RectangleShape>();
+    games_list_background_->setFillColor({107, 104, 104, 255});
+    games_list_background_->setSize({window_size.x * 0.9f, window_size.y * 0.8f});
 
-    const auto background_half_width = server_list_background_->getSize().x / 2.0f;
+    const auto background_half_width = games_list_background_->getSize().x / 2.0f;
     const auto header_position_bottom = header_text_->getGlobalBounds().top + header_text_->getGlobalBounds().height;
-    server_list_background_->setPosition((window_size.x / 2.0f) - background_half_width,
-                                         header_position_bottom + 10.0f);
+    games_list_background_->setPosition((window_size.x / 2.0f) - background_half_width, header_position_bottom + 10.0f);
 
     back_button_ = std::make_unique<Button>();
     back_button_->SetLabel("Back");
@@ -85,14 +85,13 @@ void OnlineGameScreen::InitializeDrawables()
                      : server_status_text_->setString(std::string(server_status_text).append(na_text));
 
     ping_button_ = std::make_unique<Button>();
-    ping_button_->SetLabel("Recheck");
+    ping_button_->SetLabel("Refresh");
     ping_button_->SetTextSize(GUI::Constants::MAINMENU_BUTTON_TEXT_SIZE);
     ping_button_->SetPosition({window_size.x * 0.85f, window_size.y * 0.05f});
     ping_button_->SetSound(*AssetsManager::GetSound(SoundType::Click));
     ping_button_->SetFunction([this]() {
-        rpc::DummyRequest dummy_request{};
-        dummy_request.set_dummy_data("Testing");
-        is_server_alive_ = client_->TestConnection(dummy_request).ok();
+        // Check if the server has responded with "ok"
+        is_server_alive_ = client_->TestConnection().ok();
 
         if (is_server_alive_)
         {
@@ -104,29 +103,46 @@ void OnlineGameScreen::InitializeDrawables()
             return;
         }
 
-        const auto list_of_games = client_->ListAllGames();
-
-        if (!list_of_games.has_value())
-        {
-            spdlog::info("No online games available");
-            return;
-        }
-
-        /// @TODO: Assign games to buttons in the online game list window
-        for (const auto& game : list_of_games.value()->available_games())
-        {
-            spdlog::debug("Game name: {}", game.name());
-            spdlog::debug("Map name: {}", game.map_name());
-            spdlog::debug("Player count: {}", game.player_count());
-            spdlog::debug("Ping: {}", game.ping());
-        }
+        UpdateGamesList();
     });
 
     drawables_.emplace_back(server_status_text_.get());
     drawables_.emplace_back(header_text_.get());
-    drawables_.emplace_back(server_list_background_.get());
+    drawables_.emplace_back(games_list_background_.get());
     drawables_.emplace_back(ping_button_.get());
     drawables_.emplace_back(back_button_.get());
+
+    UpdateGamesList();
+}
+
+void OnlineGameScreen::UpdateGamesList()
+{
+    const auto list_of_games = client_->ListAllGames();
+
+    if (!list_of_games.has_value())
+    {
+        spdlog::info("No online games available");
+        return;
+    }
+
+    /// @TODO: When updating the game list, filter out the existing or removed games from the list
+
+    const auto background_start_x = games_list_background_->getPosition().x;
+    const auto background_start_y = games_list_background_->getPosition().y;
+
+    for (std::size_t i{0}; i < list_of_games.value()->available_games_size(); i++)
+    {
+        const auto& game = list_of_games.value()->available_games(i);
+        const auto label = fmt::format(online_game_element_label, game.name(), game.map_name(),game.player_count(), game.ping());
+
+        auto* element = new Button();
+        element->SetLabel(label);
+        element->SetTextSize(GUI::Constants::MAINMENU_BUTTON_TEXT_SIZE);
+        element->SetPosition({background_start_x, background_start_y + (50.0f * i)});
+        element->SetFunction([]() { spdlog::info("Connecting to online games needs to be implemented"); });
+
+        drawables_.emplace_back(element);
+    }
 }
 
 }  // namespace GUI

@@ -32,7 +32,9 @@ func (gs *GameServer) TestConnection(_ context.Context, in *proto.DummyRequest) 
 	return &proto.DummyResponse{DummyData: "received following data - " + in.DummyData}, nil
 }
 
-// CreateGame todo: Add some input data validation
+// CreateGame
+// todo: Add some input data validation
+// todo: Make sure game names are unique
 func (gs *GameServer) CreateGame(_ context.Context, in *proto.Game) (*proto.Empty, error) {
 	message := fmt.Sprintf("creating new game.\nname: %s\nmap name: %s", in.Name, in.MapName)
 	gs.logger.Info(message)
