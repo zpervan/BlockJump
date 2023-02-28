@@ -24,42 +24,42 @@ Game::Game()
     // @TODO: Move in-memory map generation somewhere more appropriate
     // @TODO: Create a non-player entity factory or builder
     Block* rec{new Block()};
-    rec->SetSize({50, 50});
-    rec->SetPosition({500, 505});
-    rec->SetTexture(AssetsManager::GetTexture(AssetType::DirtWithGrass));
+    rec->Get()->setSize({50, 50});
+    rec->Get()->setPosition({500, 505});
+    rec->Get()->setTexture(AssetsManager::GetTexture(AssetType::DirtWithGrass));
     background_objects_.emplace_back(rec);
 
     Block* rec1{new Block()};
-    rec1->SetSize({100, 50});
-    rec1->SetPosition({500, 750});
-    rec1->SetTexture(AssetsManager::GetTexture(AssetType::DirtWithGrass));
+    rec1->Get()->setSize({100, 50});
+    rec1->Get()->setPosition({500, 750});
+    rec1->Get()->setTexture(AssetsManager::GetTexture(AssetType::DirtWithGrass));
     background_objects_.emplace_back(rec1);
 
     Block* rec2{new Block()};
-    rec2->SetSize({50, 100});
-    rec2->SetPosition({100, 300});
-    rec2->SetTexture(AssetsManager::GetTexture(AssetType::Brick));
+    rec2->Get()->setSize({50, 100});
+    rec2->Get()->setPosition({100, 300});
+    rec2->Get()->setTexture(AssetsManager::GetTexture(AssetType::Brick));
     background_objects_.emplace_back(rec2);
 
     Block* rec3{new Block()};
-    rec3->SetSize({400, 50});
-    rec3->SetPosition({700, 850});
-    rec3->SetTexture(AssetsManager::GetTexture(AssetType::Brick));
+    rec3->Get()->setSize({400, 50});
+    rec3->Get()->setPosition({700, 850});
+    rec3->Get()->setTexture(AssetsManager::GetTexture(AssetType::Brick));
     background_objects_.emplace_back(rec3);
 
     Block* rec4{new Block()};
-    rec4->SetSize({150, 50});
-    rec4->SetPosition({850, 800});
-    rec4->SetTexture(AssetsManager::GetTexture(AssetType::Brick));
+    rec4->Get()->setSize({150, 50});
+    rec4->Get()->setPosition({850, 800});
+    rec4->Get()->setTexture(AssetsManager::GetTexture(AssetType::Brick));
     background_objects_.emplace_back(rec4);
 
     Block* ground{new Block()};
-    ground->SetSize({1280, 200});
-    ground->SetPosition({0, 900});
-    ground->SetTexture(AssetsManager::GetTexture(AssetType::DirtWithGrass));
+    ground->Get()->setSize({1280, 200});
+    ground->Get()->setPosition({0, 900});
+    ground->Get()->setTexture(AssetsManager::GetTexture(AssetType::DirtWithGrass));
     background_objects_.emplace_back(ground);
 
-    player_entity_->SetTexture(AssetsManager::GetTexture(AssetType::Player));
+    player_entity_->Get()->setTexture(AssetsManager::GetTexture(AssetType::Player));
     // @TODO: Set it after the menu screen is done
     // window_->SetView({player_entity_->GetPosition(), {Constants::VIEW_THRESHOLD_X, Constants::VIEW_THRESHOLD_Y}});
     game_event_system_->Set(GameEvents::Menu);
@@ -104,7 +104,7 @@ void Game::Update()
 
     AddGravity();
 
-    window_->UpdatePlayerView(player_entity_->GetPosition());
+    window_->UpdatePlayerView(player_entity_->Get()->getPosition());
 }
 
 void Game::Display()
@@ -117,14 +117,14 @@ void Game::Display()
 
 void Game::ShowEntities()
 {
-    window_->Draw(*(player_entity_->GetEntity()));
+    window_->Draw(*player_entity_);
 }
 
 void Game::ShowBackground()
 {
     for (auto* background_object : background_objects_)
     {
-        window_->Draw(*(background_object->Get()));
+        window_->Draw(*background_object);
     }
 }
 
@@ -140,13 +140,13 @@ Game::~Game()
 
 void Game::AddGravity()
 {
-    const auto new_player_position_y{player_entity_->GetEntity()->getPosition().y + (Constants::GRAVITY / 250)};
-    const sf::FloatRect new_player_position{{player_entity_->GetPosition().x, new_player_position_y},
-                                            player_entity_->GetEntity()->getSize()};
+    const auto new_player_position_y{player_entity_->Get()->getPosition().y + (Constants::GRAVITY / 250)};
+    const sf::FloatRect new_player_position{{player_entity_->Get()->getPosition().x, new_player_position_y},
+                                            player_entity_->Get()->getSize()};
 
     if ((player_entity_->GetEntityState() == EntityState::Jumping) ||
         !Utility::IsColliding(new_player_position, background_objects_))
     {
-        player_entity_->GetEntity()->setPosition({player_entity_->GetPosition().x, new_player_position_y});
+        player_entity_->Get()->setPosition({player_entity_->Get()->getPosition().x, new_player_position_y});
     }
 }

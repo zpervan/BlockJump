@@ -21,11 +21,13 @@ class PlayerEntity : public BaseEntity
     /// @brief Changes the position value w.r.t the pressed key.
     void Move(std::vector<BackgroundObject*>& entities);
 
-  private:
+  private: /* Functions */
     void Jump(std::vector<BackgroundObject*>& entities);
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-    sf::Clock jumping_clock_{};
-    sf::Time jumping_timer_{};
+  private: /* Data members */
+    sf::Clock jumping_clock_;
+    sf::Time jumping_timer_;
     float jumping_timer_delta_{0.0f};
 };
 

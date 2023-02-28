@@ -1,9 +1,9 @@
 #ifndef BLOCKJUMP_BLOCK_H
 #define BLOCKJUMP_BLOCK_H
 
-#include "Game/World/src/background_object.h"
-
 #include <memory>
+
+#include "Game/World/src/background_object.h"
 
 class Block : public BackgroundObject
 {
@@ -11,15 +11,12 @@ class Block : public BackgroundObject
     Block();
     ~Block() override = default;
 
-    void SetSize(sf::Vector2f size) override;
-    void SetPosition(sf::Vector2f position) override;
-    void SetRotation(float angle) override;
-    void SetTexture(const sf::Texture* texture) override;
-    void SetFillColor(sf::Color color) override;
+    sf::RectangleShape* Get() override;
 
-    sf::RectangleShape * Get() override;
+  private: /* Functions */
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-  private:
+  private: /* Data members */
     std::unique_ptr<sf::RectangleShape> block_object_;
 };
 

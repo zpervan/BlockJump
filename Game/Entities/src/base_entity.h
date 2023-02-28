@@ -13,27 +13,19 @@ enum class EntityState
     Dead
 };
 
-/// @TODO: Reconsider to use GetEntity() to directly set data
 /// @brief Represents the base class for each entity created in the game.
-class BaseEntity
+class BaseEntity : public sf::Drawable
 {
   public: /* Functions */
+    /// @brief Updates the entity pose and movement speed data.
     void Update();
 
-  public: /* Getters and setters */
-    void SetPosition(const sf::Vector2f& position);
-    void SetRotation(float angle);
-    void SetVelocity(float velocity);
-    void SetTexture(const sf::Texture* texture);
     void SetEntityState(EntityState entity_state);
-
-    const sf::Vector2f& GetPosition() const;
-    float GetRotation() const;
     float GetVelocity() const;
     sf::Vector2f GetPositionToMove() const;
     EntityState GetEntityState() const;
 
-    sf::RectangleShape* GetEntity();
+    sf::RectangleShape* Get();
 
   protected:
     std::unique_ptr<sf::RectangleShape> entity_{std::make_unique<sf::RectangleShape>()};
