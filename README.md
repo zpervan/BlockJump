@@ -15,7 +15,6 @@ Current state of the map editor:
 ### Development setup ###
 
 Used libraries:
-- [curlcpp](https://github.com/JosephP91/curlcpp)
 - [Google Test](https://github.com/google/googletest)
 - [ImGui-SFML](https://github.com/eliasdaler/imgui-sfml)
 - [ImGui](https://github.com/ocornut/imgui)

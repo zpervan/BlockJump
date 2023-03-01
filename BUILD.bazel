@@ -8,7 +8,6 @@ cc_binary(
     data = ["//Assets:copy_fonts"],
     deps = [
         "//:game",
-        "@curlcpplib//:curlcpp",
         "@spdloglib//:spdlog",
     ],
 )

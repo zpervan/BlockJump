@@ -74,11 +74,6 @@ local_repository(
 )
 
 local_repository(
-    name = "curlcpplib",
-    path = "ThirdParty/curlcpp/",
-)
-
-local_repository(
     name = "gllib",
     path = "ThirdParty/GL/",
 )
