@@ -9,9 +9,13 @@
 
 void AssetsManager::Initialize()
 {
+    // @TODO: Think of a smarter way to load tiles such only that are used inside the game
     player_entity_ = LoadAsset("player.png");
     background_dirt_with_grass_ = LoadAsset("dirt_with_grass.png");
     background_brick_ = LoadAsset("brick.png");
+    background_ice_ = LoadAsset("ice.png");
+    background_wooden_box_ = LoadAsset("wooden_box.png");
+    background_wooden_box_boom_ = LoadAsset("wooden_box_boom.png");
     header_font_ = LoadFont("KGHAPPY.ttf");
     button_font_ = LoadFont("CodeNewRoman.otf");
     click_sound_ = LoadSound("click.wav");
@@ -57,6 +61,12 @@ sf::Texture* AssetsManager::GetTexture(AssetType type)
             return background_dirt_with_grass_.get();
         case AssetType::Brick:
             return background_brick_.get();
+        case AssetType::Ice:
+            return background_ice_.get();
+        case AssetType::WoodenBox:
+            return background_wooden_box_.get();
+        case AssetType::WoodenBoxBoom:
+            return background_wooden_box_boom_.get();
         default:
             spdlog::error("Doesn't contain asset of that type!");
             return nullptr;

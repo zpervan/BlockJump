@@ -26,7 +26,7 @@ Game::Game()
     Block* rec{new Block()};
     rec->Get()->setSize({50, 50});
     rec->Get()->setPosition({500, 505});
-    rec->Get()->setTexture(AssetsManager::GetTexture(AssetType::DirtWithGrass));
+    rec->Get()->setTexture(AssetsManager::GetTexture(AssetType::Ice));
     background_objects_.emplace_back(rec);
 
     Block* rec1{new Block()};
@@ -44,7 +44,7 @@ Game::Game()
     Block* rec3{new Block()};
     rec3->Get()->setSize({400, 50});
     rec3->Get()->setPosition({700, 850});
-    rec3->Get()->setTexture(AssetsManager::GetTexture(AssetType::Brick));
+    rec3->Get()->setTexture(AssetsManager::GetTexture(AssetType::WoodenBox));
     background_objects_.emplace_back(rec3);
 
     Block* rec4{new Block()};
@@ -53,6 +53,12 @@ Game::Game()
     rec4->Get()->setTexture(AssetsManager::GetTexture(AssetType::Brick));
     background_objects_.emplace_back(rec4);
 
+    Block* rec5{new Block()};
+    rec4->Get()->setSize({64, 64});
+    rec4->Get()->setPosition({100, 400});
+    rec4->Get()->setTexture(AssetsManager::GetTexture(AssetType::WoodenBoxBoom));
+    background_objects_.emplace_back(rec5);
+
     Block* ground{new Block()};
     ground->Get()->setSize({1280, 200});
     ground->Get()->setPosition({0, 900});
@@ -60,6 +66,7 @@ Game::Game()
     background_objects_.emplace_back(ground);
 
     player_entity_->Get()->setTexture(AssetsManager::GetTexture(AssetType::Player));
+    player_entity_->Get()->setOutlineColor({188, 188, 188, 255});
     // @TODO: Set it after the menu screen is done
     // window_->SetView({player_entity_->GetPosition(), {Constants::VIEW_THRESHOLD_X, Constants::VIEW_THRESHOLD_Y}});
     game_event_system_->Set(GameEvents::Menu);

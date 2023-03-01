@@ -12,7 +12,10 @@ enum class AssetType
     None = 0,
     Player,
     DirtWithGrass,
-    Brick
+    Brick,
+    Ice,
+    WoodenBox,
+    WoodenBoxBoom
 };
 
 /// @brief Used to select which type of font to fetch
@@ -48,6 +51,9 @@ class AssetsManager
     inline static std::unique_ptr<sf::Texture> player_entity_;
     inline static std::unique_ptr<sf::Texture> background_dirt_with_grass_;
     inline static std::unique_ptr<sf::Texture> background_brick_;
+    inline static std::unique_ptr<sf::Texture> background_ice_;
+    inline static std::unique_ptr<sf::Texture> background_wooden_box_;
+    inline static std::unique_ptr<sf::Texture> background_wooden_box_boom_;
     inline static std::unique_ptr<sf::Font> button_font_;
     inline static std::unique_ptr<sf::Font> header_font_;
     inline static std::unique_ptr<sf::SoundBuffer> click_sound_;
