@@ -11,3 +11,8 @@ proto_library(
     name = "map-serialization-messages",
     srcs = glob(["map/*.proto"]),
 )
+
+cc_proto_library(
+    name = "map-serialization",
+    deps = [":map-serialization-messages"],
+)

@@ -16,7 +16,7 @@ PlayerEntity::PlayerEntity(sf::Vector2f startingPosition)
 }
 
 /// @TODO: Extract entities from this function so we don't have to pass it through a function
-void PlayerEntity::Move(std::vector<BackgroundObject*>& entities)
+void PlayerEntity::Move(std::vector<sf::RectangleShape*>& entities)
 {
     position_to_move_ = Get()->getPosition();
 
@@ -55,7 +55,7 @@ void PlayerEntity::Move(std::vector<BackgroundObject*>& entities)
     }
 }
 
-void PlayerEntity::Jump(std::vector<BackgroundObject*>& entities)
+void PlayerEntity::Jump(std::vector<sf::RectangleShape*>& entities)
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && (GetEntityState() != EntityState::Jumping))
     {

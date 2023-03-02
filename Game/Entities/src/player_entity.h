@@ -2,10 +2,10 @@
 #define BLOCKJUMP_PLAYER_ENTITY_H
 
 #include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/System/Clock.hpp>
 #include <memory>
 
 #include "Game/Entities/src/base_entity.h"
-#include "Game/World/src/background_object.h"
 
 /// @brief Contains all the information about the player entity.
 /// @verbatim
@@ -19,10 +19,10 @@ class PlayerEntity : public BaseEntity
     explicit PlayerEntity(sf::Vector2f startingPosition);
 
     /// @brief Changes the position value w.r.t the pressed key.
-    void Move(std::vector<BackgroundObject*>& entities);
+    void Move(std::vector<sf::RectangleShape*>& entities);
 
   private: /* Functions */
-    void Jump(std::vector<BackgroundObject*>& entities);
+    void Jump(std::vector<sf::RectangleShape*>& entities);
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
   private: /* Data members */

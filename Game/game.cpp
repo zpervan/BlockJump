@@ -3,72 +3,28 @@
 #include <spdlog/spdlog.h>
 
 #include "Game/Core/src/game_events.h"
-#include "Game/GUI/src/gui_constans.h"
-#include "Game/World/src/block.h"
 #include "Game/World/src/utility.h"
 #include "Game/constants.h"
 #include "Library/src/assets_manager.h"
+#include "Library/src/paths.h"
 
 Game::Game()
     : window_(new GameWindow(Constants::TITLE)),
-      player_entity_(std::make_unique<PlayerEntity>(sf::Vector2f(25, 50))),
-      game_event_system_(std::make_unique<GameEventSystem>())
+      game_event_system_(std::make_unique<GameEventSystem>()),
+      player_entity_(std::make_unique<PlayerEntity>(sf::Vector2f(100, 100))),
+      map_manager_(std::make_unique<MapManager>())
 {
     AssetsManager::Initialize();
     main_menu_ = std::make_unique<GUI::MainMenu>(window_.get(), game_event_system_.get());
     online_game_screen_ = std::make_unique<GUI::OnlineGameScreen>(window_.get(), game_event_system_.get());
     not_implemented_screen_ = std::make_unique<GUI::NotImplementedScreen>(window_.get(), game_event_system_.get());
 
-    background_objects_.reserve(6);
+    map_manager_->Load(Paths::MapsDirectoryPath());
 
-    // @TODO: Move in-memory map generation somewhere more appropriate
-    // @TODO: Create a non-player entity factory or builder
-    Block* rec{new Block()};
-    rec->Get()->setSize({50, 50});
-    rec->Get()->setPosition({500, 505});
-    rec->Get()->setTexture(AssetsManager::GetTexture(AssetType::Ice));
-    background_objects_.emplace_back(rec);
-
-    Block* rec1{new Block()};
-    rec1->Get()->setSize({100, 50});
-    rec1->Get()->setPosition({500, 750});
-    rec1->Get()->setTexture(AssetsManager::GetTexture(AssetType::DirtWithGrass));
-    background_objects_.emplace_back(rec1);
-
-    Block* rec2{new Block()};
-    rec2->Get()->setSize({50, 100});
-    rec2->Get()->setPosition({100, 300});
-    rec2->Get()->setTexture(AssetsManager::GetTexture(AssetType::Brick));
-    background_objects_.emplace_back(rec2);
-
-    Block* rec3{new Block()};
-    rec3->Get()->setSize({400, 50});
-    rec3->Get()->setPosition({700, 850});
-    rec3->Get()->setTexture(AssetsManager::GetTexture(AssetType::WoodenBox));
-    background_objects_.emplace_back(rec3);
-
-    Block* rec4{new Block()};
-    rec4->Get()->setSize({150, 50});
-    rec4->Get()->setPosition({850, 800});
-    rec4->Get()->setTexture(AssetsManager::GetTexture(AssetType::Brick));
-    background_objects_.emplace_back(rec4);
-
-    Block* rec5{new Block()};
-    rec4->Get()->setSize({64, 64});
-    rec4->Get()->setPosition({100, 400});
-    rec4->Get()->setTexture(AssetsManager::GetTexture(AssetType::WoodenBoxBoom));
-    background_objects_.emplace_back(rec5);
-
-    Block* ground{new Block()};
-    ground->Get()->setSize({1280, 200});
-    ground->Get()->setPosition({0, 900});
-    ground->Get()->setTexture(AssetsManager::GetTexture(AssetType::DirtWithGrass));
-    background_objects_.emplace_back(ground);
-
+    // @TODO: Read this from the map data
     player_entity_->Get()->setTexture(AssetsManager::GetTexture(AssetType::Player));
     player_entity_->Get()->setOutlineColor({188, 188, 188, 255});
-    // @TODO: Set it after the menu screen is done
-    // window_->SetView({player_entity_->GetPosition(), {Constants::VIEW_THRESHOLD_X, Constants::VIEW_THRESHOLD_Y}});
+
     game_event_system_->Set(GameEvents::Menu);
 }
 
@@ -106,7 +62,7 @@ void Game::Run()
 
 void Game::Update()
 {
-    player_entity_->Move(background_objects_);
+    player_entity_->Move(map_manager_->BackgroundObjects());
     player_entity_->Update();
 
     AddGravity();
@@ -129,19 +85,9 @@ void Game::ShowEntities()
 
 void Game::ShowBackground()
 {
-    for (auto* background_object : background_objects_)
+    for (auto* background_object : map_manager_->BackgroundObjects())
     {
         window_->Draw(*background_object);
-    }
-}
-
-Game::~Game()
-{
-    spdlog::debug("Cleaning up...");
-    for (auto& background_object : background_objects_)
-    {
-        delete background_object;
-        background_object = nullptr;
     }
 }
 
@@ -152,7 +98,7 @@ void Game::AddGravity()
                                             player_entity_->Get()->getSize()};
 
     if ((player_entity_->GetEntityState() == EntityState::Jumping) ||
-        !Utility::IsColliding(new_player_position, background_objects_))
+        !Utility::IsColliding(new_player_position, map_manager_->BackgroundObjects()))
     {
         player_entity_->Get()->setPosition({player_entity_->Get()->getPosition().x, new_player_position_y});
     }

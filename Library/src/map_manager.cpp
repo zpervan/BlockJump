@@ -16,9 +16,9 @@ bool MapManager::Load(std::string path)
 {
     spdlog::info("Loading map");
 
-    if (!map_data_.empty())
+    if (!background_objects_.empty())
     {
-        map_data_.clear();
+        background_objects_.clear();
     }
 
     MapMessages::Map map;
@@ -35,6 +35,8 @@ bool MapManager::Load(std::string path)
         }
     }
 
+    background_objects_.reserve(map.background_tile_size());
+
     for (auto& tile : map.background_tile())
     {
         auto* drawable = new sf::RectangleShape();
@@ -42,7 +44,7 @@ bool MapManager::Load(std::string path)
         drawable->setSize({64.0f, 64.0f});
         drawable->setTexture(AssetsManager::GetTexture(tile_type[tile.type()]));
 
-        map_data_.emplace_back(drawable);
+        background_objects_.emplace_back(drawable);
     }
 
     spdlog::info("Map loaded successfully");
@@ -50,16 +52,16 @@ bool MapManager::Load(std::string path)
     return true;
 }
 
-std::vector<sf::Drawable*>& MapManager::Data()
+std::vector<sf::RectangleShape*>& MapManager::BackgroundObjects()
 {
-    return map_data_;
+    return background_objects_;
 }
 
 MapManager::~MapManager()
 {
     spdlog::info("Cleaning up map data");
 
-    for (auto drawable : map_data_)
+    for (auto drawable : background_objects_)
     {
         delete drawable;
         drawable = nullptr;
