@@ -23,7 +23,7 @@ std::map<AssetType, std::string> mapped_tile_types_to_string{
 }
 
 /// @TODO: Allow user to choose path
-constexpr auto map_file_path{"/home/zvonimir/Programming/BlockJump/Assets/maps/test_map.map"};
+constexpr auto map_file_path{"/home/zvonimir/Programming/BlockJump/Assets/Maps/test_map.map"};
 
 bool MapSerialization::Serialize(const std::vector<std::shared_ptr<Tile>>& map_tiles)
 {
@@ -61,10 +61,4 @@ bool MapSerialization::Serialize(const std::vector<std::shared_ptr<Tile>>& map_t
     outfile.close();
 
     return true;
-}
-
-std::vector<sf::RectangleShape> MapSerialization::Deserialize()
-{
-    /// @TODO: Implement deserialization
-    return {};
 }

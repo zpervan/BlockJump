@@ -8,16 +8,11 @@ cc_library(
     linkopts = ["-lstdc++fs"],
     visibility = ["//visibility:public"],
     deps = [
-        ":map-serialization",
         "//MapEditor/Core:core",
+        "//ProtoMessages:map-serialization",
         "@sfmllib//:sfml-graphics",
         "@sfmllib//:sfml-system",
         "@sfmllib//:sfml-window",
         "@spdloglib//:spdlog",
     ],
-)
-
-cc_proto_library(
-    name = "map-serialization",
-    deps = ["//ProtoMessages:map-serialization-messages"],
 )

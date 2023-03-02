@@ -4,16 +4,17 @@ cc_library(
     name = "library_common",
     srcs = glob(["src/*.cpp"]),
     hdrs = glob(["src/*.h"]),
-    visibility = ["//visibility:public"],
     data = [
         "//Assets:copy_fonts",
-        "//Assets:copy_sprites",
         "//Assets:copy_sounds",
+        "//Assets:copy_sprites",
         "//Assets:fonts",
+        "//Assets:sounds",
         "//Assets:sprites",
-        "//Assets:sounds"
     ],
+    visibility = ["//visibility:public"],
     deps = [
+        "//ProtoMessages:map-serialization",
         "@sfmllib//:sfml-audio",
         "@sfmllib//:sfml-graphics",
         "@sfmllib//:sfml-system",
