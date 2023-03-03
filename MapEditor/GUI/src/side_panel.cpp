@@ -41,5 +41,29 @@ void SidePanel::Show()
         tiles_service_.BeginPlacement(AssetType::Brick);
     }
 
+    ImGui::SameLine();
+
+    if (ImGui::ImageButton(*AssetsManager::GetTexture(AssetType::Ice), {Configuration::Button_Size.x, Configuration::Button_Size.y}, padding_))
+    {
+        spdlog::debug("Pressed background \"Ice\" button");
+        tiles_service_.BeginPlacement(AssetType::Ice);
+    }
+
+    ImGui::SameLine();
+
+    if (ImGui::ImageButton(*AssetsManager::GetTexture(AssetType::WoodenBox), {Configuration::Button_Size.x, Configuration::Button_Size.y}, padding_))
+    {
+        spdlog::debug("Pressed background \"WoodenBox\" button");
+        tiles_service_.BeginPlacement(AssetType::WoodenBox);
+    }
+
+    ImGui::SameLine();
+
+    if (ImGui::ImageButton(*AssetsManager::GetTexture(AssetType::WoodenBoxBoom), {Configuration::Button_Size.x, Configuration::Button_Size.y}, padding_))
+    {
+        spdlog::debug("Pressed background \"WoodenBoxBoom\" button");
+        tiles_service_.BeginPlacement(AssetType::WoodenBoxBoom);
+    }
+
     ImGui::End();
 }

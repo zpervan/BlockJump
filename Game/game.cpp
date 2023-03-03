@@ -11,7 +11,7 @@
 Game::Game()
     : window_(new GameWindow(Constants::TITLE)),
       game_event_system_(std::make_unique<GameEventSystem>()),
-      player_entity_(std::make_unique<PlayerEntity>(sf::Vector2f(100, 100))),
+      player_entity_(std::make_unique<PlayerEntity>(sf::Vector2f(400, 100))),
       map_manager_(std::make_unique<MapManager>())
 {
     AssetsManager::Initialize();

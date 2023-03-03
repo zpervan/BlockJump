@@ -26,7 +26,7 @@ bool MapManager::Load(std::string path)
         // @TODO: Once the start game menu is implemented, make the path customizable
         // @TODO: Check if the file exists
         // @TODO: There is an error while saving the map by using the paths functionality
-        std::fstream map_file{Paths::MapsDirectoryPath() + "test_map.map", std::ios::in | std::ios::binary};
+        std::fstream map_file{Paths::MapsDirectoryPath() + "test.map", std::ios::in | std::ios::binary};
 
         if (!map.ParseFromIstream(&map_file))
         {
@@ -83,8 +83,8 @@ bool MapManager::Save(const std::vector<std::shared_ptr<Tile>>& tiles)
     }
 
     /// @TODO: Consider to make the maps saving directory customizable, i.e. the user can set a custom save path
-    std::fstream outfile{Paths::MapsDirectoryPath() + "example.map",
-                         std::ios::out | std::ios::trunc | std::ios::binary};
+    //  std::fstream outfile{Paths::MapsDirectoryPath() + "example.map", std::ios::out | std::ios::trunc | std::ios::binary};
+    std::fstream outfile{"/home/zvonimir/Programming/BlockJump/Assets/Maps/test.map", std::ios::out | std::ios::trunc | std::ios::binary};
 
     if (!map.SerializeToOstream(&outfile))
     {
