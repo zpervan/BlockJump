@@ -9,8 +9,8 @@
 #include "MapEditor/GUI/src/menu_bar.h"
 #include "MapEditor/GUI/src/side_panel.h"
 #include "MapEditor/Map/src/grid.h"
-#include "MapEditor/Map/src/map_serialization.h"
 #include "MapEditor/Map/src/tiles_service.h"
+#include "Library/src/map_manager.h"
 
 int main()
 {
@@ -51,10 +51,10 @@ int main()
             {
                 if(e->getGlobalBounds().contains(window.GetMousePosition().x, window.GetMousePosition().y))
                 {
-                    tiles_service.GetTemporaryTile()->shape.setPosition(e->getPosition());
+                    tiles_service.GetTemporaryTile()->first.setPosition(e->getPosition());
                 }
             }
-            window.Draw(tiles_service.GetTemporaryTile()->shape);
+            window.Draw(tiles_service.GetTemporaryTile()->first);
         }
 
         if(map_editor_event_system.Poll() == MapEditorEvent::Saving)
@@ -67,10 +67,10 @@ int main()
             if (!serialization_result.valid())
             {
                 spdlog::debug("Calling serialization thread...");
-                serialization_result = std::async(std::launch::async, &MapSerialization::Serialize, tiles_service.CloneTiles());
+                serialization_result = std::async(std::launch::async, &MapManager::Save, tiles_service.CloneTiles());
             }
 
-            if (serialization_result.get())
+            if (serialization_result.valid())
             {
                 spdlog::debug("Finished with serialization thread.");
                 map_editor_event_system.Set(MapEditorEvent::None);
@@ -86,7 +86,6 @@ int main()
         {
             spdlog::debug("TODO: Implement loading functionality");
         }
-
 
         if(map_editor_event_system.Poll() == MapEditorEvent::None)
         {
@@ -104,7 +103,7 @@ int main()
                 continue;
             }
 
-            window.Draw(tile->shape);
+            window.Draw(tile->first);
         }
 
         for (const auto & grid_line : grid.GetGridShapes())

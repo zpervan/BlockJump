@@ -6,9 +6,11 @@ cc_library(
     hdrs = glob(["src/*.h"]),
     data = [
         "//Assets:copy_fonts",
+        "//Assets:copy_maps",
         "//Assets:copy_sounds",
         "//Assets:copy_sprites",
         "//Assets:fonts",
+        "//Assets:maps",
         "//Assets:sounds",
         "//Assets:sprites",
     ],

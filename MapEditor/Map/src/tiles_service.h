@@ -6,13 +6,8 @@
 #include <memory>
 
 #include "Library/src/assets_manager.h"
+#include "Library/src/tiles.h"
 #include "MapEditor/Core/src/map_editor_events.h"
-
-struct Tile
-{
-    sf::RectangleShape shape{};
-    AssetType type{AssetType::None};
-};
 
 class TilesService
 {

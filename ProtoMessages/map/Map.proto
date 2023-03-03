@@ -14,8 +14,11 @@ message BackgroundTile
 {
   enum Type
   {
-    DirtWithGrass = 0;
-    Brick = 1;
+    BRICK = 0;
+    DIRT_WITH_GRASS = 1;
+    ICE = 2;
+    WOODEN_BOX = 3;
+    WOODEN_BOX_BOOM = 4;
   }
 
   Position position = 1;

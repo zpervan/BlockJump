@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+package rpc;
+
+option go_package = "./proto";
+
+// In order to satisfy the interface rule for RPC functions (each function should have an argument and return values),
+// this will allow us to return an empty response without any data.
+message Empty {}
+
+// Request message mostly used for testing and prototyping
+message DummyRequest
+{
+    string dummy_data = 1;
+}
+
+// Response message mostly used for testing
+message DummyResponse
+{
+    string dummy_data = 1;
+}
+
+// Contains necessary information to establish a connection to the server or game session
+message ConnectRequest
+{
+    string username = 1;
+    string password = 2;
+}
+
+// Response data with which the user can freely communicate with the server without additional authentication
+message ConnectResponse
+{
+    string token = 1;
+    string server_name = 2;
+}
+
+// Data received after a successful connection request to the game is established which allows the player to load the
+// game map and exchange data.
+message GameInfo
+{
+    string game_id = 1;
+    string name = 2;
+    string map_name = 3;
+    uint32 ping = 4;
+    uint32 active_player_count = 5;
+    uint32 max_player_count = 6;
+}
