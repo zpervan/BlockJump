@@ -5,16 +5,14 @@ package rpc;
 option go_package = "./proto";
 
 import "ProtoMessages/server/service_messages.proto";
-import "ProtoMessages/server/world_snapshot.proto";
 
 service BlockJump
 {
     rpc TestConnection (DummyRequest) returns (DummyResponse) {}
     rpc CreateGame (GameInfo) returns (Empty) {}
     rpc ConnectToServer (ConnectRequest) returns (ConnectResponse) {}
-    rpc JoinGame (ConnectRequest) returns (GameInfo) {}
     rpc ListAllGames (Empty) returns (ListOfGames) {}
-    rpc Update (EntitySnapshot) returns (WorldSnapshot) {}
+    rpc Stream(stream GameRequest) returns (stream GameResponse) {}
 }
 
 enum ErrorCode

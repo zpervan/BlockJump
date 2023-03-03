@@ -4,6 +4,8 @@ package rpc;
 
 option go_package = "./proto";
 
+import "ProtoMessages/server/world_snapshot.proto";
+
 // In order to satisfy the interface rule for RPC functions (each function should have an argument and return values),
 // this will allow us to return an empty response without any data.
 message Empty {}
@@ -32,6 +34,21 @@ message ConnectResponse
 {
     string token = 1;
     string server_name = 2;
+}
+
+// Used for streaming player entity information (i.e. position, health etc)
+message GameRequest
+{
+    string username = 1;
+    EntitySnapshot entity_snapshot = 2;
+}
+
+// Used for streaming game responses from the server
+message GameResponse
+{
+    string username = 1;
+    string message = 2;
+    EntitySnapshot player_entity = 3;
 }
 
 // Data received after a successful connection request to the game is established which allows the player to load the
