@@ -4,60 +4,34 @@ package rpc;
 
 option go_package = "./proto";
 
-import "ProtoMessages/server/stream.proto";
+import "ProtoMessages/server/service_messages.proto";
+import "ProtoMessages/server/world_snapshot.proto";
 
-service BlockJump {
+service BlockJump
+{
     rpc TestConnection (DummyRequest) returns (DummyResponse) {}
-    rpc CreateGame (Game) returns (Empty) {}
+    rpc CreateGame (GameInfo) returns (Empty) {}
     rpc ConnectToServer (ConnectRequest) returns (ConnectResponse) {}
-    rpc ConnectToGame (DummyRequest) returns (DummyResponse) {}
+    rpc JoinGame (ConnectRequest) returns (GameInfo) {}
     rpc ListAllGames (Empty) returns (ListOfGames) {}
-    rpc Stream (stream StreamRequest) returns (stream StreamResponse) {}
+    rpc Update (EntitySnapshot) returns (WorldSnapshot) {}
 }
 
-enum ErrorCode {
+enum ErrorCode
+{
     ERROR_CODE_OK = 0;
     ERROR_CODE_NOT_FOUND = 1;
     ERROR_CODE_INTERNAL_ERROR = 2;
     ERROR_CODE_FATAL = 3;
 }
 
-message Error {
+message Error
+{
     ErrorCode code = 1;
     string message = 2;
 }
 
-message Empty {}
-
-message DummyRequest {
-    string dummy_data = 1;
-}
-
-message DummyResponse {
-    string dummy_data = 1;
-}
-
-message ConnectRequest {
-    string username = 1;
-    string password = 2;
-}
-
-message ConnectResponse {
-    string token = 1;
-    Error error = 2;
-    string server_name = 3;
-    // @TODO: Define how the initial game state should be represented (i.e. entity pose, current map name, etc.)
-    // repeated Entity entities = 2;
-}
-
-message ListOfGames {
-    repeated Game available_games = 1;
-    Error error = 2;
-}
-
-message Game {
-    string name = 1;
-    string map_name = 2;
-    int32 ping = 3;
-    int32 player_count = 4;
+message ListOfGames
+{
+    repeated GameInfo available_games = 1;
 }

@@ -133,7 +133,7 @@ void OnlineGameScreen::UpdateGamesList()
     for (std::size_t i{0}; i < list_of_games.value()->available_games_size(); i++)
     {
         const auto& game = list_of_games.value()->available_games(i);
-        const auto label = fmt::format(online_game_element_label, game.name(), game.map_name(),game.player_count(), game.ping());
+        const auto label = fmt::format(online_game_element_label, game.name(), game.map_name(), game.max_player_count(), game.ping());
 
         auto* element = new Button();
         element->SetLabel(label);

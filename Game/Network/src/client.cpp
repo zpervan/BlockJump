@@ -31,7 +31,7 @@ std::optional<rpc::ListOfGames*> Client::ListAllGames()
 
     const auto status = stub_->ListAllGames(&empty_context, {}, list_of_games_.get());
 
-    if (!status.ok() && list_of_games_->has_error())
+    if (!status.ok())
     {
         spdlog::warn("Error while fetching all games. Reason: ", status.error_message());
         return std::nullopt;

@@ -13,22 +13,18 @@ message Orientation
     float angle = 1;
 }
 
-message Entity
+message EntitySnapshot
 {
     string id = 1;
-    Position position = 2;
-    Orientation orientation = 3;
+    string name = 2;
+    int32 health = 3;
+    Position position = 4;
+    Orientation orientation = 5;
 }
 
-message StreamRequest
+/// @TODO: Consider to add NPCs in the future
+message WorldSnapshot
 {
-    oneof action
-    {
-        Entity player_entity = 1;
-    }
-}
-
-message StreamResponse
-{
-    repeated Entity entities = 1;
+    string id = 1;
+    repeated EntitySnapshot entities = 2;
 }
