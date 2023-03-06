@@ -2,6 +2,7 @@
 
 #include <spdlog/spdlog.h>
 
+#include <future>
 #include <memory>
 
 #include "Game/GUI/src/gui_constans.h"
@@ -139,7 +140,10 @@ void OnlineGameScreen::UpdateGamesList()
         element->SetLabel(label);
         element->SetTextSize(GUI::Constants::MAINMENU_BUTTON_TEXT_SIZE);
         element->SetPosition({background_start_x, background_start_y + (50.0f * i)});
-        element->SetFunction([]() { spdlog::info("Connecting to online games needs to be implemented"); });
+        element->SetFunction([this]() {
+            spdlog::info("Connecting to game...");
+            std::thread([this]() { client_->Stream("TestUser"); }).detach();
+        });
 
         drawables_.emplace_back(element);
     }

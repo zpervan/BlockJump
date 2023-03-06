@@ -41,6 +41,10 @@ class Client
     /// @return List of available online games if they exist
     std::optional<rpc::ListOfGames*> ListAllGames();
 
+    void Stream(std::string username);
+
+//    void Update(EntitySnapshot& player_snapshot);
+
   private:
     std::unique_ptr<rpc::BlockJump::Stub> stub_;
     std::unique_ptr<rpc::ListOfGames> list_of_games_;
