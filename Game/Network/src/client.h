@@ -41,13 +41,26 @@ class Client
     /// @return List of available online games if they exist
     std::optional<rpc::ListOfGames*> ListAllGames();
 
-    void Stream(std::string username);
+    /// @brief Allows the player to join a game on the server. Also, establishes a streaming connection.
+    /// @param username Player's username
+    /// @todo Add clean-up routine once the player exits the game
+    void JoinGame(const std::string& username);
 
-//    void Update(EntitySnapshot& player_snapshot);
+    /// @brief Send the current entity snapshot to the server.
+    /// @param player_entity Contains the position, angle and health data related to the player's entity
+    void UpdatePlayerEntity(EntitySnapshot& player_entity);
+
+    /// @brief Reads the world snapshot data received from the server.
+    /// @todo Extend this function to return the updated data to the caller
+    void UpdateWorldSnapshot();
 
   private:
     std::unique_ptr<rpc::BlockJump::Stub> stub_;
+    std::unique_ptr<grpc::ClientReaderWriter<rpc::GameRequest, rpc::GameResponse>> stream_writer_;
     std::unique_ptr<rpc::ListOfGames> list_of_games_;
+    std::unique_ptr<grpc::ClientContext> context_;
+    std::unique_ptr<rpc::GameRequest> request_;
+    std::unique_ptr<rpc::GameResponse> response_;
 };
 
 }  // namespace Network

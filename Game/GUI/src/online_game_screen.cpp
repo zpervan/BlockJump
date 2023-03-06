@@ -4,6 +4,7 @@
 
 #include <future>
 #include <memory>
+#include <thread>
 
 #include "Game/GUI/src/gui_constans.h"
 #include "Library/src/assets_manager.h"
@@ -142,7 +143,33 @@ void OnlineGameScreen::UpdateGamesList()
         element->SetPosition({background_start_x, background_start_y + (50.0f * i)});
         element->SetFunction([this]() {
             spdlog::info("Connecting to game...");
-            std::thread([this]() { client_->Stream("TestUser"); }).detach();
+
+            client_->JoinGame("Test User");
+
+            std::thread([this]() {
+                EntitySnapshot entity_snapshot;
+                entity_snapshot.mutable_position()->set_x(0.0f);
+                entity_snapshot.mutable_position()->set_y(0.0f);
+                entity_snapshot.mutable_orientation()->set_angle(0.0f);
+                entity_snapshot.set_health(3);
+
+                while (true)
+                {
+                    std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+
+                    float dx = rand() % 10;
+                    float dy = rand() % 20;
+
+                    auto position = entity_snapshot.mutable_position();
+
+                    position->set_x(dx + position->x());
+                    position->set_y(dy + position->y());
+
+                    client_->UpdatePlayerEntity(entity_snapshot);
+                }
+            }).detach();
+
+            std::thread([this]() { client_->UpdateWorldSnapshot(); }).detach();
         });
 
         drawables_.emplace_back(element);

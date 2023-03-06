@@ -2,6 +2,7 @@
 
 #include <spdlog/spdlog.h>
 
+#include <future>
 #include <optional>
 #include <thread>
 
@@ -41,70 +42,84 @@ std::optional<rpc::ListOfGames*> Client::ListAllGames()
     return list_of_games_.get();
 }
 
-void Client::Stream(std::string username)
+void Client::JoinGame(const std::string& username)
 {
-    grpc::ClientContext empty_context;
-    auto writer = stub_->Stream(&empty_context);
-    if (!writer)
+    context_ = std::make_unique<grpc::ClientContext>();
+    stream_writer_ = stub_->Stream(context_.get());
+
+    if (!stream_writer_)
     {
-        spdlog::error("Cannot establish stream connection while joining game");
+        spdlog::error("Cannot establish stream connection to server");
         return;
     }
 
-    auto* request = new rpc::GameRequest;
-    request->set_username(username);
-    request->mutable_entity_snapshot()->set_health(0);
-    request->mutable_entity_snapshot()->mutable_position()->set_x(0);
-    request->mutable_entity_snapshot()->mutable_position()->set_y(0);
-    request->mutable_entity_snapshot()->mutable_orientation()->set_angle(0);
+    response_ = std::make_unique<rpc::GameResponse>();
+    request_ = std::make_unique<rpc::GameRequest>();
+    request_->set_username(username);
 
-    std::thread([&writer]() {
-        spdlog::info("Starting incoming stream");
+    rpc::GameRequest initial_request;
+    initial_request.set_username(username);
+    /// @TODO: The initial data needs to be extracted from the map
+    initial_request.mutable_entity_snapshot()->mutable_position()->set_x(100);
+    initial_request.mutable_entity_snapshot()->mutable_position()->set_y(100);
+    initial_request.mutable_entity_snapshot()->mutable_orientation()->set_angle(0);
+    initial_request.mutable_entity_snapshot()->set_health(3);
 
-        auto* response = new rpc::GameResponse;
+    stream_writer_->Write(initial_request);
 
-        while (true)
-        {
-            spdlog::debug("Reading response...");
-            writer->Read(response);
+    rpc::GameResponse response;
+    if (stream_writer_->Read(&response))
+    {
+        spdlog::info("Response from server: {}", response.message());
+    }
+    else
+    {
+        spdlog::error("Error while joining game");
+        return;
+    }
+}
 
-            spdlog::debug("Response for {}", response->username());
-            spdlog::debug("Position x={} y={}",
-                          response->player_entity().position().x(),
-                          response->player_entity().position().x());
-            std::this_thread::sleep_for(std::chrono::seconds(1));
-        }
-    }).detach();
+void Client::UpdatePlayerEntity(EntitySnapshot& player_entity)
+{
+    if (!stream_writer_)
+    {
+        spdlog::error("No stream connection established");
+        return;
+    }
+
+    request_->mutable_entity_snapshot()->mutable_position()->set_x(player_entity.position().x());
+    request_->mutable_entity_snapshot()->mutable_position()->set_y(player_entity.position().y());
+
+    if (!stream_writer_->Write(*request_))
+    {
+        spdlog::error("Error while updating player entity");
+        return;
+    }
+
+    spdlog::debug("Updated player entity x={}, y={}",
+                  request_->entity_snapshot().position().x(),
+                  request_->entity_snapshot().position().y());
+}
+
+void Client::UpdateWorldSnapshot()
+{
+    if (!stream_writer_)
+    {
+        spdlog::error("No stream connection established");
+        return;
+    }
+
+    spdlog::info("Starting incoming stream");
 
     while (true)
     {
-        float dx = rand() % 10 - 5;
-        float dy = rand() % 20 - 5;
+        spdlog::debug("Reading response...");
+        stream_writer_->Read(response_.get());
 
-        auto position = request->mutable_entity_snapshot()->mutable_position();
+        spdlog::debug("Response for {}", response_->username());
+        spdlog::debug("Position x={} y={}", response_->player_entity().position().x(), response_->player_entity().position().x());
 
-        position->set_x(dx + request->entity_snapshot().position().x());
-        position->set_y(dy + request->entity_snapshot().position().y());
-
-        spdlog::debug("Updating player position to x={}, y={}", position->x(), position->y());
-
-        bool success = writer->Write(*request);
-        if (!success)
-        {
-            spdlog::error("Error while updating player entity");
-            return;
-        }
-
-        std::this_thread::sleep_for(std::chrono::milliseconds(2000));
-    }
-
-    /// @TODO: Implement a clean-up routine when the player quits the game - currently unreachable
-    writer->WritesDone();
-
-    grpc::Status status = writer->Finish();
-    if (!status.ok())
-    {
-        spdlog::error("Error joining game. Reason: {}", status.error_message());
+        std::this_thread::sleep_for(std::chrono::seconds(1));
     }
 }
 
