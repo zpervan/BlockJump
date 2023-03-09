@@ -20,6 +20,7 @@ class TilesService
     const std::vector<std::shared_ptr<Tile>>& GetTiles() const;
     std::vector<std::shared_ptr<Tile>> CloneTiles() const;
     Tile* GetTemporaryTile();
+    void DeleteTemporaryTile();
 
   private:
     MapEditorEventSystem& map_editor_event_system_;

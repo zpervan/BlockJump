@@ -5,6 +5,7 @@ enum class MapEditorEvent
 {
     None = 0,
     Add,
+    Set,
     Edit,
     Delete,
     Saving,

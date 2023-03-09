@@ -55,6 +55,11 @@ void MapEditorWindow::Update()
 
         if ((map_editor_event_system_.Poll() == MapEditorEvent::Add) && (event_.type == sf::Event::MouseButtonPressed))
         {
+            map_editor_event_system_.Set(MapEditorEvent::Set);
+        }
+
+        if ((map_editor_event_system_.Poll() == MapEditorEvent::Add) && (event_.key.code == sf::Keyboard::Escape))
+        {
             map_editor_event_system_.Set(MapEditorEvent::None);
         }
     }

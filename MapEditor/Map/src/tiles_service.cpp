@@ -46,3 +46,13 @@ Tile* TilesService::GetTemporaryTile()
 {
     return temporary_tile_;
 }
+
+void TilesService::DeleteTemporaryTile()
+{
+    if(temporary_tile_)
+    {
+        spdlog::debug("Deleting temporary tile");
+        delete temporary_tile_;
+        temporary_tile_ = nullptr;
+    }
+}

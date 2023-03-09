@@ -45,24 +45,41 @@ int main()
 
         window.BeginDraw();
 
-        if(map_editor_event_system.Poll() == MapEditorEvent::Add)
+        if (tiles_service.GetTemporaryTile())
         {
-            for (auto & e : grid.GetGridShapes())
+            switch (map_editor_event_system.Poll())
             {
-                if(e->getGlobalBounds().contains(window.GetMousePosition().x, window.GetMousePosition().y))
-                {
-                    tiles_service.GetTemporaryTile()->first.setPosition(e->getPosition());
-                }
+                case MapEditorEvent::None:
+                    tiles_service.DeleteTemporaryTile();
+                    break;
+
+                case MapEditorEvent::Add:
+                    for (auto& e : grid.GetGridShapes())
+                    {
+                        if (e->getGlobalBounds().contains(window.GetMousePosition().x, window.GetMousePosition().y))
+                        {
+                            tiles_service.GetTemporaryTile()->first.setPosition(e->getPosition());
+                        }
+                    }
+                    window.Draw(tiles_service.GetTemporaryTile()->first);
+                    break;
+
+                // Multitile placement
+                case MapEditorEvent::Set:
+                    auto asset_type = tiles_service.GetTemporaryTile()->second;
+                    tiles_service.FinishPlacement();
+                    map_editor_event_system.Set(MapEditorEvent::Add);
+                    tiles_service.BeginPlacement(asset_type);
+                    break;
             }
-            window.Draw(tiles_service.GetTemporaryTile()->first);
         }
 
-        if(map_editor_event_system.Poll() == MapEditorEvent::Saving)
+        if (map_editor_event_system.Poll() == MapEditorEvent::Saving)
         {
             save_dialog.Show("Save", "Please select a path to save your map.");
         }
 
-        if(map_editor_event_system.Poll() == MapEditorEvent::SavingConfirmed)
+        if (map_editor_event_system.Poll() == MapEditorEvent::SavingConfirmed)
         {
             if (!serialization_result.valid())
             {
@@ -77,26 +94,18 @@ int main()
             }
         }
 
-        if(map_editor_event_system.Poll() == MapEditorEvent::Loading)
+        if (map_editor_event_system.Poll() == MapEditorEvent::Loading)
         {
             load_dialog.Show("Load map", "Please select a map to load.");
         }
 
-        if(map_editor_event_system.Poll() == MapEditorEvent::LoadingConfirmed)
+        if (map_editor_event_system.Poll() == MapEditorEvent::LoadingConfirmed)
         {
             spdlog::debug("TODO: Implement loading functionality");
         }
 
-        if(map_editor_event_system.Poll() == MapEditorEvent::None)
-        {
-            if(tiles_service.GetTemporaryTile())
-            {
-                tiles_service.FinishPlacement();
-            }
-        }
-
         // Draw all placed tiles
-        for (const auto & tile : tiles_service.GetTiles())
+        for (const auto& tile : tiles_service.GetTiles())
         {
             if (!tile)
             {
@@ -106,7 +115,7 @@ int main()
             window.Draw(tile->first);
         }
 
-        for (const auto & grid_line : grid.GetGridShapes())
+        for (const auto& grid_line : grid.GetGridShapes())
         {
             window.Draw(*grid_line);
         }
