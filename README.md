@@ -14,6 +14,11 @@ Current state of the map editor:
 
 ### Development setup ###
 
+Prerequisites
+- [Bazel 5.4.0](https://github.com/bazelbuild/bazel/releases/download/5.4.0/bazel_5.4.0-linux-x86_64.deb)
+- [Go 1.20.2](https://go.dev/dl/go1.20.2.linux-amd64.tar.gz)
+- Gcc 11.3.0
+
 Used libraries:
 - [Google Test](https://github.com/google/googletest)
 - [ImGui-SFML](https://github.com/eliasdaler/imgui-sfml)
@@ -31,7 +36,7 @@ Used libraries:
 ```shell
 $ sudo apt install bazel libgl-dev freeglut3-dev libopenal1
 ```
-3. Install the needed [protobuf](https://github.com/protocolbuffers/protobuf/tags) generator
+3. Install the needed [protoc 21.6](https://github.com/protocolbuffers/protobuf/releases/download/v21.6/protoc-21.6-linux-x86_64.zip) - build it then add the built binary (`bin` file) to your `PATH` environment.
 4. Install the following `protobuf` dependencies for Go. Position your terminal in the `Server` folder and execute the following:
 ```shell
 $ go install google.golang.org/protobuf/cmd/protoc-gen-go
