@@ -2,25 +2,27 @@ syntax = "proto3";
 
 package MapMessages;
 
-import "ProtoMessages/map/Properties.proto";
+import "ProtoMessages/map/properties.proto";
 
+// @TODO: Extend player data with additional information (i.e. textures and colors)
 message Map
 {
-  Position player_position = 1;
-  repeated BackgroundTile background_tile = 2;
+    repeated Tile tiles = 1;
 }
 
-message BackgroundTile
+enum TileType
 {
-  enum Type
-  {
-    BRICK = 0;
-    DIRT_WITH_GRASS = 1;
-    ICE = 2;
-    WOODEN_BOX = 3;
-    WOODEN_BOX_BOOM = 4;
-  }
+    TILE_TYPE_PLAYER = 0;
+    TILE_TYPE_BRICK = 1;
+    TILE_TYPE_DIRT_WITH_GRASS = 2;
+    TILE_TYPE_ICE = 3;
+    TILE_TYPE_WOODEN_BOX = 4;
+    TILE_TYPE_WOODEN_BOX_BOOM = 5;
+}
 
-  Position position = 1;
-  Type type = 2;
+message Tile
+{
+    Position position = 1;
+    Orientation orientation = 2;
+    TileType type = 3;
 }

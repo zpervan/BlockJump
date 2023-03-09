@@ -4,24 +4,26 @@
 #include <SFML/Graphics.hpp>
 
 #include "Library/src/assets_manager.h"
-#include "ProtoMessages/map/Map.pb.h"
+#include "ProtoMessages/map/map.pb.h"
 
 using Tile = std::pair<sf::RectangleShape, AssetType>;
 
-static std::map<MapMessages::BackgroundTile::Type, AssetType> tile_proto_to_asset_type{
-    {MapMessages::BackgroundTile::Type::BackgroundTile_Type_BRICK, AssetType::Brick},
-    {MapMessages::BackgroundTile::Type::BackgroundTile_Type_DIRT_WITH_GRASS, AssetType::DirtWithGrass},
-    {MapMessages::BackgroundTile::Type::BackgroundTile_Type_ICE, AssetType::Ice},
-    {MapMessages::BackgroundTile::Type::BackgroundTile_Type_WOODEN_BOX, AssetType::WoodenBox},
-    {MapMessages::BackgroundTile::Type::BackgroundTile_Type_WOODEN_BOX_BOOM, AssetType::WoodenBoxBoom},
+static std::map<MapMessages::TileType, AssetType> tile_proto_to_asset_type{
+    {MapMessages::TileType::TILE_TYPE_PLAYER, AssetType::Player},
+    {MapMessages::TileType::TILE_TYPE_BRICK, AssetType::Brick},
+    {MapMessages::TileType::TILE_TYPE_DIRT_WITH_GRASS, AssetType::DirtWithGrass},
+    {MapMessages::TileType::TILE_TYPE_ICE, AssetType::Ice},
+    {MapMessages::TileType::TILE_TYPE_WOODEN_BOX, AssetType::WoodenBox},
+    {MapMessages::TileType::TILE_TYPE_WOODEN_BOX_BOOM, AssetType::WoodenBoxBoom},
 };
 
-static std::map<AssetType, MapMessages::BackgroundTile::Type> tile_asset_type_to_proto{
-    {AssetType::Brick, MapMessages::BackgroundTile::Type::BackgroundTile_Type_BRICK},
-    {AssetType::DirtWithGrass, MapMessages::BackgroundTile::Type::BackgroundTile_Type_DIRT_WITH_GRASS},
-    {AssetType::Ice, MapMessages::BackgroundTile::Type::BackgroundTile_Type_ICE},
-    {AssetType::WoodenBox, MapMessages::BackgroundTile::Type::BackgroundTile_Type_WOODEN_BOX},
-    {AssetType::WoodenBoxBoom, MapMessages::BackgroundTile::Type::BackgroundTile_Type_WOODEN_BOX_BOOM},
+static std::map<AssetType, MapMessages::TileType> tile_asset_type_to_proto{
+    {AssetType::Player, MapMessages::TileType::TILE_TYPE_PLAYER},
+    {AssetType::Brick, MapMessages::TileType::TILE_TYPE_BRICK},
+    {AssetType::DirtWithGrass, MapMessages::TileType::TILE_TYPE_DIRT_WITH_GRASS},
+    {AssetType::Ice, MapMessages::TileType::TILE_TYPE_ICE},
+    {AssetType::WoodenBox, MapMessages::TileType::TILE_TYPE_WOODEN_BOX},
+    {AssetType::WoodenBoxBoom, MapMessages::TileType::TILE_TYPE_WOODEN_BOX_BOOM},
 };
 
 static std::map<AssetType, std::string> tile_asset_type_to_string{

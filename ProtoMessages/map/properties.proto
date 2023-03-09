@@ -7,3 +7,8 @@ message Position
   float x = 1;
   float y = 2;
 }
+
+message Orientation
+{
+  float angle = 1;
+}

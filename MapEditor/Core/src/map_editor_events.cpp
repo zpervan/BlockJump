@@ -10,6 +10,7 @@ namespace
 static std::map<MapEditorEvent, std::string> mapped_map_editor_events{
     {MapEditorEvent::None, "None"},
     {MapEditorEvent::Add, "Add"},
+    {MapEditorEvent::Set, "Set"},
     {MapEditorEvent::Delete, "Delete"},
     {MapEditorEvent::Edit, "Edit"},
     {MapEditorEvent::Saving, "Saving"},

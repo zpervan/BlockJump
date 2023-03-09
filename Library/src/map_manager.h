@@ -23,13 +23,18 @@ class MapManager
     /// shared_ptr as a the function argument type.
     static bool Save(const std::vector<std::shared_ptr<Tile>>& tiles);
 
-    /// @brief Fetches the map data which contains map background tiles.
+    /// @brief Fetches the map data related to the map background tiles.
     /// @return Vector of background tiles
-    /// @todo Extend to NPC and player drawables
     std::vector<sf::RectangleShape*>& BackgroundObjects();
+
+    /// @brief Fetches the map data related to player entities.
+    /// @return Player entities
+    /// @todo Add NPC entities
+    std::vector<sf::RectangleShape*>& GetPlayerEntities();
 
   private:
     std::vector<sf::RectangleShape*> background_objects_;
+    std::vector<sf::RectangleShape*> player_entities_;
 };
 
 #endif  // BLOCKJUMP_MAP_MANAGER_H

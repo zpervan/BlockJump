@@ -7,7 +7,7 @@
 
 #include "Library/src/assets_manager.h"
 #include "Library/src/paths.h"
-#include "ProtoMessages/map/Map.pb.h"
+#include "ProtoMessages/map/map.pb.h"
 
 bool MapManager::Load(std::string path)
 {
@@ -26,7 +26,7 @@ bool MapManager::Load(std::string path)
         // @TODO: Once the start game menu is implemented, make the path customizable
         // @TODO: Check if the file exists
         // @TODO: There is an error while saving the map by using the paths functionality
-        std::fstream map_file{Paths::MapsDirectoryPath() + "test.map", std::ios::in | std::ios::binary};
+        std::fstream map_file{Paths::MapsDirectoryPath() + "single_player_test.map", std::ios::in | std::ios::binary};
 
         if (!map.ParseFromIstream(&map_file))
         {
@@ -37,16 +37,23 @@ bool MapManager::Load(std::string path)
         map_file.close();
     }
 
-    background_objects_.reserve(map.background_tile_size());
+    background_objects_.reserve(map.tiles_size());
 
-    for (auto& tile : map.background_tile())
+    for (auto& tile : map.tiles())
     {
         auto* drawable = new sf::RectangleShape();
         drawable->setPosition(tile.position().x(), tile.position().y());
         drawable->setSize({64.0f, 64.0f});
         drawable->setTexture(AssetsManager::GetTexture(tile_proto_to_asset_type[tile.type()]));
 
-        background_objects_.emplace_back(drawable);
+        if (tile.type() == MapMessages::TileType::TILE_TYPE_PLAYER)
+        {
+            player_entities_.emplace_back(drawable);
+        }
+        else
+        {
+            background_objects_.emplace_back(drawable);
+        }
     }
 
     spdlog::info("Map loaded successfully");
@@ -73,13 +80,10 @@ bool MapManager::Save(const std::vector<std::shared_ptr<Tile>>& tiles)
                       tile->first.getPosition().x,
                       tile->first.getPosition().y);
 
-        auto* position = new MapMessages::Position();
-        position->set_x(tile->first.getPosition().x);
-        position->set_y(tile->first.getPosition().y);
-
-        auto* proto_tile{map.add_background_tile()};
+        auto* proto_tile = map.add_tiles();
         proto_tile->set_type(tile_asset_type_to_proto[tile->second]);
-        proto_tile->set_allocated_position(position);
+        proto_tile->mutable_position()->set_x(tile->first.getPosition().x);
+        proto_tile->mutable_position()->set_y(tile->first.getPosition().y);
     }
 
     /// @TODO: Consider to make the maps saving directory customizable, i.e. the user can set a custom save path
@@ -101,6 +105,11 @@ bool MapManager::Save(const std::vector<std::shared_ptr<Tile>>& tiles)
 std::vector<sf::RectangleShape*>& MapManager::BackgroundObjects()
 {
     return background_objects_;
+}
+
+std::vector<sf::RectangleShape*>& MapManager::GetPlayerEntities()
+{
+    return player_entities_;
 }
 
 MapManager::~MapManager()
