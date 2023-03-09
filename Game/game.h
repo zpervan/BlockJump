@@ -22,6 +22,7 @@ class Game
     void Run();
 
   private: /* Functions */
+    void LoadGame();
     void Update();
     void Display();
     void ShowEntities();

@@ -4,8 +4,12 @@
 enum class GameEvents
 {
     None = 0,
-    Start,
-    OnlineGame,
+    GameMenu,
+    GameLoad,
+    GameRun,
+    OnlineGameMenu,
+    OnlineGameLoad,
+    OnlineGameRun,
     Options,
     Quit,
     Menu

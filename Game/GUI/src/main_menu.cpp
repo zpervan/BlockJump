@@ -75,11 +75,12 @@ void MainMenu::InitializeButtons(const std::vector<std::string>& labels)
         buttons_.emplace_back(std::move(button));
     }
 
-    // @TODO: Make it more flexible by checking the button type
-    const auto start_function = [this]() { game_event_system_->Set(GameEvents::Start); };
+    /// @TODO: When the game menu is implemented, it should set the event to GameEvents::GameMenu.
+    /// For now, it will load the game immediately when the "Start" button is clicked.
+    const auto start_function = [this]() { game_event_system_->Set(GameEvents::GameLoad); };
     buttons_[0].SetFunction(start_function);
 
-    const auto online_game_function = [this]() { game_event_system_->Set(GameEvents::OnlineGame); };
+    const auto online_game_function = [this]() { game_event_system_->Set(GameEvents::OnlineGameLoad); };
     buttons_[1].SetFunction(online_game_function);
 
     const auto options_function = [this]() { game_event_system_->Set(GameEvents::Options); };

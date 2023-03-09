@@ -7,8 +7,12 @@
 namespace
 {
 std::map<GameEvents, std::string> map_game_events{{GameEvents::None, "None"},
-                                                  {GameEvents::Start, "Start"},
-                                                  {GameEvents::OnlineGame, "OnlineGame"},
+                                                  {GameEvents::GameMenu, "GameMenu"},
+                                                  {GameEvents::GameLoad, "GameLoad"},
+                                                  {GameEvents::GameRun, "GameRun"},
+                                                  {GameEvents::OnlineGameMenu, "OnlineGameMenu"},
+                                                  {GameEvents::OnlineGameLoad, "OnlineGameLoad"},
+                                                  {GameEvents::OnlineGameRun, "OnlineGameRun"},
                                                   {GameEvents::Options, "Options"},
                                                   {GameEvents::Quit, "Quit"},
                                                   {GameEvents::Menu, "Menu"}};

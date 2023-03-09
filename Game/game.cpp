@@ -11,19 +11,12 @@
 Game::Game()
     : window_(new GameWindow(Constants::TITLE)),
       game_event_system_(std::make_unique<GameEventSystem>()),
-      player_entity_(std::make_unique<PlayerEntity>(sf::Vector2f(400, 100))),
       map_manager_(std::make_unique<MapManager>())
 {
     AssetsManager::Initialize();
     main_menu_ = std::make_unique<GUI::MainMenu>(window_.get(), game_event_system_.get());
     online_game_screen_ = std::make_unique<GUI::OnlineGameScreen>(window_.get(), game_event_system_.get());
     not_implemented_screen_ = std::make_unique<GUI::NotImplementedScreen>(window_.get(), game_event_system_.get());
-
-    map_manager_->Load(Paths::MapsDirectoryPath());
-
-    // @TODO: Read this from the map data
-    player_entity_->Get()->setTexture(AssetsManager::GetTexture(AssetType::Player));
-    player_entity_->Get()->setOutlineColor({188, 188, 188, 255});
 
     game_event_system_->Set(GameEvents::Menu);
 }
@@ -42,11 +35,15 @@ void Game::Run()
                 window_->ExitGame();
                 break;
 
-            case GameEvents::OnlineGame:
+            case GameEvents::OnlineGameMenu:
                 online_game_screen_->Show();
                 break;
 
-            case GameEvents::Start:
+            case GameEvents::GameLoad:
+                LoadGame();
+                break;
+
+            case GameEvents::GameRun:
                 Update();
                 Display();
                 break;
@@ -58,6 +55,30 @@ void Game::Run()
 
         window_->Update();
     }
+}
+
+void Game::LoadGame()
+{
+    if(!map_manager_->Load(Paths::MapsDirectoryPath()))
+    {
+        // Return to menu if the map is not loaded correctly
+        game_event_system_->Set(GameEvents::Menu);
+        return;
+    }
+
+    if (!player_entity_)
+    {
+        player_entity_ = std::make_unique<PlayerEntity>();
+    }
+
+    const auto & player_entity = map_manager_->GetPlayerEntities()[0];
+
+    player_entity_->Get()->setPosition(player_entity->getPosition());
+    player_entity_->Get()->setTexture(AssetsManager::GetTexture(AssetType::Player));
+
+    spdlog::info("Player data loaded");
+
+    game_event_system_->Set(GameEvents::GameRun);
 }
 
 void Game::Update()
@@ -90,7 +111,6 @@ void Game::ShowBackground()
         window_->Draw(*background_object);
     }
 }
-
 void Game::AddGravity()
 {
     const auto new_player_position_y{player_entity_->Get()->getPosition().y + (Constants::GRAVITY / 250)};

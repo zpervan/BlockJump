@@ -16,6 +16,7 @@
 class PlayerEntity : public BaseEntity
 {
   public:
+    PlayerEntity();
     explicit PlayerEntity(sf::Vector2f startingPosition);
 
     /// @brief Changes the position value w.r.t the pressed key.
