@@ -21,17 +21,17 @@ std::vector<std::shared_ptr<Tile>> TilesService::CloneTiles() const
 
 void TilesService::BeginPlacement(AssetType type)
 {
-    if (!temporary_tile_)
+    if(temporary_tile_)
     {
-        spdlog::info("Begin tile placement...");
-
-        map_editor_event_system_.Set(MapEditorEvent::Add);
-
-        temporary_tile_ = new Tile;
-        temporary_tile_->first.setSize({Configuration::Tile_Size, Configuration::Tile_Size});
-        temporary_tile_->first.setTexture(AssetsManager::GetTexture(type));
-        temporary_tile_->second = type;
+        DeleteTemporaryTile();
     }
+
+    spdlog::info("Begin tile placement...");
+    map_editor_event_system_.Set(MapEditorEvent::Add);
+    temporary_tile_ = new Tile;
+    temporary_tile_->first.setSize({Configuration::Tile_Size, Configuration::Tile_Size});
+    temporary_tile_->first.setTexture(AssetsManager::GetTexture(type));
+    temporary_tile_->second = type;
 }
 
 void TilesService::FinishPlacement()
