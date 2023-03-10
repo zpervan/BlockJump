@@ -16,14 +16,11 @@
 class PlayerEntity : public BaseEntity
 {
   public:
-    PlayerEntity();
-    explicit PlayerEntity(sf::Vector2f startingPosition);
+    explicit PlayerEntity(EntityManager* entity_manager);
 
     /// @brief Changes the position value w.r.t the pressed key.
-    void Move(std::vector<sf::RectangleShape*>& entities);
-
-  private: /* Functions */
-    void Jump(std::vector<sf::RectangleShape*>& entities);
+    void Move();
+    void Jump();
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
   private: /* Data members */

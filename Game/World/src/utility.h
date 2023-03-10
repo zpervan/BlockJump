@@ -6,10 +6,10 @@
 namespace Utility
 {
 
-inline bool IsColliding(sf::FloatRect entity_bounds, const std::vector<sf::RectangleShape*>& entities)
+inline bool IsColliding(sf::FloatRect entity_bounds, const std::unordered_map<EntityId, EntityData*>& entities)
 {
     return std::any_of(entities.begin(), entities.end(), [entity_bounds](auto& e) {
-        return e->getGlobalBounds().intersects(entity_bounds);
+        return e.second->shape.getGlobalBounds().intersects(entity_bounds);
     });
 }
 

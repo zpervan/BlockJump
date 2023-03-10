@@ -11,13 +11,13 @@
 Game::Game()
     : window_(new GameWindow(Constants::TITLE)),
       game_event_system_(std::make_unique<GameEventSystem>()),
-      map_manager_(std::make_unique<MapManager>())
+      map_manager_(std::make_unique<MapManager>()),
+      entity_manager_(std::make_unique<EntityManager>())
 {
     AssetsManager::Initialize();
     main_menu_ = std::make_unique<GUI::MainMenu>(window_.get(), game_event_system_.get());
     online_game_screen_ = std::make_unique<GUI::OnlineGameScreen>(window_.get(), game_event_system_.get());
     not_implemented_screen_ = std::make_unique<GUI::NotImplementedScreen>(window_.get(), game_event_system_.get());
-
     game_event_system_->Set(GameEvents::Menu);
 }
 
@@ -59,19 +59,24 @@ void Game::Run()
 
 void Game::LoadGame()
 {
-    if(!map_manager_->Load(Paths::MapsDirectoryPath()))
+    if (!map_manager_->Load(Paths::MapsDirectoryPath()))
     {
         // Return to menu if the map is not loaded correctly
         game_event_system_->Set(GameEvents::Menu);
         return;
     }
 
-    if (!player_entity_)
+    for (const auto& background_object : map_manager_->BackgroundObjects())
     {
-        player_entity_ = std::make_unique<PlayerEntity>();
+        entity_manager_->CreateEntity(*background_object);
     }
 
-    const auto & player_entity = map_manager_->GetPlayerEntities()[0];
+    if (!player_entity_)
+    {
+        player_entity_ = std::make_unique<PlayerEntity>(entity_manager_.get());
+    }
+
+    const auto& player_entity = map_manager_->GetPlayerEntities()[0];
 
     player_entity_->Get()->setPosition(player_entity->getPosition());
     player_entity_->Get()->setTexture(AssetsManager::GetTexture(AssetType::Player));
@@ -83,7 +88,7 @@ void Game::LoadGame()
 
 void Game::Update()
 {
-    player_entity_->Move(map_manager_->BackgroundObjects());
+    player_entity_->Move();
     player_entity_->Update();
 
     AddGravity();
@@ -106,9 +111,9 @@ void Game::ShowEntities()
 
 void Game::ShowBackground()
 {
-    for (auto* background_object : map_manager_->BackgroundObjects())
+    for (auto background_object : entity_manager_->GetEntities())
     {
-        window_->Draw(*background_object);
+        window_->Draw(background_object.second->shape);
     }
 }
 void Game::AddGravity()
@@ -118,7 +123,7 @@ void Game::AddGravity()
                                             player_entity_->Get()->getSize()};
 
     if ((player_entity_->GetEntityState() == EntityState::Jumping) ||
-        !Utility::IsColliding(new_player_position, map_manager_->BackgroundObjects()))
+        !Utility::IsColliding(new_player_position, entity_manager_->GetEntities()))
     {
         player_entity_->Get()->setPosition({player_entity_->Get()->getPosition().x, new_player_position_y});
     }
