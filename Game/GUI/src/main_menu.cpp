@@ -80,7 +80,7 @@ void MainMenu::InitializeButtons(const std::vector<std::string>& labels)
     const auto start_function = [this]() { game_event_system_->Set(GameEvents::GameLoad); };
     buttons_[0].SetFunction(start_function);
 
-    const auto online_game_function = [this]() { game_event_system_->Set(GameEvents::OnlineGameLoad); };
+    const auto online_game_function = [this]() { game_event_system_->Set(GameEvents::OnlineGameMenu); };
     buttons_[1].SetFunction(online_game_function);
 
     const auto options_function = [this]() { game_event_system_->Set(GameEvents::Options); };

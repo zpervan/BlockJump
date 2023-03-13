@@ -122,8 +122,7 @@ void Game::AddGravity()
     const sf::FloatRect new_player_position{{player_entity_->Get()->getPosition().x, new_player_position_y},
                                             player_entity_->Get()->getSize()};
 
-    if ((player_entity_->GetEntityState() == EntityState::Jumping) ||
-        !Utility::IsColliding(new_player_position, entity_manager_->GetEntities()))
+    if ((player_entity_->GetEntityState() == Component::State::Entity::Jumping) || !Utility::IsColliding(new_player_position, entity_manager_->GetEntities()))
     {
         player_entity_->Get()->setPosition({player_entity_->Get()->getPosition().x, new_player_position_y});
     }
