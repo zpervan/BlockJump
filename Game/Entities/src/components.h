@@ -4,20 +4,38 @@
 namespace Component
 {
 
-struct Base
+class Base
 {
 };
 
-struct Position : Base
+class Position : Base
 {
+  public:
     float x;
     float y;
 };
 
-struct Velocity : Base
+class Velocity : Base
 {
+  public:
     float x;
     float y;
+};
+
+class State : Base
+{
+  public:
+    enum class Entity
+    {
+        Idle = 0,
+        Moving,
+        Jumping,
+        Dying
+    };
+};
+
+class Collidable : Base
+{
 };
 
 }  // namespace Component

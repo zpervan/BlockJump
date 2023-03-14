@@ -19,7 +19,7 @@ void PlayerEntity::Move()
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
     {
-        const sf::Vector2f new_position{position_to_move_.x - GetVelocity(), position_to_move_.y};
+        const sf::Vector2f new_position{position_to_move_.x - Velocity(), position_to_move_.y};
         if ((entity_->getPosition().x > 0) &&
             !Utility::IsColliding({new_position, entity_->getSize()}, entity_manager_->GetEntities()))
         {
@@ -30,7 +30,7 @@ void PlayerEntity::Move()
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
     {
-        const sf::Vector2f new_position{position_to_move_.x + GetVelocity(), position_to_move_.y};
+        const sf::Vector2f new_position{position_to_move_.x + Velocity(), position_to_move_.y};
         if (((entity_->getPosition().x + entity_->getSize().x) < Constants::WINDOW_WIDTH) &&
             !Utility::IsColliding({new_position, entity_->getSize()}, entity_manager_->GetEntities()))
         {
@@ -41,7 +41,7 @@ void PlayerEntity::Move()
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
     {
-        const sf::Vector2f new_position{position_to_move_.x, position_to_move_.y + GetVelocity()};
+        const sf::Vector2f new_position{position_to_move_.x, position_to_move_.y + Velocity()};
         if (((entity_->getPosition().y + entity_->getSize().y) < Constants::WINDOW_HEIGHT) &&
             !Utility::IsColliding({new_position, entity_->getSize()}, entity_manager_->GetEntities()))
         {
@@ -53,29 +53,29 @@ void PlayerEntity::Move()
 
 void PlayerEntity::Jump()
 {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && (GetEntityState() != EntityState::Jumping))
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && (EntityState() != Component::State::Entity::Jumping))
     {
         spdlog::debug("Initiating jumping");
         jumping_timer_delta_ = 0.0f;
         jumping_timer_ = jumping_clock_.getElapsedTime();
-        SetEntityState(EntityState::Jumping);
+        SetEntityState(Component::State::Entity::Jumping);
     }
 
-    const sf::Vector2f ground_position{position_to_move_.x, position_to_move_.y + GetVelocity()};
-    const sf::Vector2f up_position{position_to_move_.x, position_to_move_.y - GetVelocity()};
+    const sf::Vector2f ground_position{position_to_move_.x, position_to_move_.y + Velocity()};
+    const sf::Vector2f up_position{position_to_move_.x, position_to_move_.y - Velocity()};
 
-    if ((GetEntityState() == EntityState::Jumping) &&
+    if ((EntityState() == Component::State::Entity::Jumping) &&
         !Utility::IsColliding({up_position, entity_->getSize()}, entity_manager_->GetEntities()) &&
         jumping_timer_delta_ <= 0.2f)
     {
         jumping_timer_delta_ = jumping_clock_.getElapsedTime().asSeconds() - jumping_timer_.asSeconds();
         position_to_move_.y -= -powf(jumping_timer_delta_ / 10.0f, 3.0f) + (jumping_timer_delta_ / 10.0f) + 0.075f;
     }
-    else if ((GetEntityState() == EntityState::Jumping) &&
+    else if ((EntityState() == Component::State::Entity::Jumping) &&
              Utility::IsColliding({ground_position, entity_->getSize()}, entity_manager_->GetEntities()))
     {
         spdlog::debug("Finished jumping");
-        SetEntityState(EntityState::Idle);
+        SetEntityState(Component::State::Entity::Idle);
     }
 }
 

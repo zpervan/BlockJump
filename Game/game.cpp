@@ -88,9 +88,9 @@ void Game::LoadGame()
 
 void Game::Update()
 {
-    player_entity_->Move();
     player_entity_->Update();
 
+    /// @TODO: Move gravity to the entity update loop once the move workflow is added
     AddGravity();
 
     window_->UpdatePlayerView(player_entity_->Get()->getPosition());
@@ -116,13 +116,14 @@ void Game::ShowBackground()
         window_->Draw(background_object.second->shape);
     }
 }
+
 void Game::AddGravity()
 {
     const auto new_player_position_y{player_entity_->Get()->getPosition().y + (Constants::GRAVITY / 250)};
     const sf::FloatRect new_player_position{{player_entity_->Get()->getPosition().x, new_player_position_y},
                                             player_entity_->Get()->getSize()};
 
-    if ((player_entity_->GetEntityState() == Component::State::Entity::Jumping) || !Utility::IsColliding(new_player_position, entity_manager_->GetEntities()))
+    if ((player_entity_->EntityState() == Component::State::Entity::Jumping) || !Utility::IsColliding(new_player_position, entity_manager_->GetEntities()))
     {
         player_entity_->Get()->setPosition({player_entity_->Get()->getPosition().x, new_player_position_y});
     }

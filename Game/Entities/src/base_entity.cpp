@@ -7,7 +7,7 @@ void BaseEntity::SetVelocity(float velocity)
     velocity_ = velocity;
 }
 
-float BaseEntity::GetVelocity() const
+float BaseEntity::Velocity() const
 {
     return velocity_;
 }
@@ -24,20 +24,28 @@ sf::Vector2f BaseEntity::GetPositionToMove() const
 
 void BaseEntity::Update()
 {
+    // Suggested workflow:
+    // Calculate acceleration
+    // Calculate velocity
+    // Apply tile friction
+    // Move entity
+    // Check for collisions
+
+    Move();
     entity_->setPosition(position_to_move_);
 }
 
-EntityState BaseEntity::GetEntityState() const
+Component::State::Entity BaseEntity::EntityState() const
 {
     return entity_state_;
 }
 
-void BaseEntity::SetEntityState(EntityState entity_state)
+void BaseEntity::SetEntityState(Component::State::Entity entity_state)
 {
     entity_state_ = entity_state;
 }
 
-float BaseEntity::GetAcceleration() const
+float BaseEntity::Acceleration() const
 {
     return acceleration_;
 }
@@ -45,9 +53,4 @@ float BaseEntity::GetAcceleration() const
 void BaseEntity::SetAcceleration(float acceleration)
 {
     acceleration_ = acceleration;
-}
-
-void BaseEntity::Move(sf::Vector2f position_to_move)
-{
-    position_to_move_ = position_to_move;
 }

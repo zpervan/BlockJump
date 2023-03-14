@@ -19,7 +19,7 @@ class PlayerEntity : public BaseEntity
     explicit PlayerEntity(EntityManager* entity_manager);
 
     /// @brief Changes the position value w.r.t the pressed key.
-    void Move();
+    void Move() override;
     void Jump();
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
