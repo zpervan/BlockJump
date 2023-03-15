@@ -1,13 +1,33 @@
 #include "Game/Entities/src/base_entity.h"
 
+#include "Game/constants.h"
+
+static const sf::Vector2f Max_Velocity{250.0f, 250.0f};
+
 BaseEntity::BaseEntity(EntityManager* entity_manager) : entity_manager_(entity_manager) {}
 
-void BaseEntity::SetVelocity(float velocity)
+/// @TODO: Once the friction component implemented, apply it to the velocity
+void BaseEntity::AddVelocity(sf::Vector2f value)
 {
-    velocity_ = velocity;
+    velocity_ += value;
+
+    if (std::abs(velocity_.x) > Max_Velocity.x)
+    {
+        velocity_.x < 0 ? velocity_.x = -Max_Velocity.x : velocity_.x = Max_Velocity.x;
+    }
+
+    if (std::abs(velocity_.y) > Max_Velocity.y)
+    {
+        velocity_.y < 0 ? velocity_.y = -Max_Velocity.y : velocity_.y = Max_Velocity.y;
+    }
 }
 
-float BaseEntity::Velocity() const
+void BaseEntity::SetVelocity(sf::Vector2f value)
+{
+    velocity_ = value;
+}
+
+sf::Vector2f BaseEntity::Velocity() const
 {
     return velocity_;
 }
@@ -17,27 +37,19 @@ sf::RectangleShape* BaseEntity::Get()
     return entity_.get();
 }
 
-sf::Vector2f BaseEntity::GetPositionToMove() const
+void BaseEntity::Accelerate(sf::Vector2f value)
 {
-    return position_to_move_;
+    acceleration_ += value;
 }
 
-void BaseEntity::Update()
+void BaseEntity::SetAcceleration(sf::Vector2f value)
 {
-    // Suggested workflow:
-    // Calculate acceleration
-    // Calculate velocity
-    // Apply tile friction
-    // Move entity
-    // Check for collisions
-
-    Move();
-    entity_->setPosition(position_to_move_);
+    acceleration_ = value;
 }
 
-Component::State::Entity BaseEntity::EntityState() const
+sf::Vector2f BaseEntity::Acceleration() const
 {
-    return entity_state_;
+    return acceleration_;
 }
 
 void BaseEntity::SetEntityState(Component::State::Entity entity_state)
@@ -45,12 +57,22 @@ void BaseEntity::SetEntityState(Component::State::Entity entity_state)
     entity_state_ = entity_state;
 }
 
-float BaseEntity::Acceleration() const
+Component::State::Entity BaseEntity::EntityState() const
 {
-    return acceleration_;
+    return entity_state_;
 }
 
-void BaseEntity::SetAcceleration(float acceleration)
+sf::Vector2f BaseEntity::GetPositionToMove() const
 {
-    acceleration_ = acceleration;
+    return position_to_move_;
+}
+
+Direction BaseEntity::GetDirection() const
+{
+    return direction_;
+}
+
+void BaseEntity::SetDirection(Direction direction)
+{
+    direction_ = direction;
 }

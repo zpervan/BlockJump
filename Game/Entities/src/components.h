@@ -4,27 +4,24 @@
 namespace Component
 {
 
-class Base
+struct Base
 {
 };
 
-class Position : Base
+struct Position : public Base
 {
-  public:
     float x;
     float y;
 };
 
-class Velocity : Base
+struct Velocity : public Base
 {
-  public:
     float x;
     float y;
 };
 
-class State : Base
+struct State : public Base
 {
-  public:
     enum class Entity
     {
         Idle = 0,
@@ -34,8 +31,10 @@ class State : Base
     };
 };
 
-class Collidable : Base
+struct Collidable : public Base
 {
+    bool x_collision{false};
+    bool y_collision{false};
 };
 
 }  // namespace Component

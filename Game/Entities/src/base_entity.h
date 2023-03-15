@@ -7,24 +7,39 @@
 
 #include "Game/Entities/src/entity_manager.h"
 
+enum class Direction
+{
+    None = 0,
+    Up,
+    Down,
+    Left,
+    Right
+};
+
 /// @brief Represents the base class for each entity created in the game.
 class BaseEntity : public sf::Drawable
 {
   public: /* Functions */
     explicit BaseEntity(EntityManager* entity_manager);
 
-    virtual void Move() = 0;
+    virtual void Move(float elapsed_time) = 0;
+    virtual void Update(float elapsed_time) = 0;
 
-    /// @brief Updates the entity pose and movement speed data.
-    virtual void Update();
+    /// @brief Adds the passed velocity value to the current acceleration vector.
+    /// @param value
+    void Accelerate(sf::Vector2f value);
 
     sf::Vector2f GetPositionToMove() const;
 
-    void SetVelocity(float velocity);
-    float Velocity() const;
+    sf::Vector2f Velocity() const;
+    void AddVelocity(sf::Vector2f value);
+    void SetVelocity(sf::Vector2f value);
 
-    void SetAcceleration(float acceleration);
-    float Acceleration() const;
+    sf::Vector2f Acceleration() const;
+    void SetAcceleration(sf::Vector2f value);
+
+    Direction GetDirection() const;
+    void SetDirection(Direction direction);
 
     void SetEntityState(Component::State::Entity entity_state);
     Component::State::Entity EntityState() const;
@@ -38,8 +53,10 @@ class BaseEntity : public sf::Drawable
 
     sf::Vector2f current_position_{0.0f, 0.0f};
     sf::Vector2f position_to_move_{0.0f, 0.0f};
-    float velocity_{0.15f};
-    float acceleration_{0.0f};
+    sf::Vector2f velocity_{0.0f, 0.0f};
+    sf::Vector2f acceleration_{0.0f, 0.0f};
+
+    Direction direction_{Direction::None};
 };
 
 #endif  // BLOCKJUMP_BASE_ENTITY_H

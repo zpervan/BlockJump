@@ -24,12 +24,12 @@ class Game
 
   private: /* Functions */
     void LoadGame();
+    void HandleInput();
     void Update();
     void Display();
     void ShowEntities();
     void ShowBackground();
-    /// @TODO: Consider to move this into a Physics class functionality
-    void AddGravity();
+    void RestartClock();
 
   private: /* Data members */
     std::unique_ptr<GameWindow> window_;
@@ -40,6 +40,9 @@ class Game
     std::unique_ptr<GUI::MainMenu> main_menu_;
     std::unique_ptr<GUI::OnlineGameScreen> online_game_screen_;
     std::unique_ptr<GUI::NotImplementedScreen> not_implemented_screen_;
+    Direction direction_;
+    sf::Time elapsed_time_;
+    sf::Clock clock_;
 };
 
 #endif  // BLOCKJUMP_GAME_H

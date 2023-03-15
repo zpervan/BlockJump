@@ -44,8 +44,10 @@ void Game::Run()
                 break;
 
             case GameEvents::GameRun:
+                HandleInput();
                 Update();
                 Display();
+                RestartClock();
                 break;
 
             default:
@@ -68,7 +70,20 @@ void Game::LoadGame()
 
     for (const auto& background_object : map_manager_->BackgroundObjects())
     {
-        entity_manager_->CreateEntity(*background_object);
+        const auto id = entity_manager_->CreateEntity(*background_object);
+
+        auto position = new Component::Position;
+        position->x = background_object->getPosition().x;
+        position->y = background_object->getPosition().y;
+
+        entity_manager_->AddComponent(id, position);
+
+        /// @TODO: Components data should be a part of the background object
+        auto collidable = new Component::Collidable;
+        collidable->x_collision = true;
+        collidable->y_collision = true;
+
+        entity_manager_->AddComponent(id, collidable);
     }
 
     if (!player_entity_)
@@ -78,7 +93,8 @@ void Game::LoadGame()
 
     const auto& player_entity = map_manager_->GetPlayerEntities()[0];
 
-    player_entity_->Get()->setPosition(player_entity->getPosition());
+    /// @TODO: -200 is just added temporary as the player start inside the tile - create new map
+    player_entity_->Get()->setPosition({player_entity->getPosition().x, player_entity->getPosition().y - 200});
     player_entity_->Get()->setTexture(AssetsManager::GetTexture(AssetType::Player));
 
     spdlog::info("Player data loaded");
@@ -86,12 +102,39 @@ void Game::LoadGame()
     game_event_system_->Set(GameEvents::GameRun);
 }
 
+void Game::HandleInput()
+{
+    direction_ = Direction::None;
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+    {
+        direction_ = Direction::Up;
+        return;
+    }
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+    {
+        direction_ = Direction::Down;
+        return;
+    }
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+    {
+        direction_ = Direction::Left;
+        return;
+    }
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+    {
+        direction_ = Direction::Right;
+        return;
+    }
+}
+
 void Game::Update()
 {
-    player_entity_->Update();
-
-    /// @TODO: Move gravity to the entity update loop once the move workflow is added
-    AddGravity();
+    player_entity_->SetDirection(direction_);
+    player_entity_->Update(elapsed_time_.asSeconds());
 
     window_->UpdatePlayerView(player_entity_->Get()->getPosition());
 }
@@ -117,14 +160,7 @@ void Game::ShowBackground()
     }
 }
 
-void Game::AddGravity()
+void Game::RestartClock()
 {
-    const auto new_player_position_y{player_entity_->Get()->getPosition().y + (Constants::GRAVITY / 250)};
-    const sf::FloatRect new_player_position{{player_entity_->Get()->getPosition().x, new_player_position_y},
-                                            player_entity_->Get()->getSize()};
-
-    if ((player_entity_->EntityState() == Component::State::Entity::Jumping) || !Utility::IsColliding(new_player_position, entity_manager_->GetEntities()))
-    {
-        player_entity_->Get()->setPosition({player_entity_->Get()->getPosition().x, new_player_position_y});
-    }
+    elapsed_time_ = clock_.restart();
 }

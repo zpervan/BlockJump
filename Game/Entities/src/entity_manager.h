@@ -26,7 +26,7 @@ class EntityManager
   public:
     /// @brief Creates a new entity based with an generated Id based on the passed rectangle shape.
     /// @param shape Entity data
-    void CreateEntity(const sf::RectangleShape& shape);
+    EntityId CreateEntity(const sf::RectangleShape& shape);
 
     /// @brief Adds new components to the entity with the specified Id.
     /// @param id Entity which should have the component
@@ -88,7 +88,7 @@ class EntityManager
 
   private:
     std::unordered_map<EntityId, EntityData*> entities_;
-    EntityId next_entity_id_{0};
+    EntityId entity_id_{0};
 };
 
 #endif  // BLOCKJUMP_ENTITY_MANAGER_H
