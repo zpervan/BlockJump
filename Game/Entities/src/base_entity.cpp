@@ -1,7 +1,5 @@
 #include "Game/Entities/src/base_entity.h"
 
-#include "Game/constants.h"
-
 static const sf::Vector2f Max_Velocity{250.0f, 250.0f};
 
 BaseEntity::BaseEntity(EntityManager* entity_manager) : entity_manager_(entity_manager) {}
@@ -75,4 +73,39 @@ Direction BaseEntity::GetDirection() const
 void BaseEntity::SetDirection(Direction direction)
 {
     direction_ = direction;
+}
+
+bool BaseEntity::Collision()
+{
+    new_bounding_box_ = sf::FloatRect{position_to_move_, entity_->getSize()};
+
+    for (const auto& entity : entity_manager_->GetEntities())
+    {
+        const auto& other_entity_global_bounds = entity.second->shape.getGlobalBounds();
+
+        if (!other_entity_global_bounds.intersects(new_bounding_box_))
+        {
+            continue;
+        }
+
+        // X-component collision
+        if ((new_bounding_box_.left + new_bounding_box_.width >= other_entity_global_bounds.left) ||
+            (other_entity_global_bounds.left + other_entity_global_bounds.width >= new_bounding_box_.left))
+        {
+            SetAcceleration({0.0f, acceleration_.y});
+            SetVelocity({0.0f, velocity_.y});
+        }
+
+        // Y-component collision
+        if ((new_bounding_box_.top + new_bounding_box_.height >= other_entity_global_bounds.top) ||
+            (other_entity_global_bounds.top + other_entity_global_bounds.height >= new_bounding_box_.top))
+        {
+            SetAcceleration({acceleration_.x, 0.0f});
+            SetVelocity({velocity_.x, 0.0f});
+        }
+
+        return true;
+    }
+
+    return false;
 }

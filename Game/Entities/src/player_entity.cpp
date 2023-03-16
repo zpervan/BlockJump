@@ -4,15 +4,16 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "Game/World/src/utility.h"
 #include "Game/constants.h"
 
 constexpr float acceleration_tick{0.2f};
+static const sf::Vector2f Zero_Vector{0.0f, 0.0f};
 
 PlayerEntity::PlayerEntity(EntityManager* entity_manager) : BaseEntity(entity_manager)
 {
     spdlog::debug("Creating player entity");
     entity_->setSize({50.0f, 50.0f});
+    new_bounding_box_ = sf::FloatRect{{0.0f, 0.0f}, entity_->getSize()};
 }
 
 void PlayerEntity::Update(float elapsed_time)
@@ -27,18 +28,10 @@ void PlayerEntity::Update(float elapsed_time)
 
     Move(elapsed_time);
 
-    if (!Utility::IsColliding({entity_->getPosition(), entity_->getSize()}, entity_manager_->GetEntities()))
+    if (!Collision())
     {
-        Accelerate({0.0f, Constants::GRAVITY});
-        AddVelocity({acceleration_.x * elapsed_time, acceleration_.y * elapsed_time});
+        entity_->setPosition(position_to_move_);
     }
-    else
-    {
-        SetAcceleration({0.0f, 0.0f});
-        SetVelocity({velocity_.x, 0.0f});
-    }
-
-    entity_->setPosition(position_to_move_);
 }
 
 void PlayerEntity::Move(float elapsed_time)
@@ -47,6 +40,8 @@ void PlayerEntity::Move(float elapsed_time)
     {
         case Direction::None:
             SetAcceleration({0, 0});
+            /// @TODO: Reduce the velocity slowly so we have a more smooth slowing animation
+            SetVelocity({0.0f, 0.0f});
             break;
 
         case Direction::Down:
@@ -65,13 +60,9 @@ void PlayerEntity::Move(float elapsed_time)
             break;
     }
 
-    if (acceleration_ != sf::Vector2f{0.0f, 0.0f})
+    if (acceleration_ != Zero_Vector)
     {
         AddVelocity(acceleration_);
-    }
-    else
-    {
-        SetVelocity({0.0f, 0.0f});
     }
 
     position_to_move_ = entity_->getPosition() + (velocity_ * elapsed_time);
