@@ -75,14 +75,29 @@ void BaseEntity::SetDirection(Direction direction)
     direction_ = direction;
 }
 
+EntityId BaseEntity::Id() const
+{
+    return id_;
+}
+
+void BaseEntity::SetId(EntityId id)
+{
+    id_ = id;
+}
+
 bool BaseEntity::Collision()
 {
     new_bounding_box_ = sf::FloatRect{position_to_move_, entity_->getSize()};
 
     for (const auto& entity : entity_manager_->GetEntities())
     {
-        const auto& other_entity_global_bounds = entity.second->shape.getGlobalBounds();
+        // Skip checking the same entities
+        if (entity.first == id_)
+        {
+            continue;
+        }
 
+        const auto& other_entity_global_bounds = entity.second->shape.getGlobalBounds();
         if (!other_entity_global_bounds.intersects(new_bounding_box_))
         {
             continue;

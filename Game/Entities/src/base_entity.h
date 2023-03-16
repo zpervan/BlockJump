@@ -22,13 +22,23 @@ class BaseEntity : public sf::Drawable
   public: /* Functions */
     explicit BaseEntity(EntityManager* entity_manager);
 
-    virtual void Move(float elapsed_time) = 0;
+    /// @brief Updates all related data for the entity.
+    /// @param elapsed_time How much time has passed since the last update
     virtual void Update(float elapsed_time) = 0;
 
+    /// @brief Moves the entity based on the current velocity and elapsed time in the direction of the pressed arrow key.
+    /// @param elapsed_time How much time has passed since the last update
+    virtual void Move(float elapsed_time) = 0;
+
     /// @brief Adds the passed velocity value to the current acceleration vector.
-    /// @param value
+    /// @param value Vector value
     void Accelerate(sf::Vector2f value);
 
+    /// @brief Checks and handles situation where a collision is detected.
+    /// @return @c true if a collision is detected, @c false otherwise
+    bool Collision();
+
+    /* Getters and setters */
     sf::Vector2f GetPositionToMove() const;
 
     sf::Vector2f Velocity() const;
@@ -44,11 +54,13 @@ class BaseEntity : public sf::Drawable
     void SetEntityState(Component::State::Entity entity_state);
     Component::State::Entity EntityState() const;
 
-    bool Collision();
+    EntityId Id() const;
+    void SetId(EntityId id);
 
     sf::RectangleShape* Get();
 
   protected:
+    EntityId id_;
     EntityManager* entity_manager_;
     std::unique_ptr<sf::RectangleShape> entity_{std::make_unique<sf::RectangleShape>()};
     Component::State::Entity entity_state_{Component::State::Entity::Idle};

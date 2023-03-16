@@ -4,8 +4,6 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "Game/constants.h"
-
 constexpr float acceleration_tick{0.2f};
 static const sf::Vector2f Zero_Vector{0.0f, 0.0f};
 

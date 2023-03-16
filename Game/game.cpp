@@ -86,6 +86,8 @@ void Game::LoadGame()
         entity_manager_->AddComponent(id, collidable);
     }
 
+    spdlog::info("Background tiles loaded");
+
     if (!player_entity_)
     {
         player_entity_ = std::make_unique<PlayerEntity>(entity_manager_.get());
@@ -96,6 +98,9 @@ void Game::LoadGame()
     /// @TODO: -200 is just added temporary as the player start inside the tile - create new map
     player_entity_->Get()->setPosition({player_entity->getPosition().x, player_entity->getPosition().y - 200});
     player_entity_->Get()->setTexture(AssetsManager::GetTexture(AssetType::Player));
+
+    const auto player_entity_id = entity_manager_->CreateEntity(*player_entity_->Get());
+    player_entity_->SetId(player_entity_id);
 
     spdlog::info("Player data loaded");
 
@@ -156,6 +161,11 @@ void Game::ShowBackground()
 {
     for (auto background_object : entity_manager_->GetEntities())
     {
+        if (background_object.first == player_entity_->Id())
+        {
+            continue;
+        }
+
         window_->Draw(background_object.second->shape);
     }
 }
