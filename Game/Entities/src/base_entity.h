@@ -65,8 +65,6 @@ class BaseEntity : public sf::Drawable
     std::unique_ptr<sf::RectangleShape> entity_{std::make_unique<sf::RectangleShape>()};
     Component::State::Entity entity_state_{Component::State::Entity::Idle};
 
-    sf::FloatRect new_bounding_box_;
-    sf::Vector2f current_position_{0.0f, 0.0f};
     sf::Vector2f position_to_move_{0.0f, 0.0f};
     sf::Vector2f velocity_{0.0f, 0.0f};
     sf::Vector2f acceleration_{0.0f, 0.0f};
