@@ -43,7 +43,7 @@ bool MapManager::Load(std::string path)
     {
         auto* drawable = new sf::RectangleShape();
         drawable->setPosition(tile.position().x(), tile.position().y());
-        drawable->setSize({64.0f, 64.0f});
+        drawable->setSize({50.0f, 50.0f});
         drawable->setTexture(AssetsManager::GetTexture(tile_proto_to_asset_type[tile.type()]));
 
         if (tile.type() == MapMessages::TileType::TILE_TYPE_PLAYER)

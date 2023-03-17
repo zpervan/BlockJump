@@ -8,6 +8,8 @@
 
 using Tile = std::pair<sf::RectangleShape, AssetType>;
 
+const sf::Vector2f DEFAULT_TILE_SIZE{50.0f, 50.0f};
+
 static std::map<MapMessages::TileType, AssetType> tile_proto_to_asset_type{
     {MapMessages::TileType::TILE_TYPE_PLAYER, AssetType::Player},
     {MapMessages::TileType::TILE_TYPE_BRICK, AssetType::Brick},

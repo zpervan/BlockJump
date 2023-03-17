@@ -8,11 +8,12 @@
 
 constexpr float acceleration_tick{0.2f};
 static const sf::Vector2f Zero_Vector{0.0f, 0.0f};
+static const sf::Vector2f Default_Player_Size{40.0f, 40.0f};
 
 PlayerEntity::PlayerEntity(EntityManager* entity_manager) : BaseEntity(entity_manager)
 {
     spdlog::debug("Creating player entity");
-    entity_->setSize({50.0f, 50.0f});
+    entity_->setSize(Default_Player_Size);
 }
 
 void PlayerEntity::Update(float elapsed_time)

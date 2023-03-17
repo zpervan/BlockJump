@@ -17,9 +17,6 @@ inline ImGuiWindowFlags Window_Flags {ImGuiWindowFlags_NoCollapse |
                                      ImGuiWindowFlags_NoMove |
                                      ImGuiWindowFlags_NoResize};
 
-// Tiles
-inline constexpr float Tile_Size{50.0f};
-
 // Map
 static char Map_Name[64]{"example.map"};
 }

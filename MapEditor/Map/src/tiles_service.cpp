@@ -29,7 +29,7 @@ void TilesService::BeginPlacement(AssetType type)
     spdlog::info("Begin tile placement...");
     map_editor_event_system_.Set(MapEditorEvent::Add);
     temporary_tile_ = new Tile;
-    temporary_tile_->first.setSize({Configuration::Tile_Size, Configuration::Tile_Size});
+    temporary_tile_->first.setSize(DEFAULT_TILE_SIZE);
     temporary_tile_->first.setTexture(AssetsManager::GetTexture(type));
     temporary_tile_->second = type;
 }
