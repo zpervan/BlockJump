@@ -75,15 +75,10 @@ void Game::LoadGame()
         auto position = new Component::Position;
         position->x = background_object->getPosition().x;
         position->y = background_object->getPosition().y;
-
         entity_manager_->AddComponent(id, position);
 
         /// @TODO: Components data should be a part of the background object
-        auto collidable = new Component::Collidable;
-        collidable->x_collision = true;
-        collidable->y_collision = true;
-
-        entity_manager_->AddComponent(id, collidable);
+        entity_manager_->AddComponent(id, new Component::Collidable);
     }
 
     spdlog::info("Background tiles loaded");
@@ -101,6 +96,8 @@ void Game::LoadGame()
 
     const auto player_entity_id = entity_manager_->CreateEntity(*player_entity_->Get());
     player_entity_->SetId(player_entity_id);
+
+    entity_manager_->AddComponent(player_entity_id, new Component::Collidable);
 
     spdlog::info("Player data loaded");
 

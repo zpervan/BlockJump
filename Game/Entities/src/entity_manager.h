@@ -29,9 +29,14 @@ class EntityManager
     EntityId CreateEntity(const sf::RectangleShape& shape);
 
     /// @brief Adds new components to the entity with the specified Id.
+    /// @tparam T Component type
     /// @param id Entity which should have the component
     /// @param component Component which will be added to the entity
-    void AddComponent(EntityId id, Component::Base* component);
+    template <typename T>
+    void AddComponent(EntityId id, T* component)
+    {
+        entities_[id]->components.emplace(typeid(component).name(), component);
+    }
 
     /// @brief Clears all entities in the repository.
     void Purge();
@@ -42,18 +47,18 @@ class EntityManager
     /// @return Entity's component
     /// @example
     /// @code
-    /// auto position = GetComponent<Position>(entity_id);
-    /// auto velocity = GetComponent<Velocity>(entity_id);
+    /// auto position = GetComponent<Component::Position>(entity_id);
+    /// auto velocity = GetComponent<Component::Velocity>(entity_id);
     /// @endcode
     template <typename T>
     T* GetComponent(EntityId id)
     {
-        auto& entity_component = entities_.at(id)->components;
-        auto component_it = entity_component.find(typeid(T).name());
+        auto& entity_components = entities_.at(id)->components;
+        auto component_it = entity_components.find(typeid(T*).name());
 
-        if (component_it != entity_component.end())
+        if (component_it != entity_components.end())
         {
-            return std::any_cast<T>(entity_component[typeid(T).name()]);
+            return dynamic_cast<T*>(component_it->second);
         }
 
         return nullptr;
@@ -64,7 +69,7 @@ class EntityManager
     /// @return All entities which have the given component
     /// @example
     /// @code
-    /// auto entities_with_position = GetEntitiesWithComponent<Position>();
+    /// auto entities_with_position = GetEntitiesWithComponent<Component::Position>();
     /// @endcode
     template <typename T>
     std::vector<EntityData*> GetEntitiesWithComponent()

@@ -11,11 +11,6 @@ EntityId EntityManager::CreateEntity(const sf::RectangleShape& shape)
     return entity_id_;
 }
 
-void EntityManager::AddComponent(EntityId id, Component::Base* component)
-{
-    entities_[id]->components.emplace(typeid(*component).name(), component);
-}
-
 void EntityManager::Purge()
 {
     entities_.clear();
