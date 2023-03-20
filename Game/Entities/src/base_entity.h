@@ -35,8 +35,10 @@ class BaseEntity : public sf::Drawable
     void Accelerate(sf::Vector2f value);
 
     /// @brief Checks and handles situation where a collision is detected.
-    /// @return @c true if a collision is detected, @c false otherwise
-    bool Collision();
+    void CheckCollision();
+
+    /// @brief Handles collision situations by handling acceleration, speed and position data.
+    void HandleCollision();
 
     /* Getters and setters */
     sf::Vector2f GetPositionToMove() const;

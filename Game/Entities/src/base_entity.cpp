@@ -87,13 +87,20 @@ void BaseEntity::SetId(EntityId id)
     id_ = id;
 }
 
-/// @TODO: Extract collision handling in a separate function?
-bool BaseEntity::Collision()
+void BaseEntity::CheckCollision()
 {
-    const float entity_x_left = position_to_move_.x;
-    const float entity_x_right = position_to_move_.x + entity_->getSize().x;
-    const float entity_y_top = position_to_move_.y;
-    const float entity_y_bottom = position_to_move_.y + entity_->getSize().y;
+    const float old_x_left = entity_->getPosition().x;
+    const float old_x_right = entity_->getPosition().x + entity_->getSize().x;
+    const float old_y_top = entity_->getPosition().y;
+    const float old_y_bottom = entity_->getPosition().y + entity_->getSize().y;
+
+    const float new_x_left = position_to_move_.x;
+    const float new_x_right = position_to_move_.x + entity_->getSize().x;
+    const float new_y_top = position_to_move_.y;
+    const float new_y_bottom = position_to_move_.y + entity_->getSize().y;
+
+    auto* collidable = entity_manager_->GetComponent<Component::Collidable>(id_);
+    collidable->Reset();
 
     for (const auto& entity : entity_manager_->GetEntities())
     {
@@ -103,30 +110,50 @@ bool BaseEntity::Collision()
             continue;
         }
 
-        const auto& other_entity_global_bounds = entity.second->shape.getGlobalBounds();
-        if (!other_entity_global_bounds.intersects({position_to_move_, entity_->getSize()}))
+        if (!entity.second->shape.getGlobalBounds().intersects({position_to_move_, entity_->getSize()}))
         {
             continue;
         }
 
-        // X-component collision
-        const float other_entity_x_right = other_entity_global_bounds.left + other_entity_global_bounds.width;
-        if ((entity_x_right >= other_entity_global_bounds.left) && (entity_x_left <= other_entity_x_right))
+        const auto& entity_bounds = entity.second->shape.getGlobalBounds();
+
+        if (entity_bounds.contains(new_x_left, old_y_top) || entity_bounds.contains(new_x_left, old_y_bottom))
         {
-            SetAcceleration({0.0f, acceleration_.y});
-            SetVelocity({0.0f, velocity_.y});
+            collidable->x_left_collision = true;
         }
 
-        // Y-component collision
-        const float other_entity_y_bottom = other_entity_global_bounds.top + other_entity_global_bounds.height;
-        if ((entity_y_bottom >= other_entity_global_bounds.top) && (entity_y_top <= other_entity_y_bottom))
+        if (entity_bounds.contains(new_x_right, old_y_top) || entity_bounds.contains(new_x_right, old_y_bottom))
         {
-            SetAcceleration({acceleration_.x, 0.0f});
-            SetVelocity({velocity_.x, 0.0f});
+            collidable->x_right_collision = true;
         }
 
-        return true;
+        if (entity_bounds.contains(old_x_left, new_y_top) || entity_bounds.contains(old_x_right, new_y_top))
+        {
+            collidable->y_top_collision = true;
+        }
+
+        if (entity_bounds.contains(old_x_left, new_y_bottom) || entity_bounds.contains(old_x_right, new_y_bottom))
+        {
+            collidable->y_bottom_collision = true;
+        }
+    }
+}
+
+void BaseEntity::HandleCollision()
+{
+    const auto collidable = entity_manager_->GetComponent<Component::Collidable>(id_);
+
+    if (collidable->x_left_collision || collidable->x_right_collision)
+    {
+        SetAcceleration({0.0f, acceleration_.y});
+        SetVelocity({0.0f, velocity_.y});
+        position_to_move_.x = entity_->getPosition().x;
     }
 
-    return false;
+    if (collidable->y_top_collision || collidable->y_bottom_collision)
+    {
+        SetAcceleration({acceleration_.x, 0.0f});
+        SetVelocity({velocity_.x, 0.0f});
+        position_to_move_.y = entity_->getPosition().y;
+    }
 }

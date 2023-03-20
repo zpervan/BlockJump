@@ -27,11 +27,10 @@ void PlayerEntity::Update(float elapsed_time)
     // Resolve collisions
 
     Move(elapsed_time);
+    CheckCollision();
+    HandleCollision();
 
-    if (!Collision())
-    {
-        entity_->setPosition(position_to_move_);
-    }
+    entity_->setPosition(position_to_move_);
 }
 
 void PlayerEntity::Move(float elapsed_time)
@@ -61,12 +60,10 @@ void PlayerEntity::Move(float elapsed_time)
             break;
     }
 
+    // While floating, add the gravitational component to the acceleration
     Accelerate({0.0f, Constants::GRAVITY});
 
-    if (acceleration_ != Zero_Vector)
-    {
-        AddVelocity(acceleration_);
-    }
+    AddVelocity(acceleration_);
 
     position_to_move_ = entity_->getPosition() + (velocity_ * elapsed_time);
 }

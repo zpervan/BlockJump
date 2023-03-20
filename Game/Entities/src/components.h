@@ -6,6 +6,7 @@ namespace Component
 
 struct Base
 {
+    virtual ~Base() = default;
 };
 
 struct Position : public Base
@@ -33,8 +34,18 @@ struct State : public Base
 
 struct Collidable : public Base
 {
-    bool x_collision{false};
-    bool y_collision{false};
+    bool x_left_collision{false};
+    bool x_right_collision{false};
+    bool y_top_collision{false};
+    bool y_bottom_collision{false};
+
+    void Reset()
+    {
+        x_left_collision = false;
+        x_right_collision = false;
+        y_top_collision = false;
+        y_bottom_collision = false;
+    }
 };
 
 }  // namespace Component
