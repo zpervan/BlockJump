@@ -4,13 +4,13 @@
 [![Server(Windows)](https://github.com/zpervan/BlockJump/actions/workflows/windows_server.yml/badge.svg)](https://github.com/zpervan/BlockJump/actions/workflows/windows_server.yml)
 ## BlockJump ##
 
-A simple jump-and-run platformer game. Also includes a map editor for creating custom maps.
+A simple jump-and-run platform game with the possibility of creating custom maps and playing multiplayer online games.
 
 Current state of the game:
-![](.github/assets/game_preview.gif)
+![](.github/assets/game_preview.png)
 
 Current state of the map editor:
-![](.github/assets/map_editor_preview.gif)
+![](.github/assets/map_editor_preview.png)
 
 ### Development setup ###
 
@@ -26,7 +26,6 @@ Used libraries:
 - [ImFileBrowser](https://github.com/AirGuanZ/imgui-filebrowser)
 - [SFML](https://www.sfml-dev.org/)
 - [spdlog](https://github.com/gabime/spdlog)
-- [stduuid](https://github.com/mariusbancila/stduuid)
 
 #### Ubuntu ####
 
@@ -80,4 +79,3 @@ Running the server:
 $ cd Server
 $ go run .
 ```
-
