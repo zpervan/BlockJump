@@ -1,7 +1,5 @@
 #include "Game/Entities/src/base_entity.h"
 
-#include "Game/constants.h"
-
 static const sf::Vector2f Max_Velocity{250.0f, 250.0f};
 
 BaseEntity::BaseEntity(EntityManager* entity_manager) : entity_manager_(entity_manager) {}

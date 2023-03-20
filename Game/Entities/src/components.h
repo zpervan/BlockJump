@@ -27,6 +27,7 @@ struct State : public Base
     {
         Idle = 0,
         Moving,
+        JumpStart,
         Jumping,
         Dying
     };

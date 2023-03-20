@@ -111,25 +111,26 @@ void Game::HandleInput()
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
     {
         direction_ = Direction::Up;
-        return;
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
     {
         direction_ = Direction::Down;
-        return;
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
     {
         direction_ = Direction::Left;
-        return;
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
     {
         direction_ = Direction::Right;
-        return;
+    }
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && player_entity_->EntityState() != Component::State::Entity::Jumping)
+    {
+        player_entity_->SetEntityState(Component::State::Entity::JumpStart);
     }
 }
 
