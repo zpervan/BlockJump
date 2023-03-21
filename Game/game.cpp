@@ -3,7 +3,6 @@
 #include <spdlog/spdlog.h>
 
 #include "Game/Core/src/game_events.h"
-#include "Game/World/src/utility.h"
 #include "Game/constants.h"
 #include "Library/src/assets_manager.h"
 #include "Library/src/paths.h"

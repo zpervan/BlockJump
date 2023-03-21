@@ -8,7 +8,6 @@ cc_library(
     deps =
         [
             "//:game-bootstrap",
-            "//Game/World:world",
             "@sfmllib//:sfml-graphics",
             "@sfmllib//:sfml-system",
             "@sfmllib//:sfml-window",

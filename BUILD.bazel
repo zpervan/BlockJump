@@ -27,7 +27,6 @@ cc_library(
     deps = [
         "//Game/Entities:entities",
         "//Game/GUI:gui",
-        "//Game/World:world",
         "@spdloglib//:spdlog",
     ],
 )
