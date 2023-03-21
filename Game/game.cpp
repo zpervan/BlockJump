@@ -10,12 +10,16 @@
 Game::Game()
     : window_(new GameWindow(Constants::TITLE)),
       game_event_system_(std::make_unique<GameEventSystem>()),
+      client_(
+          std::make_unique<Network::Client>(grpc::CreateChannel("localhost:3500", grpc::InsecureChannelCredentials()))),
+      metadata_(std::make_unique<Metadata>()),
       map_manager_(std::make_unique<MapManager>()),
       entity_manager_(std::make_unique<EntityManager>())
 {
     AssetsManager::Initialize();
     main_menu_ = std::make_unique<GUI::MainMenu>(window_.get(), game_event_system_.get());
-    online_game_screen_ = std::make_unique<GUI::OnlineGameScreen>(window_.get(), game_event_system_.get());
+    online_game_screen_ = std::make_unique<GUI::OnlineGameScreen>(
+        window_.get(), game_event_system_.get(), metadata_.get(), client_.get());
     not_implemented_screen_ = std::make_unique<GUI::NotImplementedScreen>(window_.get(), game_event_system_.get());
     game_event_system_->Set(GameEvents::Menu);
 }
@@ -39,7 +43,16 @@ void Game::Run()
                 break;
 
             case GameEvents::GameLoad:
-                LoadGame();
+                LoadGame(metadata_->PlayingMapPath());
+                break;
+
+            case GameEvents::OnlineGameRun:
+                // @TODO: Update world (positions)
+                HandleInput();
+                Update();
+                Display();
+                // @TODO: Use server clock? This way we will reduce inconsistency
+                RestartClock();
                 break;
 
             case GameEvents::GameRun:
@@ -58,9 +71,9 @@ void Game::Run()
     }
 }
 
-void Game::LoadGame()
+void Game::LoadGame(const std::string& path)
 {
-    if (!map_manager_->Load(Paths::MapsDirectoryPath()))
+    if (!map_manager_->Load(path))
     {
         // Return to menu if the map is not loaded correctly
         game_event_system_->Set(GameEvents::Menu);

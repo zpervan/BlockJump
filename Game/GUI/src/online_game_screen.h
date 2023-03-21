@@ -6,6 +6,7 @@
 
 #include "Game/Core/src/game_events.h"
 #include "Game/Core/src/game_window.h"
+#include "Game/Core/src/metadata.h"
 #include "Game/GUI/src/button.h"
 #include "Game/Network/src/client.h"
 
@@ -14,7 +15,10 @@ namespace GUI
 class OnlineGameScreen
 {
   public:
-    OnlineGameScreen(GameWindow* game_window, GameEventSystem* game_event_system);
+    OnlineGameScreen(GameWindow* game_window,
+                     GameEventSystem* game_event_system,
+                     Metadata* metadata,
+                     Network::Client* client);
 
     /// @brief Displays the online game screen
     void Show();
@@ -26,13 +30,14 @@ class OnlineGameScreen
   private: /* Data members */
     GameWindow* window_;
     GameEventSystem* game_event_system_;
+    Metadata* metadata_;
+    Network::Client* client_;
 
     std::vector<sf::Drawable*> drawables_;
     std::unique_ptr<sf::Text> header_text_;
     std::unique_ptr<sf::Text> server_status_text_;
     std::unique_ptr<Button> back_button_;
     std::unique_ptr<Button> ping_button_;
-    std::unique_ptr<Network::Client> client_;
     std::unique_ptr<sf::RectangleShape> games_list_background_;
 
     bool is_server_alive_{false};

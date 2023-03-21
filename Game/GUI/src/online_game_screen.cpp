@@ -17,10 +17,14 @@ constexpr auto alive_text{"Alive"};
 constexpr auto na_text{"N/A"};
 constexpr auto online_game_element_label{"Name: {} | Map: {} | Players: {} | Ping: {}"};
 
-OnlineGameScreen::OnlineGameScreen(GameWindow* game_window, GameEventSystem* game_event_system)
+OnlineGameScreen::OnlineGameScreen(GameWindow* game_window,
+                                   GameEventSystem* game_event_system,
+                                   Metadata* metadata,
+                                   Network::Client* client)
     : window_(game_window),
       game_event_system_(game_event_system),
-      client_(new Network::Client(grpc::CreateChannel("localhost:3500", grpc::InsecureChannelCredentials())))
+      metadata_(metadata),
+      client_(client)
 {
     InitializeDrawables();
 }

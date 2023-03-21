@@ -14,7 +14,7 @@ class MapManager
     /// @brief Loads the map on a given path.
     /// @param path Path to the map file
     /// @return @c true if loading was successful, @c false otherwise
-    bool Load(std::string path);
+    bool Load(const std::string& path);
 
     /// @brief Saves the map data into a @c .map file.
     /// @param tiles Map tiles which will be serialized

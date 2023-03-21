@@ -9,7 +9,7 @@
 #include "Library/src/paths.h"
 #include "ProtoMessages/map/map.pb.h"
 
-bool MapManager::Load(std::string path)
+bool MapManager::Load(const std::string& path)
 {
     spdlog::info("Loading map");
 
@@ -26,7 +26,7 @@ bool MapManager::Load(std::string path)
         // @TODO: Once the start game menu is implemented, make the path customizable
         // @TODO: Check if the file exists
         // @TODO: There is an error while saving the map by using the paths functionality
-        std::fstream map_file{Paths::MapsDirectoryPath() + "single_player_test.map", std::ios::in | std::ios::binary};
+        std::fstream map_file{path, std::ios::in | std::ios::binary};
 
         if (!map.ParseFromIstream(&map_file))
         {
